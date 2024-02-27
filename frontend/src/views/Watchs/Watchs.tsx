@@ -1,4 +1,4 @@
-import Card from "@/components/Card/Card";
+import WatchCard from "@/components/Card/WatchCard";
 import Filter from "./Filter/Filter";
 import HomeBanner from "./HomeBanner/HomeBanner";
 import SortingBanner from "./SortingBanner/SortingBanner";
@@ -18,10 +18,10 @@ const Watchs = () => {
               <SortingBanner />
 
               <div className="flex gap-10 p-10">
-                <Card />
-                <Card />
-                <Card />
-                {/* <Card /> */}
+                <WatchCard />
+                <WatchCard />
+                <WatchCard />
+                {/* <WatchCard /> */}
               </div>
             </div>
           </div>

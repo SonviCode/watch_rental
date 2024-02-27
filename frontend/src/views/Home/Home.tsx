@@ -1,17 +1,17 @@
 import { BRAND_NAME } from "@/constants/Constants";
 import "@/style/index.css";
 import { Link } from "react-router-dom";
-import SubSection from "./SubSection/SubSection";
+import SubscripSection from "./SubscripSection/SubscripSection";
 import WatchSection from "./WatchSection/WatchSection";
 import HowSection from "./HowSection/HowSection";
 
 function Home() {
   return (
     <>
-      <section className=" h-[600px]">
-        <div className="pt-20 p-10 text-center">
+      <section className="mb-20 md:h-[520px]">
+        <div className="pt-10 md:pt-20 lg:p-10 text-center">
           <h1 className="text-6xl font-extrabold">{BRAND_NAME}</h1>
-          <h1 className="font-extrabold text-6xl py-10 gradient-text text-pretty">
+          <h1 className="font-extrabold text-4xl sm:text-6xl py-10 gradient-text text-pretty">
             LA MONTRE PARFAITE POUR CHAQUE OCCASION
           </h1>
           <Link
@@ -22,9 +22,9 @@ function Home() {
           </Link>
         </div>
       </section>
-      <SubSection/>
-      <WatchSection/>
-      <HowSection/>
+      <SubscripSection />
+      <WatchSection />
+      <HowSection />
     </>
   );
 }

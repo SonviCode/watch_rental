@@ -1,5 +1,5 @@
 import imgWatch from "@/assets/rolex.jpg";
-import Card from "@/components/Card/Card";
+import WatchCard from "@/components/Card/WatchCard";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,7 +14,7 @@ const WatchSection = () => {
         parfaite compagne pour chaque moment.
       </p>
       <div className="flex flex-col md:flex-row gap-10 mb-10">
-        <Card />
+        <WatchCard />
         <div className="rounded-lg bg-blacklight relative">
           <div className="absolute top-3 right-3 bg-gray w-8 h-8 rounded-full flex items-center justify-center">
             <FontAwesomeIcon icon={faHeart} />

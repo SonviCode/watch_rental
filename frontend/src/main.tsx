@@ -9,6 +9,7 @@ import Account from "./views/Account/Account";
 import Subscription from "./views/Subscription/Subscription";
 import Contact from "./views/Contact/Contact";
 import ErrorPage from "./views/Error/ErrorPage";
+import Watch from "./views/Watch/Watch";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { path: "/account", element: <Account /> },
       { path: "/subscription", element: <Subscription /> },
       { path: "/contact", element: <Contact /> },
+      { path: "/watch/:name", element: <Watch /> }
     ],
   },
   { path: "/watchs", element: <Watchs /> },
