@@ -11,8 +11,8 @@ const Watch = () => {
   return (
     <>
       <Slug />
-      <div className="flex gap-20 py-5">
-        <div className="w-1/2 flex flex-col items-center gap-10 justify-center">
+      <div className="flex flex-col md:flex-row gap-20">
+        <div className="md:w-1/2 flex flex-col items-center gap-10 justify-center">
           <div className="relative">
             <img
               className="absolute top-3 right-3 w-20"
@@ -22,7 +22,7 @@ const Watch = () => {
             <img
               src={img}
               alt="rolex"
-              className="rounded-lg h-[350px] w-[300px] object-cover bg-[#FFFFFF]"
+              className="rounded-lg h-[300px] w-[300px] object-cover bg-[#FFFFFF]"
             />
           </div>
           <div className="flex gap-5">
@@ -49,13 +49,13 @@ const Watch = () => {
             />
           </div>
         </div>
-        <div className="p-5 w-1/2 flex flex-col gap-5">
+        <div className=" md:w-1/2 flex flex-col gap-2">
           <div>
             <p className="text-graylight">Rolex</p>
             <h3 className="font-bold text-xl">SUBMARINER DATE</h3>
           </div>
           <p className="text-graylight text-sm">
-            à partir de <span className="text-base">59,99€</span>/jour
+            <span className="text-base font-extrabold">59,99€</span> par jour
           </p>
           <WatchCalendar />
         </div>

@@ -23,7 +23,7 @@ export const NumberOfDaysSelected = (a: Date, b: Date): number => {
  * @param disabledDates the disabled dates (already rented, under repair...)
  * @returns
  */
-export const checkIfDateIsBetweenRange = (
+export const disbaledDateIsSelected = (
   from: Date,
   to: Date,
   disabledDates: Date[]
@@ -55,3 +55,18 @@ export const checkDisabledDates = (
     .map((disabled) => disabled.getTime())
     .includes(date.getTime());
 };
+
+// /**
+//  *
+//  * @param date date not formatted
+//  * @returns formatted date in "DD/MM/YYYY" and return a string
+//  */
+// export const formatDate = (date: Date): string => {
+//   const formattedDate = date.toLocaleDateString("fr-FR", {
+//     day: "numeric",
+//     month: "long",
+//     year: "numeric",
+//   });
+
+//   return formattedDate;
+// };
