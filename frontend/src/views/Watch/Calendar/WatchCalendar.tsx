@@ -3,13 +3,15 @@ import {
   MINIMUM_RENTAL_DAYS,
   MINIMUM_RENTAL_DAYS_ERROR,
 } from "@/constants/Constants";
-import "@/style/calendar.css";
+import "@/style/custom/DateRangePicker.css";
+import "@/style/custom/calendar.css";
 import {
   NumberOfDaysSelected,
   checkDisabledDates,
   disbaledDateIsSelected,
 } from "@/utils/calendarUtils";
-import { FormEvent, useState } from "react";
+import DateRangePicker from "@wojtekmaj/react-daterange-picker";
+import { useState } from "react";
 import Calendar from "react-calendar";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,7 +28,11 @@ const disabledDates = [bDate1, bDate2, bDate3];
 const WatchCalendar = () => {
   const [value, setValue] = useState<Value>();
   const [errorMsg, setErrorMsg] = useState<string>("");
+  const [minDate, setMinDate] = useState<Date>(new Date());
   // const [input, setErrorMsg] = useState<string>("");
+
+  console.log(value);
+  // console.log(new Date(new Date().setDate(new Date().getDate() - 1)));
 
   const handleChange = (datesValue: Value): void => {
     setErrorMsg("");
@@ -39,69 +45,67 @@ const WatchCalendar = () => {
       return;
     }
 
-    if (
-      NumberOfDaysSelected(startOfRental, endOfRental) < MINIMUM_RENTAL_DAYS
-    ) {
-      setErrorMsg(MINIMUM_RENTAL_DAYS_ERROR);
-      setValue(null);
-      return;
-    }
+    // if (
+    //   NumberOfDaysSelected(startOfRental, endOfRental) < MINIMUM_RENTAL_DAYS
+    // ) {
+    //   setErrorMsg(MINIMUM_RENTAL_DAYS_ERROR);
+    //   setValue(null);
+    //   return;
+    // }
 
     setValue(datesValue);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(e.target);
-    console.log(e.currentTarget.value);
+  const handlePicker = (datesValue: Value): void => {
+    setErrorMsg("");
+    console.log(datesValue);
+
+    // setErrorMsg("");
+    // const startOfRental = datesValue[0];
+    // const endOfRental = datesValue[1];
+
+    // if (disbaledDateIsSelected(startOfRental, endOfRental, disabledDates)) {
+    //   setErrorMsg(DISABLED_DATE_SLECTED);
+    //   setValue(null);
+    //   return;
+    // }
+
+    setValue(datesValue);
+  };
+
+  const test = (locale: string, date: Date) => {
+    console.log(locale);
+    console.log(date);
+
+    return "2024";
   };
 
   return (
     <>
-      <form
-        className="flex rounded-lg  bg-blacklight cursor-pointer"
-        onSubmit={(e) => handleSubmit(e)}
-      >
-        <div className="flex flex-col w-1/2 p-2 pl-4 border border-blacklight focus-within:border-graylight rounded-l-lg">
-          <label htmlFor="dateStart" className="text-graylight uppercase">
-            Début
-          </label>
-          <input
-            className="bg-blacklight outline-none"
-            placeholder="Ajouter une date"
-            name="dateStart"
-            id="dateStart"
-            type="text"
-            autoComplete="off"
-            // value={value ? value[0].toLocaleDateString() : ""}
-            // onChange={(e) => setValue([e.target.value])}
-            required
-          />
-        </div>{" "}
-        <hr className="h-auto border-l border-gray" />
-        <div className="flex flex-col w-1/2 p-2 pl-4 border border-blacklight focus-within:border-graylight rounded-r-lg">
-          <label htmlFor="dateEnd" className="text-graylight uppercase">
-            Fin
-          </label>
-          <input
-            className="bg-blacklight outline-none text-gray"
-            placeholder="Ajouter une date"
-            name="dateEnd"
-            id="dateEnd"
-            type="text"
-            autoComplete="off"
-            // value={value ? value[1].toLocaleDateString() : ""}
-            // onChange={(e) => setValue([e.target.value])}
-            required
-          />
-        </div>
-      </form>
+      <DateRangePicker
+        className="rounded-lg"
+        rangeDivider={<></>}
+        format={"dd/MM/y"}
+        dayPlaceholder="DD"
+        monthPlaceholder="MM"
+        yearPlaceholder="YYYY"
+        calendarIcon={null}
+        formatYear={(locale, date) => test(locale!, date)}
+        maxDate={new Date("2026")}
+        disableCalendar={true}
+        value={value}
+        minDate={minDate}
+        onChange={(datesValue) => handlePicker(datesValue)}
+        // onFocus={(event:any) => console.log("Focused input: ", event.value)}
+        onInvalidChange={() => setErrorMsg("test")}
+        required
+      />
       <Calendar
         className="p-2 rounded-lg"
         onChange={(datesValue) => handleChange(datesValue)}
         selectRange={true}
         value={value}
-        minDate={new Date()}
+        minDate={minDate}
         prev2Label={null}
         next2Label={null}
         maxDetail="month"
@@ -109,7 +113,10 @@ const WatchCalendar = () => {
         // defaultView="month"
         // maxDate={new Date('2029-12-31')}
         minDetail="year"
-        onClickDay={(date) => console.log(date)}
+        // onClickDay={(date) =>
+        //   setMinDate(date)
+        // }
+        // goToRangeStartOnSelect
         // showDoubleView
         tileDisabled={({ date }) => checkDisabledDates(disabledDates, date)}
       />
@@ -129,7 +136,7 @@ const WatchCalendar = () => {
             {errorMsg}
           </p>
         )}
-        {value && (
+        {value && value[0] && value[1] && (
           <button className="mt-2 bg-greenfluo text-black font-bold border border-greenfluo w-full py-2 px-4 rounded-lg text-center">
             Réserver
           </button>

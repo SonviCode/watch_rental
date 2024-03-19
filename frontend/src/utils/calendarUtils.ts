@@ -56,17 +56,17 @@ export const checkDisabledDates = (
     .includes(date.getTime());
 };
 
-// /**
-//  *
-//  * @param date date not formatted
-//  * @returns formatted date in "DD/MM/YYYY" and return a string
-//  */
-// export const formatDate = (date: Date): string => {
-//   const formattedDate = date.toLocaleDateString("fr-FR", {
-//     day: "numeric",
-//     month: "long",
-//     year: "numeric",
-//   });
+/**
+ *
+ * @param date date not formatted
+ * @returns formatted date in "DD/MM/YYYY" and return a string
+ */
+export const formatDate = (date: Date): string => {
+  const formattedDate = date.toLocaleDateString("fr-FR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
-//   return formattedDate;
-// };
+  return formattedDate;
+};

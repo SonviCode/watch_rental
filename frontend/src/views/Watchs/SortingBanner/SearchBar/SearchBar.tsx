@@ -1,13 +1,13 @@
-
 const SearchBar = () => {
   return (
-    <div>
+    <div className="relative">
       <input
         type="text"
         name="search"
         id="search"
-        className="rounded-md bg-blacklight outline-none px-4 py-3"
-        placeholder="Cherche une montre..."
+        style={{ fontFamily: "Montserrat, FontAwesome" }}
+        className="rounded-md bg-gray w-full outline-none px-3 py-2.5 text-sm"
+        placeholder="&#xf002; Cherche une montre"
       />
     </div>
   );

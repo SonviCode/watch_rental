@@ -1,0 +1,11 @@
+.select .select__control {
+    background-color: black;
+}
+
+.select .select__option {
+    background-color: black;   
+}
+
+.react-select__menu .react-select__menu-list .react-select__control {
+    background-color: black !important;
+}
