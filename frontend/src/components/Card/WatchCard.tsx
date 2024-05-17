@@ -1,10 +1,10 @@
 import rolexLogo from "@/assets/logo-rolex.png";
 import imgWatch from "@/assets/rolex.jpg";
-import { faCheck, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartBorder } from "@fortawesome/free-regular-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const WatchCard = () => {
   const [isFav, setIsFav] = useState<boolean>(false);
@@ -14,35 +14,42 @@ const WatchCard = () => {
   return (
     <Link
       to="/watch/submariner-date"
-      className="rounded-lg bg-blacklight relative cursor-pointer"
+      className="bg-blacklight relative cursor-pointer rounded-lg"
     >
       <div
-        className="absolute top-3 left-3 rounded-full flex items-center justify-center z-10 p-2 bg-graylight"
+        className="absolute left-3 top-3 z-10 flex items-center justify-center rounded-full p-1.5"
         onClick={(e) => {
           e.preventDefault(), setIsFav(!isFav);
         }}
       >
         <FontAwesomeIcon
-          className="text-purple w-5 h-5"
+          className="text-purple size-5"
           icon={isFav ? faHeart : faHeartBorder}
         />
       </div>
-      <div className="absolute top-3 right-3 w-10 h-8 rounded-full flex items-center justify-center">
+      <div className="absolute right-3 top-3 flex h-8 w-10 items-center justify-center rounded-full">
         <img src={rolexLogo} alt="logo rolex" />
       </div>
       <img
         src={imgWatch}
         alt="rolex"
-        className="rounded-t-lg max-h-[200px] w-full object-cover"
+        className="max-h-[190px] w-full rounded-t-lg object-cover"
       />
       <div className="p-5">
         <p>SUBMARINER DATE</p>
-        <p className="text-graylight text-sm">
+        <p className="text-graylight text-xs mt-1">
+          <span className="italic text-sm">Essentiel</span> - dès 145€/mois
+        </p>
+        <p className="underline underline-offset-2 w-fit rounded-lg text-sm mb-2">Abonnement</p>
+        <button className="m-auto w-full text-center gradient-btn rounded-lg px-2 py-1.5">
+          S'abonner
+        </button>
+        {/* <p className="text-graylight text-sm">
           à partir de <span className="text-base">59,99€</span>
         </p>
         <p className="text-greenfluo">
           En stock <FontAwesomeIcon icon={faCheck} />
-        </p>
+        </p> */}
       </div>
     </Link>
   );

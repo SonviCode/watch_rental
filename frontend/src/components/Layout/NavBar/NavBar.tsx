@@ -9,7 +9,7 @@ const NavBar = () => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="fixed w-full flex justify-between px-10 py-5 backdrop-blur-3xl z-10">
+    <div className="fixed w-full flex justify-between px-10 py-5 backdrop-blur-3xl z-50">
       <NavLink to="/" className="flex items-center">
         <img src={logo} alt="logo" className="w-10" />
         <p>{BRAND_NAME}</p>

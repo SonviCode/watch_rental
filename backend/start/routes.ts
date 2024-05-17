@@ -14,3 +14,9 @@ router.get('/', async () => {
     hello: 'world',
   }
 })
+
+router.get('/watchs', async () => {
+  return {
+    hello: 'watchs',
+  }
+})

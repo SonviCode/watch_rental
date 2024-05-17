@@ -9,7 +9,7 @@ const SubscripCategory = () => {
         switch_text={
           "Changez de montres jusqu'à 4 fois par an (4 échanges inclus par an)"
         }
-        watch_price={"jusqu'à 5000€"}
+        watch_price={"jusqu'à 5 000€"}
       />
       <SubscripCard
         title={"Tempo Avancé"}

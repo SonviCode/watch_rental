@@ -6,13 +6,13 @@ const FilterCategory = ({ Category }: { Category: FilterCategoryProps }) => {
   const { name, elements } = Category;
 
   return (
-    <div className=" border-y border-gray w-full text-gray-700 py-5 px-4 flex-col items-center justify-between relative">
+    <div className=" border-t border-t-gray w-full text-gray-700 py-5 px-4 flex-col items-center justify-between relative ">
       <input
         type="checkbox"
         defaultChecked={true}
-        className="peer absolute left-0 top-0 right-0 h-[32px] appearance-none cursor-pointer z-10"
+        className="peer absolute left-0 top-0 right-0 h-[65px] checked:h-[40px] appearance-none cursor-pointer z-10"
       />
-      <div className="peer-checked:[&>svg]:rotate-180 flex items-center justify-between ">
+      <div className="peer-checked:[&>svg]:rotate-180 flex items-center justify-between uppercase">
         <span>{name}</span>{" "}
         <FontAwesomeIcon
           icon={faChevronDown}
@@ -27,9 +27,12 @@ const FilterCategory = ({ Category }: { Category: FilterCategoryProps }) => {
               // onClick={(e) => getFilterProduct(e, el, key.keyRequest)}
               id={el}
               type="checkbox"
-              className="cursor-pointer accent-greenfluo"
+              className="cursor-pointer accent-greenfluo "
             />
-            <label htmlFor={el} className="grow pl-2 cursor-pointer">
+            <label
+              htmlFor={el}
+              className="grow pl-2 cursor-pointer first-letter:uppercase text-sm"
+            >
               {el}
             </label>
           </li>
