@@ -2,6 +2,15 @@
 export const BRAND_NAME = "TEMPO"
 
 // ---API
+const API_ROOTDIR = "http://localhost:3333/api/";
+export const API_LOGIN = API_ROOTDIR + "auth/login";
+export const API_LOGOUT = API_ROOTDIR + "auth/logout";
+export const API_SIGNUP = API_ROOTDIR + "auth/signup";
+
+// ---ACCOUNT
+export const DIFFERENT_PASSWORD = "Les mots de passes sont différents"
+export const INVALID_CREDENTIALS = "Informations d'identification invalide"
+export const GENERIC_ERROR = "Une erreur s'est produite, veuillez réessayer"
 
 // ---Subscription
 
