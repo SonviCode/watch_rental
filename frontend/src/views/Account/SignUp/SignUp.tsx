@@ -24,12 +24,22 @@ const SignUp = ({
     const password = elements.password.value;
     const password_confirm = elements.password_confirm.value;
 
+    console.log(elements);
+
+    const location = {
+      address: elements.address.value,
+      additional_address: elements.additional_address.value,
+      city: elements.city.value,
+      postal_code: elements.postal_code.value,
+    };
+
     if (password !== password_confirm) {
       setError(DIFFERENT_PASSWORD);
       return;
     }
 
     formData.set("phone_number", phone.trim());
+    formData.set("location", JSON.stringify(location));
 
     fetchSignUp(formData, setError);
   };
@@ -126,13 +136,13 @@ const SignUp = ({
         <div className="relative">
           <input
             type="date"
-            name="birth"
-            id="birth"
+            name="birth_date"
+            id="birth_date"
             className="rounded-md bg-blacklight px-4 py-3 peer w-full"
             placeholder=""
             required
           />
-          <label className="label-auth" htmlFor="brith">
+          <label className="label-auth" htmlFor="brith_date">
             Date de naissance
           </label>
         </div>
@@ -141,7 +151,6 @@ const SignUp = ({
             <input
               type="text"
               id="address"
-              name="address"
               className="rounded-md bg-blacklight px-4 py-3 peer w-full"
               placeholder=""
               required
@@ -153,13 +162,13 @@ const SignUp = ({
           <div className="w-1/2 relative">
             <input
               type="text"
-              name="additional_address"
               id="additional_address"
               className="rounded-md bg-blacklight px-4 py-3 peer w-full"
               placeholder=""
             />
             <label className="label-auth" htmlFor="additional_address">
-              Complément d'adresse <span className="text-xs text-gray">( optionnel )</span>
+              Complément d'adresse{" "}
+              <span className="text-xs text-gray">( optionnel )</span>
             </label>
           </div>
         </div>
@@ -168,7 +177,6 @@ const SignUp = ({
             <input
               type="text"
               id="city"
-              name="city"
               className="rounded-md bg-blacklight px-4 py-3 peer w-full"
               placeholder=""
               required
@@ -180,13 +188,12 @@ const SignUp = ({
           <div className="w-1/2 relative">
             <input
               type="text"
-              name="postcode"
-              id="postcode"
+              id="postal_code"
               className="rounded-md bg-blacklight px-4 py-3 peer w-full"
               placeholder=""
               required
             />
-            <label className="label-auth" htmlFor="postcode">
+            <label className="label-auth" htmlFor="postal_code">
               Code postal
             </label>
           </div>

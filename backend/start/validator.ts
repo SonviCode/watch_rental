@@ -62,7 +62,8 @@ vine.messagesProvider = new SimpleMessagesProvider({
   'string': 'The value of {{ field }} field must be a string',
 
   // signup
-  'email.unique': "L'adresse e-mail n'est pas valide",
+  'email.unique':
+    'Cette adresse email est déjà utilisée, choisissez-en une autre ou connectez-vous.',
 
   // Error message for the username field
   'username.required': 'Please choose a username for your account',

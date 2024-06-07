@@ -13,6 +13,13 @@ export const signUpValidator = vine.compile(
       }),
     password: vine.string().minLength(8).maxLength(32),
     phone_number: vine.string().maxLength(10),
+    birth_date: vine.date(),
+    location: vine.object({
+      address: vine.string(),
+      additional_address: vine.string().optional(),
+      city: vine.string(),
+      postal_code: vine.string().maxLength(6),
+    }),
   })
 )
 

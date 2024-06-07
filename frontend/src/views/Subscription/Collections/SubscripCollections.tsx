@@ -37,7 +37,7 @@ const SubscripCollections = () => {
             Tempo Premium
           </span>
         </div>
-        <div className="w-full rounded-xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-5">
+        <div className="w-full rounded-xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-2 sm:gap-5">
           <WatchCard />
           <WatchCard />
           <WatchCard />
