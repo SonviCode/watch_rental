@@ -1,10 +1,12 @@
 import {
   API_LOGIN,
+  API_LOGOUT,
   API_SIGNUP,
   GENERIC_ERROR,
   INVALID_CREDENTIALS,
 } from "@/constants/Constants";
 import { Dispatch, SetStateAction } from "react";
+import { NavigateFunction } from "react-router-dom";
 
 /**
  * service to sign up and add user
@@ -14,7 +16,8 @@ import { Dispatch, SetStateAction } from "react";
  */
 export const fetchSignUp = async (
   formData: FormData,
-  setError: Dispatch<SetStateAction<string>>
+  setError: Dispatch<SetStateAction<string>>,
+  navigate: NavigateFunction
 ) => {
   try {
     const res = await fetch(API_SIGNUP, {
@@ -29,7 +32,7 @@ export const fetchSignUp = async (
       return;
     }
 
-    fetchLogin(data.email, formData.get('password') as string, setError);
+    fetchLogin(data.email, formData.get("password") as string, setError, navigate);
   } catch (e) {
     setError(GENERIC_ERROR);
   }
@@ -46,7 +49,8 @@ export const fetchSignUp = async (
 export const fetchLogin = async (
   email: string,
   password: string,
-  setError: Dispatch<SetStateAction<string>>
+  setError: Dispatch<SetStateAction<string>>,
+  navigate: NavigateFunction
 ) => {
   try {
     const res = await fetch(API_LOGIN, {
@@ -58,15 +62,26 @@ export const fetchLogin = async (
       credentials: "include",
       body: JSON.stringify({ email, password }),
     });
-    const data = await res.json();
 
     if (!res.ok) {
       setError(INVALID_CREDENTIALS);
       return;
     }
 
-    // fetchUser(data.id);
+    navigate("/account");
   } catch (e) {
     setError(GENERIC_ERROR);
   }
+};
+
+/**
+ * Function to logout the user
+ */
+export const fetchLogout = async (navigate: NavigateFunction) => {
+  fetch(API_LOGOUT, {
+    method: "POST",
+    credentials: "include",
+  })
+    .then(() => navigate("/"))
+    .catch((e) => console.error(e));
 };

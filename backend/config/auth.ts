@@ -1,13 +1,13 @@
 import { defineConfig } from '@adonisjs/auth'
-import { InferAuthEvents, Authenticators } from '@adonisjs/auth/types'
-import { tokensGuard, tokensUserProvider } from '@adonisjs/auth/access_tokens'
+import { sessionGuard, sessionUserProvider } from '@adonisjs/auth/session'
+import type { InferAuthEvents, Authenticators } from '@adonisjs/auth/types'
 
 const authConfig = defineConfig({
-  default: 'api',
+  default: 'web',
   guards: {
-    api: tokensGuard({
-      provider: tokensUserProvider({
-        tokens: 'accessTokens',
+    web: sessionGuard({
+      useRememberMeTokens: false,
+      provider: sessionUserProvider({
         model: () => import('#models/user'),
       }),
     }),
@@ -21,6 +21,7 @@ export default authConfig
  * guards.
  */
 declare module '@adonisjs/auth/types' {
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   interface Authenticators extends InferAuthenticators<typeof authConfig> {}
 }
 declare module '@adonisjs/core/types' {

@@ -1,11 +1,15 @@
 // ---global
 export const BRAND_NAME = "TEMPO"
 
-// ---API
+// ------API
 const API_ROOTDIR = "http://localhost:3333/api/";
+// ---auth
 export const API_LOGIN = API_ROOTDIR + "auth/login";
 export const API_LOGOUT = API_ROOTDIR + "auth/logout";
 export const API_SIGNUP = API_ROOTDIR + "auth/signup";
+export const API_CHECK_AUTH = API_ROOTDIR + "auth/check";
+// ---user
+export const API_USER = API_ROOTDIR + "user";
 
 // ---ACCOUNT
 export const DIFFERENT_PASSWORD = "Les mots de passes sont différents"

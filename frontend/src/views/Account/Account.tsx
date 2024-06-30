@@ -1,20 +1,45 @@
+import { API_USER } from "@/constants/Constants";
+import useFetchData from "@/hooks/useFetchData";
+import { fetchLogout } from "@/services/api/account";
+import { User } from "@/types/userType";
+import { faFileInvoice } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import SignUp from "./SignUp/SignUp";
-import Login from "./Login/Login";
+import { useNavigate } from "react-router-dom";
 
 const Account = () => {
-  const [login, setLogin] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
+  const [user, setUser] = useState<User | undefined>();
+  const navigate = useNavigate();
+
+  useFetchData(setUser, API_USER);
 
   return (
-    // <div className="flex h-[600px]">
-    <div>
+    <>
+      <div className="flex gap-10">
+        <div>
+          <div className="bg-graylight rounded-md p-2 text-black font-bold flex justify-center items-center gap-5">
+            <FontAwesomeIcon icon={faFileInvoice} />
+            <h2>Factures</h2>
+          </div>
+        </div>
 
-      {/* <div className="bg-account w-1/3 bg-cover bg-center"></div>
-      <div className="w-2/3"> */}
-        {login ? <Login setLogin={setLogin} /> : <SignUp setLogin={setLogin} />}
-      {/* </div> */}
-    </div>
-    // </div>
+        <div>
+          <h1 className="uppercase font-bold text-xl">Votre compte</h1>
+          <p>
+            {user?.firstName} {user?.lastName}
+          </p>
+        </div>
+      </div>
+      <div className="text-right">
+        <button
+          onClick={() => fetchLogout(navigate)}
+          className="border rounded-md p-2"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </>
   );
 };
 

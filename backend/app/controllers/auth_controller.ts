@@ -3,6 +3,8 @@ import env from '#start/env'
 import { loginValidator, signUpValidator } from '#validators/auth'
 import type { HttpContext } from '@adonisjs/core/http'
 import twilio from 'twilio'
+import { CAPTCHA_NOT_VALID } from '../../constants/constants.js'
+import emitter from '@adonisjs/core/services/emitter'
 
 const accountSid = env.get('TWILIO_ACCOUNT_SID')
 const authToken = env.get('TWILIO_AUTH_TOKEN')
@@ -12,6 +14,11 @@ const client = twilio(accountSid, authToken)
 export default class AuthController {
   async signup({ request, response }: HttpContext) {
     const body = request.body()
+
+    // if (!body['g-recaptcha-response']) {
+    //   return response.abort({ errors: [{ message: CAPTCHA_NOT_VALID }] })
+    // }
+
     body.location = JSON.parse(body.location)
 
     const payload = await signUpValidator.validate(body)
@@ -21,16 +28,20 @@ export default class AuthController {
     return response.created(user)
   }
 
-  async login({ request, response }: HttpContext) {
+  async login({ request, auth, response }: HttpContext) {
     const { email, password } = await request.validateUsing(loginValidator)
 
     const user = await User.verifyCredentials(email, password)
-    const token = await User.accessTokens.create(user)
 
-    return response.ok({
-      token: token,
-      ...user.serialize(),
-    })
+    await auth.use('web').login(user)
+
+    return response.status(200)
+  }
+
+  async logout({ auth, response }: HttpContext) {
+    await auth.use('web').logout()
+
+    return response.status(204)
   }
 
   async verifySMSCode({ request, response }: HttpContext) {
@@ -57,5 +68,11 @@ export default class AuthController {
       .then((verification_check) => console.log(verification_check.status))
 
     return response.created('test')
+  }
+
+  async check({ response }: HttpContext) {
+    return response.ok({
+      message: 'login successful',
+    })
   }
 }

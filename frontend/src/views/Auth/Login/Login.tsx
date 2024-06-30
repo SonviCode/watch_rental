@@ -2,24 +2,14 @@
 import { fetchLogin } from "@/services/api/account";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-// import { SubmitHandler, useForm } from "react-hook-form";
+import { FormEvent, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-const Login = ({
-  setLogin,
-}: {
-  setLogin: Dispatch<SetStateAction<boolean>>;
-}) => {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   watch,
-  //   formState: { errors },
-  // } = useForm<InputsLogin>();
-  // const onSubmit: SubmitHandler<InputsLogin> = (data) => console.log(data);
-
+const Login = () => {
   const [seePswd, setSeePswd] = useState(false);
   const [error, setError] = useState<string>("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,7 +22,7 @@ const Login = ({
     //   setMsg(INPUT_EMPTY);
     // }
 
-    fetchLogin(email, password, setError);
+    fetchLogin(email, password, setError, navigate);
   };
 
   return (
@@ -88,10 +78,10 @@ const Login = ({
           Se connecter
         </button>
         {error && <p className="text-red-600 italic">{error}</p>}
-        <p className="mt-10" onClick={() => setLogin(false)}>
+        <Link to="/signup" className="mt-10">
           Pas encore de compte ?{" "}
           <span className="underline cursor-pointer ">S'inscrire</span>
-        </p>
+        </Link>
       </form>
     </div>
   );

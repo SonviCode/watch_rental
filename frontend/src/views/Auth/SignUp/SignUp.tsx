@@ -1,49 +1,17 @@
-import { DIFFERENT_PASSWORD } from "@/constants/Constants";
-import { fetchSignUp } from "@/services/api/account";
+import { handleSignUpSubmit } from "@/services/handler/handleSubmit";
 import { formatPhoneNumber } from "@/utils/accountUtils";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
+import { Link, useNavigate } from "react-router-dom";
 
-const SignUp = ({
-  setLogin,
-}: {
-  setLogin: Dispatch<SetStateAction<boolean>>;
-}) => {
+const SignUp = () => {
   const [phone, setPhone] = useState<string>("");
   const [seePswd, setSeePswd] = useState(false);
   const [error, setError] = useState<string>("");
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-
-    const elements = e.currentTarget.elements as unknown as HTMLFormElement;
-    const password = elements.password.value;
-    const password_confirm = elements.password_confirm.value;
-
-    console.log(elements);
-
-    const location = {
-      address: elements.address.value,
-      additional_address: elements.additional_address.value,
-      city: elements.city.value,
-      postal_code: elements.postal_code.value,
-    };
-
-    if (password !== password_confirm) {
-      setError(DIFFERENT_PASSWORD);
-      return;
-    }
-
-    formData.set("phone_number", phone.trim());
-    formData.set("location", JSON.stringify(location));
-
-    fetchSignUp(formData, setError);
-  };
-  // const onSubmit: SubmitHandler<InputsSignUp> = (data) => fetchSignUp(data, setError);
+  const navigate = useNavigate();
 
   return (
     <div className="py-5 md:px-10">
@@ -53,7 +21,7 @@ const SignUp = ({
       </h1>
 
       <form
-        onSubmit={(e) => handleSubmit(e)}
+        onSubmit={(e) => handleSignUpSubmit(e, setError, phone, navigate)}
         onChange={() => setError("")}
         className=" flex flex-col gap-5"
       >
@@ -229,10 +197,10 @@ const SignUp = ({
           S'inscrire
         </button>
         {error && <p className="text-red-600 italic">{error}</p>}
-        <p className="mt-10" onClick={() => setLogin(true)}>
+        <Link to="/login" className="mt-10">
           Déjà un compte ?{" "}
           <span className="underline cursor-pointer">Se connecter</span>
-        </p>
+        </Link>
       </form>
     </div>
   );
