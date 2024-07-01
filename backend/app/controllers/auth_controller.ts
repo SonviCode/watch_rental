@@ -5,6 +5,8 @@ import type { HttpContext } from '@adonisjs/core/http'
 import twilio from 'twilio'
 import { CAPTCHA_NOT_VALID } from '../../constants/constants.js'
 import emitter from '@adonisjs/core/services/emitter'
+import mail from '@adonisjs/mail/services/main'
+import OtpService from '#services/otp_service'
 
 const accountSid = env.get('TWILIO_ACCOUNT_SID')
 const authToken = env.get('TWILIO_AUTH_TOKEN')
@@ -14,6 +16,8 @@ const client = twilio(accountSid, authToken)
 export default class AuthController {
   async signup({ request, response }: HttpContext) {
     const body = request.body()
+
+    console.log(body)
 
     // if (!body['g-recaptcha-response']) {
     //   return response.abort({ errors: [{ message: CAPTCHA_NOT_VALID }] })
@@ -34,6 +38,14 @@ export default class AuthController {
     const user = await User.verifyCredentials(email, password)
 
     await auth.use('web').login(user)
+
+    await OtpService.sendOtpVerificationEmail(user)
+
+    // await mail.send((message) => {
+    //   message.from('service@tempo.fr').to(user.email).from('info@example.org').subject('test')
+    //   message.htmlView('emails/verify_email_html', { user })
+    //   // message.textView('emails/verify_email_text', user)
+    // })
 
     return response.status(200)
   }

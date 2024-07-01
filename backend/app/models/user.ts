@@ -1,9 +1,11 @@
 import { withAuthFinder } from '@adonisjs/auth'
 import { compose } from '@adonisjs/core/helpers'
 import hash from '@adonisjs/core/services/hash'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 import type { Location } from '../../types/user_types.js'
+import UserOtpVerification from './user_otp_verification.js'
+import type { HasOne } from '@adonisjs/lucid/types/relations'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -13,6 +15,9 @@ const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
 export default class User extends compose(BaseModel, AuthFinder) {
   @column({ isPrimary: true })
   declare id: number
+
+  @hasOne(() => UserOtpVerification)
+  declare userOtpVerification: HasOne<typeof UserOtpVerification>
 
   @column()
   declare firstName: string
