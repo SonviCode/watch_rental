@@ -1,7 +1,9 @@
 import {
   API_LOGIN,
   API_LOGOUT,
+  API_RESEND_OTP_MAIL,
   API_SIGNUP,
+  API_VERIFY_OTP_MAIL,
   GENERIC_ERROR,
   INVALID_CREDENTIALS,
 } from "@/constants/Constants";
@@ -32,7 +34,12 @@ export const fetchSignUp = async (
       return;
     }
 
-    fetchLogin(data.email, formData.get("password") as string, setError, navigate);
+    fetchLogin(
+      data.email,
+      formData.get("password") as string,
+      setError,
+      navigate
+    );
   } catch (e) {
     setError(GENERIC_ERROR);
   }
@@ -84,4 +91,58 @@ export const fetchLogout = async (navigate: NavigateFunction) => {
   })
     .then(() => navigate("/"))
     .catch((e) => console.error(e));
+};
+
+/**
+ * Service to verify mail by OTP code
+ *
+ * @param code
+ * @param setError
+ * @returns
+ */
+export const fetchVerifyMail = async (
+  code: string,
+  setError: Dispatch<SetStateAction<string>>
+) => {
+  try {
+    const res = await fetch(API_VERIFY_OTP_MAIL, {
+      method: "POST",
+      headers: {
+        Accept: "application.json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ code }),
+    });
+
+    if (!res.ok) {
+      setError(INVALID_CREDENTIALS);
+      return;
+    }
+  } catch (e) {
+    setError(GENERIC_ERROR);
+  }
+};
+
+/**
+ * Service to resend otp email code
+ *
+ * @param setError
+ * @returns
+ */
+export const fetchResendOtpEmail = async (
+  setError: Dispatch<SetStateAction<string>>
+) => {
+  try {
+    await fetch(API_RESEND_OTP_MAIL, {
+      method: "POST",
+      headers: {
+        Accept: "application.json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+  } catch (e) {
+    setError(GENERIC_ERROR);
+  }
 };

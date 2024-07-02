@@ -1,5 +1,5 @@
 // import { InputsLogin } from "@/types/Inputs/InputsAccount";
-import { fetchLogin } from "@/services/api/account";
+import { fetchLogin } from "@/services/api/auth";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormEvent, useState } from "react";

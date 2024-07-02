@@ -3,9 +3,7 @@ import { HttpContext } from '@adonisjs/core/http'
 
 export default class UserController {
   async getUserConnectedInfo({ auth, response }: HttpContext) {
-    const userId = auth.user?.id
-
-    const user = await User.find(userId)
+    const user = await User.find(auth.user?.id)
 
     return response.ok(user)
   }

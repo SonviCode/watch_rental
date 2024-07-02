@@ -1,7 +1,7 @@
 import { DIFFERENT_PASSWORD } from "@/constants/Constants";
 import { Dispatch, FormEvent, SetStateAction } from "react";
 import { NavigateFunction } from "react-router-dom";
-import { fetchSignUp } from "../api/account";
+import { fetchSignUp } from "../api/auth";
 
 export const handleSignUpSubmit = (
   e: FormEvent<HTMLFormElement>,

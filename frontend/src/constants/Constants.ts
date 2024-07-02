@@ -8,6 +8,8 @@ export const API_LOGIN = API_ROOTDIR + "auth/login";
 export const API_LOGOUT = API_ROOTDIR + "auth/logout";
 export const API_SIGNUP = API_ROOTDIR + "auth/signup";
 export const API_CHECK_AUTH = API_ROOTDIR + "auth/check";
+export const API_VERIFY_OTP_MAIL = API_ROOTDIR + "auth/verify-email";
+export const API_RESEND_OTP_MAIL = API_ROOTDIR + "auth/resend-otp-email";
 // ---user
 export const API_USER = API_ROOTDIR + "user";
 

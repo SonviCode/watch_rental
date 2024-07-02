@@ -17,10 +17,11 @@ router
     router
       .group(() => {
         router.post('/signup', [AuthController, 'signup'])
-        router.post('/verify-email', [AuthController, 'verifyEmail'])
-        router.post('/verify-sms-code', [AuthController, 'verifySMSCode'])
         router.post('/login', [AuthController, 'login'])
         router.post('/logout', [AuthController, 'logout'])
+        router.post('/resend-otp-email', [AuthController, 'resendOtpEmail']).use(middleware.auth())
+        router.post('/verify-email', [AuthController, 'verifyEmail']).use(middleware.auth())
+        router.post('/verify-sms-code', [AuthController, 'verifySMSCode']).use(middleware.auth())
         router.get('/check', [AuthController, 'check']).use(middleware.auth())
       })
       .prefix('auth')
