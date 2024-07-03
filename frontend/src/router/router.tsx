@@ -11,6 +11,7 @@ import Watchs from "@/views/Watchs/Watchs";
 import { createBrowserRouter } from "react-router-dom";
 import { ProtectedAuthRoute } from "./ProtectedAuthRoute";
 import Invoices from "@/views/Account/Invoices/Invoices";
+import VerifyEmail from "@/views/Auth/VerifyEmail/VerifyEmail";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedAuthRoute>
             <Account />
+          </ProtectedAuthRoute>
+        ),
+      },
+      {
+        path: "/verif-email",
+        element: (
+          <ProtectedAuthRoute>
+            <VerifyEmail />
           </ProtectedAuthRoute>
         ),
       },

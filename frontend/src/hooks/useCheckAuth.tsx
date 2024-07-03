@@ -1,4 +1,4 @@
-import { API_CHECK_AUTH } from "@/constants/Constants";
+import { API_USER } from "@/constants/Constants";
 import { useEffect, useRef, useState } from "react";
 
 export default function useCheckAuth() {
@@ -14,12 +14,9 @@ export default function useCheckAuth() {
 
     const checkAuth = async () => {
       try {
-        const res = await fetch(API_CHECK_AUTH, {
+        const res = await fetch(API_USER, {
           credentials: "include",
         });
-
-        console.log(res);
-        console.log(res.ok);
 
         setAuthed(res.ok);
       } catch (e) {

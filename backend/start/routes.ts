@@ -22,7 +22,6 @@ router
         router.post('/resend-otp-email', [AuthController, 'resendOtpEmail']).use(middleware.auth())
         router.post('/verify-email', [AuthController, 'verifyEmail']).use(middleware.auth())
         router.post('/verify-sms-code', [AuthController, 'verifySMSCode']).use(middleware.auth())
-        router.get('/check', [AuthController, 'check']).use(middleware.auth())
       })
       .prefix('auth')
     router

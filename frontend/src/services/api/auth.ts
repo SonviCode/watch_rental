@@ -102,7 +102,8 @@ export const fetchLogout = async (navigate: NavigateFunction) => {
  */
 export const fetchVerifyMail = async (
   code: string,
-  setError: Dispatch<SetStateAction<string>>
+  setError: Dispatch<SetStateAction<string>>,
+  navigate: NavigateFunction
 ) => {
   try {
     const res = await fetch(API_VERIFY_OTP_MAIL, {
@@ -119,6 +120,8 @@ export const fetchVerifyMail = async (
       setError(INVALID_CREDENTIALS);
       return;
     }
+
+    navigate("/account");
   } catch (e) {
     setError(GENERIC_ERROR);
   }
@@ -131,18 +134,14 @@ export const fetchVerifyMail = async (
  * @returns
  */
 export const fetchResendOtpEmail = async (
-  setError: Dispatch<SetStateAction<string>>
+  setMessage: Dispatch<SetStateAction<string>>
 ) => {
   try {
     await fetch(API_RESEND_OTP_MAIL, {
       method: "POST",
-      headers: {
-        Accept: "application.json",
-        "Content-Type": "application/json",
-      },
       credentials: "include",
     });
   } catch (e) {
-    setError(GENERIC_ERROR);
+    setMessage(GENERIC_ERROR);
   }
 };

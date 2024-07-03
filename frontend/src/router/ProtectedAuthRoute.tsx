@@ -1,15 +1,19 @@
-import useCheckAuth from "@/hooks/useCheckAuth";
+import { API_USER } from "@/constants/Constants";
+import useFetchData from "@/hooks/useFetchData";
+import { User } from "@/types/userType";
+import { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 export const ProtectedAuthRoute = ({ children }: { children: JSX.Element }) => {
-  const { authed, isLoading } = useCheckAuth();
+  const [user, setUser] = useState<User>();
 
-  console.log(authed);
+  const isLoading = useFetchData(setUser, API_USER);
+
+  console.log(user);
+
   if (isLoading) return;
 
-  if (!authed) {
-    return <Navigate to="/login" replace />;
-  }
+  if (!user) return <Navigate to="/login" />;
 
   return children ? children : <Outlet />;
 };

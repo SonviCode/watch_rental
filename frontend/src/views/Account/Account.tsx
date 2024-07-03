@@ -1,30 +1,24 @@
 import { API_USER } from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
-import {
-  fetchLogout,
-  fetchResendOtpEmail,
-  fetchVerifyMail,
-} from "@/services/api/auth";
+import { fetchLogout } from "@/services/api/auth";
 import { User } from "@/types/userType";
 import { faFileInvoice } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Account = () => {
-  const [error, setError] = useState<string>("");
+  // const [error, setError] = useState<string>("");
   const [user, setUser] = useState<User | undefined>();
   const navigate = useNavigate();
 
-  useFetchData(setUser, API_USER);
+  const isLoading = useFetchData(setUser, API_USER);
 
-  const handleSubmitVerifyOTPMail = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  if (isLoading) return;
 
-    const elements = e.currentTarget.elements as unknown as HTMLFormElement;
+  console.log(user);
 
-    fetchVerifyMail(elements.code.value, setError);
-  };
+  if (!user?.emailIsVerified) return <Navigate to="/verif-email" />;
 
   return (
     <>
@@ -43,20 +37,7 @@ const Account = () => {
           </p>
         </div>
       </div>
-      <div className="text-right border">
-        <form onSubmit={(e) => handleSubmitVerifyOTPMail(e)}>
-          <input type="text" name="code" className="bg-black" />
-          <button className="border rounded-md p-2">OTP</button>
-        </form>
-      </div>
-      <div className="text-right border">
-        <button
-          onClick={() => fetchResendOtpEmail(setError)}
-          className="border rounded-md p-2"
-        >
-          Resend
-        </button>
-      </div>
+
       <div className="text-right">
         <button
           onClick={() => fetchLogout(navigate)}

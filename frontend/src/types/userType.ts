@@ -13,6 +13,9 @@ export type User = {
     city: string;
     postal_code: string;
   };
+  emailIsVerified: boolean;
+  smsIsVerified: boolean;
+  idIsVerified: boolean;
 };
 
 export interface userState {

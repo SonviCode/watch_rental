@@ -27,6 +27,8 @@ export default class AuthController {
 
     const user = await User.create(payload)
 
+    await OtpService.sendOtpVerificationEmail(user)
+
     return response.created(user)
   }
 
@@ -37,13 +39,7 @@ export default class AuthController {
 
     await auth.use('web').login(user)
 
-    await OtpService.sendOtpVerificationEmail(user)
-
-    // await mail.send((message) => {
-    //   message.from('service@tempo.fr').to(user.email).from('info@example.org').subject('test')
-    //   message.htmlView('emails/verify_email_html', { user })
-    //   // message.textView('emails/verify_email_text', user)
-    // })
+    if (!user.emailIsVerified) await OtpService.sendOtpVerificationEmail(user)
 
     return response.status(200)
   }
@@ -95,11 +91,5 @@ export default class AuthController {
     await OtpService.sendOtpVerificationEmail(user)
 
     return response.status(200).send(OTP_EMAIL_IS_RESEND)
-  }
-
-  async check({ response }: HttpContext) {
-    return response.ok({
-      message: 'login successful',
-    })
   }
 }
