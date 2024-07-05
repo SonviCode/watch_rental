@@ -1,21 +1,25 @@
-import Layout from "@/components/Layout/Layout";
+
+import GeneralLayout from "@/components/Layout/General/GeneralLayout";
+import PurchaseLayout from "@/components/Layout/Purchase/PurchaseLayout";
 import Account from "@/views/Account/Account";
+import Invoices from "@/views/Account/Invoices/Invoices";
 import Login from "@/views/Auth/Login/Login";
 import SignUp from "@/views/Auth/SignUp/SignUp";
+import VerifyEmail from "@/views/Auth/Verify/VerifyEmail";
+import VerifyPhoneNumber from "@/views/Auth/Verify/VerifyPhoneNumber";
 import Contact from "@/views/Contact/Contact";
 import ErrorPage from "@/views/Error/ErrorPage";
 import Home from "@/views/Home/Home";
+import Purchase from "@/views/Purchase/Purchase";
 import Subscription from "@/views/Subscription/Subscription";
 import Watch from "@/views/Watch/Watch";
 import Watchs from "@/views/Watchs/Watchs";
 import { createBrowserRouter } from "react-router-dom";
 import { ProtectedAuthRoute } from "./ProtectedAuthRoute";
-import Invoices from "@/views/Account/Invoices/Invoices";
-import VerifyEmail from "@/views/Auth/VerifyEmail/VerifyEmail";
 
 export const router = createBrowserRouter([
   {
-    element: <Layout />,
+    element: <GeneralLayout />,
     errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <Home /> },
@@ -36,6 +40,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "/verif-sms",
+        element: (
+          <ProtectedAuthRoute>
+            <VerifyPhoneNumber />
+          </ProtectedAuthRoute>
+        ),
+      },
+      {
         path: "/factures",
         element: (
           <ProtectedAuthRoute>
@@ -51,4 +63,8 @@ export const router = createBrowserRouter([
     ],
   },
   { path: "/watchs", element: <Watchs /> },
+  {
+    element: <PurchaseLayout />,
+    children: [{ path: "/purchase", element: <Purchase /> }],
+  },
 ]);

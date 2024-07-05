@@ -16,9 +16,8 @@ const Account = () => {
 
   if (isLoading) return;
 
-  console.log(user);
-
   if (!user?.emailIsVerified) return <Navigate to="/verif-email" />;
+  if (!user?.smsIsVerified) return <Navigate to="/verif-sms" />;
 
   return (
     <>

@@ -41,6 +41,8 @@ export default class AuthController {
 
     if (!user.emailIsVerified) await OtpService.sendOtpVerificationEmail(user)
 
+    if (user.emailIsVerified && !user.smsIsVerified) await OtpService.sendOtpVerificationSms(user)
+
     return response.status(200)
   }
 
@@ -50,15 +52,25 @@ export default class AuthController {
     return response.status(204)
   }
 
-  async verifySMSCode({ request, response }: HttpContext) {
+  async verifySMS({ request, response }: HttpContext) {
     const smsCode = await request.input('code')
-
-    console.log(smsCode)
 
     client.verify.v2
       .services('VA49263bcab5d0110d6d94e8674579bd14')
       .verificationChecks.create({ to: '+33782934530', code: smsCode })
       .then((verification_check) => console.log(verification_check.status))
+
+    return response.created('test')
+  }
+
+  async resendOtpSms({ auth, response }: HttpContext) {
+    client.messages
+      .create({
+        body: 'Hello from twilio-node',
+        to: '+33782934530', // Text your number
+        from: '+12345678901', // From a valid Twilio number
+      })
+      .then((message) => console.log(message.sid))
 
     return response.created('test')
   }

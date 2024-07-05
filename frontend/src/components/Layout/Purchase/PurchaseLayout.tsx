@@ -1,17 +1,15 @@
 import { Outlet } from "react-router-dom";
-import Footer from "./Footer/Footer";
-import NavBar from "./NavBar/NavBar";
+import HeaderPurchase from "./Header/HeaderPurchase";
 
-const Layout = () => {
+const PurchaseLayout = () => {
   return (
     <>
-      <NavBar />
+      <HeaderPurchase />
       <main className="pt-20 px-5 md:px-10 flex-grow">
         <Outlet />
       </main>
-      <Footer />
     </>
   );
 };
 
-export default Layout;
+export default PurchaseLayout;

@@ -37,10 +37,10 @@ const WatchCard = () => {
       />
       <div className="p-5">
         <p>SUBMARINER DATE</p>
-        <p className="text-graylight text-xs mt-1">
+        <p className="text-graylight text-xs mt-1 mb-2">
           <span className="italic text-sm">Essentiel</span> - dès 145€/mois
         </p>
-        <p className="underline underline-offset-2 w-fit rounded-lg text-sm mb-2">Abonnement</p>
+        {/* <p className="underline underline-offset-2 w-fit rounded-lg text-sm mb-2">Abonnement</p> */}
         <button className="m-auto w-full text-center gradient-btn rounded-lg px-2 py-1.5">
           S'abonner
         </button>

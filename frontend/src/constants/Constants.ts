@@ -9,8 +9,14 @@ export const API_LOGOUT = API_ROOTDIR + "auth/logout";
 export const API_SIGNUP = API_ROOTDIR + "auth/signup";
 export const API_VERIFY_OTP_MAIL = API_ROOTDIR + "auth/verify-email";
 export const API_RESEND_OTP_MAIL = API_ROOTDIR + "auth/resend-otp-email";
+export const API_VERIFY_OTP_SMS = API_ROOTDIR + "auth/verify-sms";
+export const API_RESEND_OTP_SMS = API_ROOTDIR + "auth/resend-otp-sms";
 // ---user
 export const API_USER = API_ROOTDIR + "user";
+// ---subscription
+export const API_SUBSCRIPTION = API_ROOTDIR + "subscription";
+
+
 // ---ACCOUNT
 export const DIFFERENT_PASSWORD = "Les mots de passes sont différents"
 export const INVALID_CREDENTIALS = "Informations d'identification invalide"

@@ -2,8 +2,8 @@ import WatchCard from "@/components/Card/WatchCard";
 import Filter from "./Filter/Filter";
 import HomeBanner from "./HomeBanner/HomeBanner";
 import SortingBanner from "./SortingBanner/SortingBanner";
-import NavBar from "@/components/Layout/NavBar/NavBar";
-import Footer from "@/components/Layout/Footer/Footer";
+import NavBar from "@/components/Layout/General/NavBar/NavBar";
+import Footer from "@/components/Layout/General/Footer/Footer";
 
 const Watchs = () => {
   return (

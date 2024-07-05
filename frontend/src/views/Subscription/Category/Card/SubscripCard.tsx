@@ -1,36 +1,31 @@
-import { FunctionComponent } from "react";
+import { Subscription } from "@/types/subscriptionTypes";
+import { formatEuros } from "@/utils/formatUtils";
+import { Link } from "react-router-dom";
 
-type CardProps = {
-  title: string;
-  price: string;
-  switch_text: string;
-  watch_price: string;
-};
-
-const SubscripCard: FunctionComponent<CardProps> = ({
-  title,
-  price,
-  switch_text,
-  watch_price,
-}) => {
+const SubscripCard = ({ subscription }: { subscription: Subscription }) => {
   return (
     <div className="rounded-lg bg-blacklight  text-center md:w-1/3 ">
       <div className=" py-5 px-2 lg:p-5 flex flex-col gap-3 md:gap-4 justify-between h-full">
-        <h3 className="font-bold text-xl lg:text-2xl ">{title}</h3>
+        <h3 className="font-bold text-xl lg:text-2xl ">
+          Tempo {subscription.title}
+        </h3>
         <hr className="text-gray" />
         <p className="text-graylight text-sm">
           {" "}
-          Dès <span className="font-extrabold text-xl">{price}</span>
+          Dès{" "}
+          <span className="font-extrabold text-xl">
+            {subscription.price}€/mois
+          </span>
         </p>
         <hr className="text-gray" />
-        <p className="text-xs lg:text-sm">{switch_text}</p>
+        <p className="text-xs lg:text-sm">{subscription.switchText}</p>
         <hr className="text-gray" />
         <div>
           <p className="text-xs lg:text-sm">
             Accédez à des montres d'une valeur{" "}
           </p>
           <span className="font-extrabold text-base lg:text-xl">
-            {watch_price}
+            {formatEuros(subscription.watchMaxPrice)} €
           </span>
         </div>
         <a
@@ -39,9 +34,13 @@ const SubscripCard: FunctionComponent<CardProps> = ({
         >
           Voir tout les modèles
         </a>
-        <button className="gradient-btn py-2 px-4 rounded-lg text-center">
+        <Link
+          to="/purchase"
+          state={{ subscription }}
+          className="gradient-btn py-2 px-4 rounded-lg text-center"
+        >
           S'abonner
-        </button>
+        </Link>
       </div>
     </div>
   );

@@ -38,7 +38,7 @@ const HowSection = () => {
             <p>À la fin de la période d'abonnement, renvoyez la montre que vous avez.</p>
           </div>
         </div>
-        <span className="py-5 text-4xl font-extrabold">OU</span>
+        {/* <span className="py-5 text-4xl font-extrabold">OU</span>
         <h3 className="text-2xl section-title text-greenfluo">Location courte durée</h3>
         <div className="flex flex-col md:flex-row gap-5 md:gap-10">
           <div className=" flex flex-col items-center gap-2 md:gap-5 md:w-1/3">
@@ -72,7 +72,7 @@ const HowSection = () => {
             </p>
             <p>À la fin de la période de location, renvoyez la montre.</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import NavBar from "@/components/Layout/NavBar/NavBar";
+import NavBar from "@/components/Layout/General/NavBar/NavBar";
 
 const ErrorPage = () => {
   return (

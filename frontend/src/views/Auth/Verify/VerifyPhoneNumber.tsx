@@ -1,29 +1,34 @@
 import { API_USER } from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
-import { fetchResendOtpEmail, fetchVerifyMail } from "@/services/api/auth";
 import "@/style/custom/otpInputStyle.css";
 import { User } from "@/types/userType";
+import { formatPhoneNumber } from "@/utils/formatUtils";
 import { useState } from "react";
 import OtpInput from "react-otp-input";
 import { Navigate, useNavigate } from "react-router-dom";
+import { fetchResendOtpSms, fetchVerifySms } from '../../../services/api/auth';
 
-const VerifyEmail = () => {
+const VerifyPhoneNumber = () => {
   const [message, setMessage] = useState<string>("");
   const [user, setUser] = useState<User | undefined>();
   const [otp, setOtp] = useState<string>("");
   const navigate = useNavigate();
 
-  useFetchData(setUser, API_USER);
+  const isLoading = useFetchData(setUser, API_USER);
 
-  if (user?.emailIsVerified) return <Navigate to="/account" />;
+  if (isLoading) return;
+
+  if (user?.smsIsVerified) return <Navigate to="/account" />;
 
   return (
     <section className="flex flex-col justify-center items-center pt-10 gap-20">
       <div className="bg-blacklight p-10 rounded-md max-w-xl text-center flex flex-col gap-10 items-center">
         <h1>
-          Veuillez saisir le code envoyé par e-mail à{" "}
-          <span className="italic">{user?.email}</span> afin de vérifier votre
-          compte
+          Veuillez saisir le code envoyé par sms au{" "}
+          <span className="italic">
+            {formatPhoneNumber(`${user?.phoneNumber}`)}
+          </span>{" "}
+          afin de vérifier votre compte
         </h1>
         <OtpInput
           value={otp}
@@ -34,7 +39,7 @@ const VerifyEmail = () => {
           inputStyle="inputStyle"
         />
         <button
-          onClick={() => fetchVerifyMail(otp, setMessage, navigate)}
+          onClick={() => fetchVerifySms(otp, setMessage, navigate)}
           className="gradient-btn py-2 px-10 rounded-lg text-center "
         >
           Valider
@@ -43,11 +48,10 @@ const VerifyEmail = () => {
       {message && <p>{message}</p>}
       <div className="flex gap-10 items-center">
         <p className="text-sm italic">
-          Si vous n'avez pas reçu le code OTP, veuillez vérifier votre dossier
-          de spam ou demander un nouveau code.
+          Aucun code reçu ? Veuillez réessayer ou contacter le support.
         </p>
         <button
-          onClick={() => fetchResendOtpEmail(setMessage)}
+          onClick={() => fetchResendOtpSms(setMessage)}
           className="text-sm border text-white border-greenfluo py-1.5 px-2 rounded-lg text-center"
         >
           Renvoyer
@@ -57,4 +61,4 @@ const VerifyEmail = () => {
   );
 };
 
-export default VerifyEmail;
+export default VerifyPhoneNumber;

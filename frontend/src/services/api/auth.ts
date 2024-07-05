@@ -9,6 +9,7 @@ import {
 } from "@/constants/Constants";
 import { Dispatch, SetStateAction } from "react";
 import { NavigateFunction } from "react-router-dom";
+import { API_RESEND_OTP_SMS, API_VERIFY_OTP_SMS } from '../../constants/Constants';
 
 /**
  * service to sign up and add user
@@ -138,6 +139,59 @@ export const fetchResendOtpEmail = async (
 ) => {
   try {
     await fetch(API_RESEND_OTP_MAIL, {
+      method: "POST",
+      credentials: "include",
+    });
+  } catch (e) {
+    setMessage(GENERIC_ERROR);
+  }
+};
+
+/**
+ * Service to verify mail by OTP code
+ *
+ * @param code
+ * @param setError
+ * @returns
+ */
+export const fetchVerifySms = async (
+  code: string,
+  setError: Dispatch<SetStateAction<string>>,
+  navigate: NavigateFunction
+) => {
+  try {
+    const res = await fetch(API_VERIFY_OTP_SMS, {
+      method: "POST",
+      headers: {
+        Accept: "application.json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ code }),
+    });
+
+    if (!res.ok) {
+      setError(INVALID_CREDENTIALS);
+      return;
+    }
+
+    navigate("/account");
+  } catch (e) {
+    setError(GENERIC_ERROR);
+  }
+};
+
+/**
+ * Service to resend otp email code
+ *
+ * @param setError
+ * @returns
+ */
+export const fetchResendOtpSms = async (
+  setMessage: Dispatch<SetStateAction<string>>
+) => {
+  try {
+    await fetch(API_RESEND_OTP_SMS, {
       method: "POST",
       credentials: "include",
     });

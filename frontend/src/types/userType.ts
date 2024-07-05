@@ -6,7 +6,7 @@ export type User = {
   email: string;
   password?: string;
   birthday: Date;
-  phonenumber: number;
+  phoneNumber: number;
   location: {
     additional_address?: string;
     address: string;

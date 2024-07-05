@@ -1,5 +1,5 @@
 import { handleSignUpSubmit } from "@/services/handler/handleSubmit";
-import { formatPhoneNumber } from "@/utils/accountUtils";
+import { formatPhoneNumber } from "@/utils/formatUtils";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
