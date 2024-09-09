@@ -25,7 +25,8 @@ export const formatPhoneNumber = (value: string): string => {
  * @returns formatted euros in this format : "XXX XXX XXX"
  */
 export const formatEuros = (value: number): string => {
-  if (!value) return value.toString();
+
+  if (!value) return "";
 
   return value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 };

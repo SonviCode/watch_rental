@@ -5,7 +5,7 @@ const PurchaseLayout = () => {
   return (
     <>
       <HeaderPurchase />
-      <main className="pt-20 px-5 md:px-10 flex-grow">
+      <main className="   flex-grow">
         <Outlet />
       </main>
     </>

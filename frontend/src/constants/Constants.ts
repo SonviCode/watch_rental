@@ -11,6 +11,7 @@ export const API_VERIFY_OTP_MAIL = API_ROOTDIR + "auth/verify-email";
 export const API_RESEND_OTP_MAIL = API_ROOTDIR + "auth/resend-otp-email";
 export const API_VERIFY_OTP_SMS = API_ROOTDIR + "auth/verify-sms";
 export const API_RESEND_OTP_SMS = API_ROOTDIR + "auth/resend-otp-sms";
+export const API_IS_ADMIN = API_ROOTDIR + "auth/admin"
 // ---user
 export const API_USER = API_ROOTDIR + "user";
 // ---subscription

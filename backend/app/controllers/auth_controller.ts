@@ -41,7 +41,7 @@ export default class AuthController {
 
     if (!user.emailIsVerified) await OtpService.sendOtpVerificationEmail(user)
 
-    if (user.emailIsVerified && !user.smsIsVerified) await OtpService.sendOtpVerificationSms(user)
+    // if (user.emailIsVerified && !user.smsIsVerified) await OtpService.sendOtpVerificationSms(user)
 
     return response.status(200)
   }
@@ -68,7 +68,7 @@ export default class AuthController {
       .create({
         body: 'Hello from twilio-node',
         to: '+33782934530', // Text your number
-        from: '+12345678901', // From a valid Twilio number
+        from: '+33782934530', // From a valid Twilio number
       })
       .then((message) => console.log(message.sid))
 
@@ -103,5 +103,12 @@ export default class AuthController {
     await OtpService.sendOtpVerificationEmail(user)
 
     return response.status(200).send(OTP_EMAIL_IS_RESEND)
+  }
+
+  async isAdmin({ auth, response }: HttpContext) {
+    const user = await User.findOrFail(auth.user?.id)
+    const role = user.role
+
+    return response.send(role === env.get('ROLE_ADMIN'))
   }
 }

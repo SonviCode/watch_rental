@@ -1,8 +1,12 @@
+import { setSubscription } from "@/store/slices/subscriptionSlice";
 import { Subscription } from "@/types/subscriptionTypes";
 import { formatEuros } from "@/utils/formatUtils";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 const SubscripCard = ({ subscription }: { subscription: Subscription }) => {
+  const dispatch = useDispatch();
+
   return (
     <div className="rounded-lg bg-blacklight  text-center md:w-1/3 ">
       <div className=" py-5 px-2 lg:p-5 flex flex-col gap-3 md:gap-4 justify-between h-full">
@@ -36,7 +40,7 @@ const SubscripCard = ({ subscription }: { subscription: Subscription }) => {
         </a>
         <Link
           to="/purchase"
-          state={{ subscription }}
+          onClick={() => dispatch(setSubscription(subscription))}
           className="gradient-btn py-2 px-4 rounded-lg text-center"
         >
           S'abonner

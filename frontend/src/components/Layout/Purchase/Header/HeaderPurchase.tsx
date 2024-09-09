@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const HeaderPurchase = () => {
   return (
-    <header className="w-full py-5 px-10 flex justify-center">
+    <header className="w-full py-8 px-10 flex justify-center">
       <h1 className="gradient-text w-fit text-5xl">Tempo</h1>
       <Link
         to="/"
