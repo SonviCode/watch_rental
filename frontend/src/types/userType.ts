@@ -16,6 +16,8 @@ export type User = {
   emailIsVerified: boolean;
   smsIsVerified: boolean;
   idIsVerified: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export interface userState {

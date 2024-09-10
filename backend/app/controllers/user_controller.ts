@@ -9,7 +9,11 @@ export default class UserController {
   }
 
   async getAllUsers({ response }: HttpContext) {
+    console.log('test')
+
     const users = await User.all()
+
+    console.log(users)
 
     return response.ok(users)
   }

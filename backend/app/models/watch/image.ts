@@ -14,19 +14,7 @@ export default class Subscription extends BaseModel {
   declare id: string
 
   @column()
-  declare name: string
-
-  @column()
-  declare brand: string
-
-  @column()
-  declare material: string
-
-  @column()
-  declare isAvailable: boolean
-
-  @column()
-  declare description: string
+  declare imageUrl: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

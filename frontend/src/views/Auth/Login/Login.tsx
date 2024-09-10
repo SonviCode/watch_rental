@@ -45,7 +45,7 @@ const Login = () => {
             placeholder=""
             required
           />
-          <label className="label-auth" htmlFor="email">
+          <label className="label-form" htmlFor="email">
             Email
           </label>
         </div>
@@ -58,7 +58,7 @@ const Login = () => {
             placeholder=""
             required
           />
-          <label className="label-auth" htmlFor="password">
+          <label className="label-form" htmlFor="password">
             Mot de passe
           </label>
           <FontAwesomeIcon

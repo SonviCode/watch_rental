@@ -2,12 +2,12 @@ import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, column } from '@adonisjs/lucid/orm'
 import { randomUUID } from 'node:crypto'
 
-export default class Subscription extends BaseModel {
+export default class Watch extends BaseModel {
   static selfAssignPrimaryKey = true
 
   @beforeCreate()
-  static assignUuid(subscription: Subscription) {
-    subscription.id = randomUUID()
+  static assignUuid(watch: Watch) {
+    watch.id = randomUUID()
   }
 
   @column({ isPrimary: true })
@@ -17,8 +17,6 @@ export default class Subscription extends BaseModel {
   declare name: string
 
   @column()
-  declare brand: string
-  @column()
   declare material: string
 
   @column()
@@ -26,9 +24,6 @@ export default class Subscription extends BaseModel {
 
   @column()
   declare description: string
-
-  @column()
-  declare price: number
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

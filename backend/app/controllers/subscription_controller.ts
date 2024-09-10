@@ -4,17 +4,17 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 export default class SubscriptionController {
   async getAllSubscriptions({ response }: HttpContext) {
-    const users = await Subscription.all()
+    const subscriptions = await Subscription.all()
 
-    return response.ok(users)
+    return response.ok(subscriptions)
   }
 
   async getSubscriptionById({ request, response }: HttpContext) {
     const subscriptionId = request.param('id')
 
-    const user = await Subscription.find(subscriptionId)
+    const subscription = await Subscription.find(subscriptionId)
 
-    return response.ok(user)
+    return response.ok(subscription)
   }
 
   async createSubscription({ request, response }: HttpContext) {

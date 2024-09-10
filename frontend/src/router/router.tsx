@@ -18,7 +18,10 @@ import { ProtectedAuthRoute } from "./ProtectedAuthRoute";
 import { ProtectedAdminRoute } from "./ProtectedAdminRoute";
 import Admin from "@/views/Admin/Admin";
 import AdminLayout from "@/components/Layout/Admin/AdminLayout";
-import AdminUsers from "@/views/Admin/Data/AdminUsers";
+import AdminUsers from "@/views/Admin/Data/users/AdminUsers";
+import AdminSubscriptions from "@/views/Admin/Data/subscriptions/AdminSubscriptions";
+import AdminWatches from "@/views/Admin/Data/watches/AdminWatches";
+
 
 export const router = createBrowserRouter([
   {
@@ -85,6 +88,14 @@ export const router = createBrowserRouter([
       {
         path: "/admin/users",
         element: <AdminUsers />,
+      },
+      {
+        path: "/admin/subscriptions",
+        element: <AdminSubscriptions />,
+      },
+      {
+        path: "/admin/watches",
+        element: <AdminWatches />,
       },
     ],
   },

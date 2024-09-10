@@ -6,6 +6,8 @@ export type Subscription =
       description: string;
       price: number;
       watchMaxPrice: number;
+      createdAt: Date;
+      updatedAt: Date;
     }
   | Record<string, never>;
 

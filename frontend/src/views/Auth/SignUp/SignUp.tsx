@@ -35,7 +35,7 @@ const SignUp = () => {
               name="last_name"
               required
             />
-            <label className="label-auth" htmlFor="last_name">
+            <label className="label-form" htmlFor="last_name">
               Nom
             </label>
           </div>
@@ -48,7 +48,7 @@ const SignUp = () => {
               placeholder=""
               required
             />
-            <label className="label-auth" htmlFor="first_name">
+            <label className="label-form" htmlFor="first_name">
               Prénom
             </label>
           </div>
@@ -62,7 +62,7 @@ const SignUp = () => {
             placeholder=""
             required
           />
-          <label className="label-auth" htmlFor="email">
+          <label className="label-form" htmlFor="email">
             Email
           </label>
         </div>
@@ -75,7 +75,7 @@ const SignUp = () => {
             placeholder=""
             required
           />
-          <label className="label-auth" htmlFor="password">
+          <label className="label-form" htmlFor="password">
             Mot de passe
           </label>
           <FontAwesomeIcon
@@ -92,7 +92,7 @@ const SignUp = () => {
             placeholder=""
             required
           />
-          <label className="label-auth" htmlFor="password_confirm">
+          <label className="label-form" htmlFor="password_confirm">
             Confirmer le mot de passe
           </label>
           <FontAwesomeIcon
@@ -110,7 +110,7 @@ const SignUp = () => {
             placeholder=""
             required
           />
-          <label className="label-auth" htmlFor="brith_date">
+          <label className="label-form" htmlFor="brith_date">
             Date de naissance
           </label>
         </div>
@@ -123,7 +123,7 @@ const SignUp = () => {
               placeholder=""
               required
             />
-            <label className="label-auth" htmlFor="address">
+            <label className="label-form" htmlFor="address">
               Adresse
             </label>
           </div>
@@ -134,7 +134,7 @@ const SignUp = () => {
               className="rounded-md bg-blacklight px-4 py-3 peer w-full"
               placeholder=""
             />
-            <label className="label-auth" htmlFor="additional_address">
+            <label className="label-form" htmlFor="additional_address">
               Complément d'adresse{" "}
               <span className="text-xs text-gray">( optionnel )</span>
             </label>
@@ -149,7 +149,7 @@ const SignUp = () => {
               placeholder=""
               required
             />
-            <label className="label-auth" htmlFor="city">
+            <label className="label-form" htmlFor="city">
               Ville
             </label>
           </div>
@@ -161,7 +161,7 @@ const SignUp = () => {
               placeholder=""
               required
             />
-            <label className="label-auth" htmlFor="postal_code">
+            <label className="label-form" htmlFor="postal_code">
               Code postal
             </label>
           </div>
@@ -176,7 +176,7 @@ const SignUp = () => {
             onChange={(e) => setPhone(e.target.value)}
             required
           />
-          <label className="label-auth" htmlFor="phone_number">
+          <label className="label-form" htmlFor="phone_number">
             Numéro de téléphone
           </label>
         </div>
