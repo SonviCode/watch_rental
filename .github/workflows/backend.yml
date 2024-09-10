@@ -3,7 +3,7 @@ name: backend CI
 on: [push]
 
 jobs:
-  phpunit:
+  build:
     runs-on: ubuntu-latest
     defaults:
       run:
