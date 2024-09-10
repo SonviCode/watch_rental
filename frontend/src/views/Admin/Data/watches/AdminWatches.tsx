@@ -3,10 +3,12 @@ import useFetchData from "@/hooks/useFetchData";
 import { Watch } from "@/types/watchTypes";
 import { useState } from "react";
 import HandleWatches from "./HandleWatches";
+import HandleBrand from "./HandleBrand";
 
 const AdminWatches = () => {
   const [watches, setWatches] = useState<Watch[]>([]);
   const [handleWatches, setHandleWatches] = useState<boolean>(false);
+  const [handleBrand, setHandleBrand] = useState<boolean>(false);
 
   const isLoading = useFetchData(setWatches, API_WATCH);
 
@@ -15,8 +17,10 @@ const AdminWatches = () => {
   return (
     <section className="p-5 w-full">
       <h1 className="tracking-wide uppercase text-xl mb-5">Montres</h1>
-      {handleWatches ? (
-        <HandleWatches />
+      {handleBrand ? (
+        <HandleBrand setHandleBrand={setHandleBrand} />
+      ) : handleWatches ? (
+        <HandleWatches setHandleWatches={setHandleWatches} />
       ) : (
         <>
           <div className="relative">
@@ -62,12 +66,20 @@ const AdminWatches = () => {
               </tbody>
             </table>
           </div>
-          <button
-            onClick={() => setHandleWatches(true)}
-            className="text-sm border text-white border-greenfluo py-1.5 px-2 rounded-lg text-center"
-          >
-            Ajouter une montre
-          </button>
+          <div className="flex flex-col gap-5 items-end">
+            <button
+              onClick={() => setHandleWatches(true)}
+              className="text-sm border text-white border-greenfluo py-1.5 px-2 rounded-lg text-center"
+            >
+              Ajouter une montre
+            </button>
+            <button
+              onClick={() => setHandleBrand(true)}
+              className="text-sm border text-white border-purple py-1.5 px-2 rounded-lg text-center"
+            >
+              Ajouter une marque
+            </button>
+          </div>
         </>
       )}
     </section>

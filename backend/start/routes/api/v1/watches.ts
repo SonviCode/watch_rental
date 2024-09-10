@@ -1,4 +1,4 @@
-const WatchController = () => import('#controllers/watch_controller')
+const WatchController = () => import('#controllers/watch/watch_controller')
 
 // import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'

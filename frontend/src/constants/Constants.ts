@@ -19,6 +19,8 @@ export const API_GET_ALL_USERS = API_ROOTDIR + "user/all-users";
 export const API_SUBSCRIPTION = API_ROOTDIR + "subscription";
 // ---watch
 export const API_WATCH = API_ROOTDIR + "watch";
+// --brand
+export const API_BRAND = API_ROOTDIR + "brand";
 
 // ---ACCOUNT
 export const DIFFERENT_PASSWORD = "Les mots de passes sont différents";
