@@ -1,9 +1,10 @@
 import Watch from '#models/watch/watch'
+import { createWatchValidator } from '#validators/watch'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class WatchController {
   async getAllWatches({ response }: HttpContext) {
-    const watches = await Watch.all()
+    const watches = await Watch.query().preload('brand').preload('material')
 
     return response.ok(watches)
   }
@@ -16,13 +17,13 @@ export default class WatchController {
     return response.ok(watch)
   }
 
-  //   async createWatch({ request, response }: HttpContext) {
-  //     const body = await request.validateUsing(createSubscriptionValidator)
+  async addWatch({ request, response }: HttpContext) {
+    const body = await request.validateUsing(createWatchValidator)
 
-  //     const subscription = await Subscription.create(body)
+    const watch = await Watch.create(body)
 
-  //     return response.ok(subscription)
-  //   }
+    return response.ok(watch)
+  }
 
   //   async updateSubscription({ request, response }: HttpContext) {
   //     const body = await request.validateUsing(createSubscriptionValidator)

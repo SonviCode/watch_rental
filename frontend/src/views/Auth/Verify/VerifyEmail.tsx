@@ -1,6 +1,10 @@
 import { API_USER } from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
-import { fetchResendOtpEmail, fetchVerifyMail } from "@/services/api/auth";
+import {
+  fetchLogout,
+  fetchResendOtpEmail,
+  fetchVerifyMail,
+} from "@/services/api/auth";
 import "@/style/custom/otpInputStyle.css";
 import { User } from "@/types/userType";
 import { useState } from "react";
@@ -42,10 +46,18 @@ const VerifyEmail = () => {
       </div>
       {message && <p>{message}</p>}
       <div className="flex gap-10 items-center">
-        <p className="text-sm italic">
-          Si vous n'avez pas reçu le code, veuillez vérifier votre dossier
-          de spam ou demander un nouveau code.
-        </p>
+        <div className="text-sm italic flex flex-col items-center">
+          <p>
+            Si vous n'avez pas reçu le code, veuillez vérifier votre dossier de
+            spam ou demander un nouveau code.
+          </p>
+          <span
+            onClick={() => fetchLogout(navigate)}
+            className="text-xs text-red-600 underline cursor-pointer"
+          >
+            Me déconnecter
+          </span>
+        </div>
         <button
           onClick={() => fetchResendOtpEmail(setMessage)}
           className="text-sm border text-white border-greenfluo py-1.5 px-2 rounded-lg text-center"

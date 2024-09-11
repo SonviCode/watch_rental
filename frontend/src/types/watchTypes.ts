@@ -1,7 +1,8 @@
 export type Watch = {
   id: string;
+  brand: Brand;
   name: string;
-  material: string;
+  material: Material;
   isAvailable: boolean;
   description: string;
   createdAt: Date;
@@ -14,3 +15,10 @@ export type Brand = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type Material = {
+  id: string;
+  materialName: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

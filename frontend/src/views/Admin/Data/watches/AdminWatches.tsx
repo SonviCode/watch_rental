@@ -4,11 +4,13 @@ import { Watch } from "@/types/watchTypes";
 import { useState } from "react";
 import HandleWatches from "./HandleWatches";
 import HandleBrand from "./HandleBrand";
+import HandleMaterial from "./HandleMaterial";
 
 const AdminWatches = () => {
   const [watches, setWatches] = useState<Watch[]>([]);
   const [handleWatches, setHandleWatches] = useState<boolean>(false);
   const [handleBrand, setHandleBrand] = useState<boolean>(false);
+  const [handleMaterial, setHandleMaterial] = useState<boolean>(false);
 
   const isLoading = useFetchData(setWatches, API_WATCH);
 
@@ -17,29 +19,24 @@ const AdminWatches = () => {
   return (
     <section className="p-5 w-full">
       <h1 className="tracking-wide uppercase text-xl mb-5">Montres</h1>
-      {handleBrand ? (
+      {handleMaterial ? (
+        <HandleMaterial setHandleMaterial={setHandleMaterial} />
+      ) : handleBrand ? (
         <HandleBrand setHandleBrand={setHandleBrand} />
       ) : handleWatches ? (
         <HandleWatches setHandleWatches={setHandleWatches} />
       ) : (
         <>
           <div className="relative">
-            <table className="w-full text-sm text-left text-gray-500">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table className="w-full text-xs text-left mb-10 ">
+              <thead className="uppercase p-3">
                 <tr>
-                  <th scope="col" className="px-6 py-3">
-                    Nom
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Marque
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Description
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Disponible
-                  </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th className="pl-3">Nom</th>
+                  <th>Marque</th>
+                  <th>Matière</th>
+                  <th>Description</th>
+                  <th>Disponible</th>
+                  <th>
                     <span className="sr-only">Edit</span>
                   </th>
                 </tr>
@@ -47,18 +44,17 @@ const AdminWatches = () => {
               <tbody>
                 {watches.map((watch: Watch, i) => (
                   <tr className="border-b hover:bg-blacklight " key={i}>
-                    <th scope="row" className=" py-4  ">
-                      {watch.name}
-                    </th>
-                    <td className="px-6 py-4 max-w-0">{watch.brand}</td>
-                    <td className="px-6 py-4">{watch.description}</td>
-                    <td className="px-6 py-4">{watch.isAvailable}</td>
-                    <td className="px-6 py-4 text-right">
+                    <th className=" pl-3 py-4">{watch.name}</th>
+                    <td>{watch.brand.brandName}</td>
+                    <td>{watch.material.materialName}</td>
+                    <td>{watch.description}</td>
+                    <td>{watch.isAvailable ? "✅" : "❌"}</td>
+                    <td className="pr-3 text-right">
                       <a
                         href="#"
                         className="font-medium text-greenfluo hover:underline"
                       >
-                        Edit
+                        Modifier
                       </a>
                     </td>
                   </tr>
@@ -66,7 +62,13 @@ const AdminWatches = () => {
               </tbody>
             </table>
           </div>
-          <div className="flex flex-col gap-5 items-end">
+          <div className="flex gap-5 justify-around">
+            <button
+              onClick={() => setHandleMaterial(true)}
+              className="text-sm border text-white border-purple py-1.5 px-2 rounded-lg text-center"
+            >
+              Ajouter une matière
+            </button>
             <button
               onClick={() => setHandleWatches(true)}
               className="text-sm border text-white border-greenfluo py-1.5 px-2 rounded-lg text-center"

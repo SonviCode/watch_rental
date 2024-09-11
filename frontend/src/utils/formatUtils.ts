@@ -3,7 +3,10 @@
  * @param value string
  * @returns formatted phone number
  */
-export const formatPhoneNumber = (value: string): string => {
+export const formatPhoneNumber = (
+  value: string,
+  isForPayload: boolean
+): string => {
   if (!value) return value;
 
   const phoneNumber = value.replace(/[^\d]/g, "");
@@ -16,7 +19,9 @@ export const formatPhoneNumber = (value: string): string => {
     phoneNumber.slice(8, 10),
   ];
 
-  return formattedNumber.join(" ").trim();
+  return isForPayload
+    ? formattedNumber.join("").trim()
+    : formattedNumber.join(" ").trim();
 };
 
 /**
@@ -25,7 +30,6 @@ export const formatPhoneNumber = (value: string): string => {
  * @returns formatted euros in this format : "XXX XXX XXX"
  */
 export const formatEuros = (value: number): string => {
-
   if (!value) return "";
 
   return value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ");

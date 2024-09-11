@@ -7,9 +7,9 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').primary().notNullable()
       table.uuid('brand_id').references('brands.id')
+      table.uuid('material_id').references('materials.id')
       table.string('name').notNullable()
-      table.string('material').notNullable()
-      table.boolean('is_available').notNullable()
+      table.boolean('is_available').notNullable().defaultTo(true)
       table.string('description').notNullable()
 
       table.timestamp('created_at').nullable()

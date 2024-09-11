@@ -1,6 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, column } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeCreate, belongsTo, column, hasOne } from '@adonisjs/lucid/orm'
 import { randomUUID } from 'node:crypto'
+import type { BelongsTo, HasOne } from '@adonisjs/lucid/types/relations'
+import Brand from './brand.js'
+import Material from './material.js'
+import Image from '#models/image'
 
 export default class Watch extends BaseModel {
   static selfAssignPrimaryKey = true
@@ -13,11 +17,23 @@ export default class Watch extends BaseModel {
   @column({ isPrimary: true })
   declare id: string
 
-  @column()
-  declare name: string
+  @belongsTo(() => Brand)
+  declare brand: BelongsTo<typeof Brand>
+
+  @column({ serializeAs: null })
+  declare brandId: string
+
+  @belongsTo(() => Material)
+  declare material: BelongsTo<typeof Material>
+
+  @column({ serializeAs: null })
+  declare materialId: string
+
+  @hasOne(() => Image)
+  declare Watch: HasOne<typeof Image>
 
   @column()
-  declare material: string
+  declare name: string
 
   @column()
   declare isAvailable: boolean

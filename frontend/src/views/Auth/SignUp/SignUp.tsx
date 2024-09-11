@@ -172,8 +172,8 @@ const SignUp = () => {
             placeholder=""
             id="phone_number"
             type="tel"
-            value={formatPhoneNumber(phone)}
-            onChange={(e) => setPhone(e.target.value)}
+            value={formatPhoneNumber(phone, false)}
+            onChange={(e) => setPhone(formatPhoneNumber(e.target.value, true))}
             required
           />
           <label className="label-form" htmlFor="phone_number">

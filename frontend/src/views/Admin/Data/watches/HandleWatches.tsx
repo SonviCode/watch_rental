@@ -1,9 +1,10 @@
-import { API_BRAND } from "@/constants/Constants";
+import { API_BRAND, API_MATERIAL } from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
-import { Brand } from "@/types/watchTypes";
+import { fetchAddWatch } from "@/services/api/watch";
+import { Brand, Material } from "@/types/watchTypes";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 
 const HandleWatches = ({
   setHandleWatches,
@@ -12,10 +13,19 @@ const HandleWatches = ({
 }) => {
   const [error, setError] = useState<string>("");
   const [brands, setBrands] = useState<Brand[]>();
+  // const [image, setImage] = useState<FileList | null>();
+  const [materials, setMaterials] = useState<Material[]>();
 
+  useFetchData(setMaterials, API_MATERIAL);
   const isLoading = useFetchData(setBrands, API_BRAND);
 
   if (isLoading) return;
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    fetchAddWatch(setError, new FormData(e.currentTarget));
+  };
 
   return (
     <>
@@ -30,7 +40,7 @@ const HandleWatches = ({
       </div>
 
       <form
-        // onSubmit={(e) => handleSignUpSubmit(e, setError, phone, navigate)}
+        onSubmit={(e) => handleSubmit(e)}
         onChange={() => setError("")}
         className=" flex flex-col gap-5"
       >
@@ -50,8 +60,8 @@ const HandleWatches = ({
         <div className="relative">
           <select
             className="rounded-md bg-blacklight px-4 py-3 peer w-full"
-            name="brand"
-            id="brand"
+            name="brand_id"
+            id="brand_id"
           >
             {brands!.map((brand, i) => (
               <option key={i} value={brand.id}>
@@ -59,20 +69,23 @@ const HandleWatches = ({
               </option>
             ))}
           </select>
-          <label className="label-form" htmlFor="brand">
+          <label className="label-form" htmlFor="brand_id">
             Marque
           </label>
         </div>
         <div className="relative">
-          <input
-            type="text"
-            name="material"
-            id="material"
+          <select
             className="rounded-md bg-blacklight px-4 py-3 peer w-full"
-            placeholder=""
-            required
-          />
-          <label className="label-form" htmlFor="material">
+            name="material_id"
+            id="material_id"
+          >
+            {materials!.map((mat, i) => (
+              <option key={i} value={mat.id}>
+                {mat.materialName}
+              </option>
+            ))}
+          </select>
+          <label className="label-form" htmlFor="material_id">
             Matière
           </label>
         </div>
@@ -86,6 +99,36 @@ const HandleWatches = ({
           />
           <label className="label-form" htmlFor="description">
             Description
+          </label>
+        </div>
+        <div className="relative">
+          <input
+            type="file"
+            id="imageUrl"
+            className="rounded-t-md bg-blacklight px-4 py-3 peer w-full"
+            placeholder=""
+            name="imageUrl"
+            required
+          />
+          <input
+            type="file"
+            id="imageUrl"
+            className=" bg-blacklight px-4 py-3 peer w-full"
+            placeholder=""
+            name="imageUrl2"
+            required
+          />
+          <input
+            type="file"
+            id="imageUrl"
+            className="rounded-b-md bg-blacklight px-4 py-3 peer w-full"
+            placeholder=""
+            name="imageUrl3"
+            required
+          />
+
+          <label className="label-form" htmlFor="imageUrl">
+            Images
           </label>
         </div>
         <button

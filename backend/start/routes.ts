@@ -13,6 +13,7 @@ import subscriptionRoutes from './routes/api/v1/subscriptions.js'
 import usersRoutes from './routes/api/v1/users.js'
 import watchesRoutes from './routes/api/v1/watches.js'
 import brandsRoutes from './routes/api/v1/brands.js'
+import materialsRoutes from './routes/api/v1/material.js'
 
 router
   .group(() => {
@@ -23,6 +24,7 @@ router
         subscriptionRoutes()
         watchesRoutes()
         brandsRoutes()
+        materialsRoutes()
       })
       .prefix('v1')
   })
