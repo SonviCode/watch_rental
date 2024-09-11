@@ -1,6 +1,7 @@
 import { test } from '@japa/runner'
 import hash from '@adonisjs/core/services/hash'
 import { createRandomUser } from '#tests/faker/user_faker'
+import AuthController from '#controllers/auth_controller'
 
 test.group('creating user', () => {
   test('hashes user password', async ({ assert }) => {
@@ -33,4 +34,20 @@ test.group('creating user', () => {
     assert.isFalse(hash.isValidHash(user.password))
     assert.isFalse(await hash.verify(user.password, ''))
   })
+
+  // test('sign up', async ({ assert }) => {
+
+  //   const authController = new AuthController()
+
+  //   authController.signup({})
+
+  //   const user = createRandomUser()
+  //   user.password = ''
+  //   user.firstName = ''
+
+  //   await user.save()
+
+  //   assert.isFalse(hash.isValidHash(user.password))
+  //   assert.isFalse(await hash.verify(user.password, ''))
+  // })
 })

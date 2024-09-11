@@ -1,4 +1,4 @@
-import HeaderPurchase from "@/components/Layout/Purchase/Header/HeaderPurchase";
+// import HeaderPurchase from "@/components/Layout/Purchase/Header/HeaderPurchase";
 
 const Admin = () => {
   return <div>test</div>;

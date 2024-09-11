@@ -6,7 +6,7 @@ import { formatPhoneNumber } from "@/utils/formatUtils";
 import { useState } from "react";
 import OtpInput from "react-otp-input";
 import { Navigate, useNavigate } from "react-router-dom";
-import { fetchResendOtpSms, fetchVerifySms } from '../../../services/api/auth';
+import { fetchResendOtpSms, fetchVerifySms } from "../../../services/api/auth";
 
 const VerifyPhoneNumber = () => {
   const [message, setMessage] = useState<string>("");
@@ -26,7 +26,7 @@ const VerifyPhoneNumber = () => {
         <h1>
           Veuillez saisir le code envoyé par sms au{" "}
           <span className="italic">
-            {formatPhoneNumber(`${user?.phoneNumber}`)}
+            {formatPhoneNumber(`${user?.phoneNumber}`, false)}
           </span>{" "}
           afin de vérifier votre compte
         </h1>

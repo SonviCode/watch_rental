@@ -1,14 +1,11 @@
 import {
-  DISABLED_DATE_SLECTED,
-  MINIMUM_RENTAL_DAYS,
-  MINIMUM_RENTAL_DAYS_ERROR,
+  DISABLED_DATE_SLECTED
 } from "@/constants/Constants";
 import "@/style/custom/DateRangePicker.css";
 import "@/style/custom/calendar.css";
 import {
-  NumberOfDaysSelected,
   checkDisabledDates,
-  disbaledDateIsSelected,
+  disbaledDateIsSelected
 } from "@/utils/calendarUtils";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import { useState } from "react";
@@ -28,7 +25,7 @@ const disabledDates = [bDate1, bDate2, bDate3];
 const WatchCalendar = () => {
   const [value, setValue] = useState<Value>();
   const [errorMsg, setErrorMsg] = useState<string>("");
-  const [minDate, setMinDate] = useState<Date>(new Date());
+  // const [minDate, setMinDate] = useState<Date>(new Date());
   // const [input, setErrorMsg] = useState<string>("");
 
   console.log(value);
@@ -94,7 +91,7 @@ const WatchCalendar = () => {
         maxDate={new Date("2026")}
         disableCalendar={true}
         value={value}
-        minDate={minDate}
+        // minDate={minDate}
         onChange={(datesValue) => handlePicker(datesValue)}
         // onFocus={(event:any) => console.log("Focused input: ", event.value)}
         onInvalidChange={() => setErrorMsg("test")}
@@ -105,7 +102,7 @@ const WatchCalendar = () => {
         onChange={(datesValue) => handleChange(datesValue)}
         selectRange={true}
         value={value}
-        minDate={minDate}
+        // minDate={minDate}
         prev2Label={null}
         next2Label={null}
         maxDetail="month"
