@@ -31,6 +31,7 @@ export default function useCheckAuth() {
     checkAuth();
 
     calledOnce.current = true;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { authed, isLoading };
