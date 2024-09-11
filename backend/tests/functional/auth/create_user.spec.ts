@@ -22,4 +22,15 @@ test.group('creating user', () => {
     assert.isFalse(hash.isValidHash(user.password))
     assert.isFalse(await hash.verify(user.password, ''))
   })
+
+  test('user without right parameters', async ({ assert }) => {
+    const user = createRandomUser()
+    user.password = ''
+    user.firstName = ''
+
+    await user.save()
+
+    assert.isFalse(hash.isValidHash(user.password))
+    assert.isFalse(await hash.verify(user.password, ''))
+  })
 })
