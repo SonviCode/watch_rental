@@ -69,6 +69,7 @@ const Login = () => {
         </div>
 
         <button
+          data-testid="login-btn"
           className={`${
             error
               ? "border-red-600 hover:bg-red-600"

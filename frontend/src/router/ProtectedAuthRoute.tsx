@@ -9,8 +9,6 @@ export const ProtectedAuthRoute = ({ children }: { children: JSX.Element }) => {
 
   const isLoading = useFetchData(setUser, API_USER);
 
-  console.log(user);
-
   if (isLoading) return;
 
   if (!user) return <Navigate to="/login" />;

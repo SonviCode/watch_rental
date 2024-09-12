@@ -43,8 +43,12 @@ const VerifyEmail = () => {
         >
           Valider
         </button>
+        {message && (
+          <p className="text-red-600 underline cursor-pointer">
+            {message}
+          </p>
+        )}
       </div>
-      {message && <p>{message}</p>}
       <div className="flex gap-10 items-center">
         <div className="text-sm italic flex flex-col items-center">
           <p>

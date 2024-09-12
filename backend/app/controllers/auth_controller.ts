@@ -73,20 +73,12 @@ export default class AuthController {
   }
 
   async verifyEmail({ request, auth, response }: HttpContext) {
-    const otpCode = await request.input('code')
-    const user = await User.findOrFail(auth.user?.id)
-    const userOtpverif = await UserOtpVerification.findBy('user_id', auth.user?.id)
-
-    const isExperied = Date.now() > userOtpverif?.expiresAt.getTime()!
-    if (isExperied) return response.status(400).send('Code expiré !')
-
-    const otpIsChecked = await hash.verify(userOtpverif?.otp!, otpCode)
-    if (!otpIsChecked) return response.status(400).send('Mauvais code !')
-
-    user.emailIsVerified = true
-    await user.save()
-
-    return response.status(200).send(EMAIL_IS_VERIFIED)
+    try {
+      await OtpService.verifyOtpEmail(request, auth)
+      return response.status(200).send(EMAIL_IS_VERIFIED)
+    } catch (error) {
+      return response.status(400).send(error)
+    }
   }
 
   async resendOtpEmail({ auth, response }: HttpContext) {
