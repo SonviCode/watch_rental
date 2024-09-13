@@ -109,22 +109,7 @@ const HandleWatches = ({
             placeholder=""
             name="imageUrl"
             required
-          />
-          <input
-            type="file"
-            id="imageUrl"
-            className=" bg-blacklight px-4 py-3 peer w-full"
-            placeholder=""
-            name="imageUrl2"
-            required
-          />
-          <input
-            type="file"
-            id="imageUrl"
-            className="rounded-b-md bg-blacklight px-4 py-3 peer w-full"
-            placeholder=""
-            name="imageUrl3"
-            required
+            multiple
           />
 
           <label className="label-form" htmlFor="imageUrl">

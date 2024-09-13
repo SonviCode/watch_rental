@@ -1,8 +1,8 @@
+import AccountLayout from "@/components/Layout/Account/AccountLayout";
 import AdminLayout from "@/components/Layout/Admin/AdminLayout";
 import GeneralLayout from "@/components/Layout/General/GeneralLayout";
 import PurchaseLayout from "@/components/Layout/Purchase/PurchaseLayout";
 import Account from "@/views/Account/Account";
-import Invoices from "@/views/Account/Invoices/Invoices";
 import Admin from "@/views/Admin/Admin";
 import AdminSubscriptions from "@/views/Admin/Data/subscriptions/AdminSubscriptions";
 import AdminUsers from "@/views/Admin/Data/users/AdminUsers";
@@ -20,6 +20,10 @@ import Watchs from "@/views/Watchs/Watchs";
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import { ProtectedAdminRoute } from "./ProtectedAdminRoute";
 import { ProtectedAuthRoute } from "./ProtectedAuthRoute";
+import Alerts from "@/views/Account/Alerts";
+import Favoris from "@/views/Account/Favoris";
+import Orders from "@/views/Account/Orders";
+import Invoices from "@/views/Account/Invoices";
 
 export const router = createBrowserRouter([
   {
@@ -35,7 +39,14 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "/account",
-            element: <Account />,
+            element: <AccountLayout />,
+            children: [
+              { path: "/account", element: <Account /> },
+              { path: "/account/favoris", element: <Favoris /> },
+              { path: "/account/alerts", element: <Alerts /> },
+              { path: "/account/orders", element: <Orders /> },
+              { path: "/account/invoices", element: <Invoices /> },
+            ],
           },
           {
             path: "/verif-email",
@@ -53,14 +64,14 @@ export const router = createBrowserRouter([
               </ProtectedAuthRoute>
             ),
           },
-          {
-            path: "/factures",
-            element: (
-              <ProtectedAuthRoute>
-                <Invoices />
-              </ProtectedAuthRoute>
-            ),
-          },
+          // {
+          //   path: "/factures",
+          //   element: (
+          //     <ProtectedAuthRoute>
+          //       <Invoices />
+          //     </ProtectedAuthRoute>
+          //   ),
+          // },
         ],
       },
       { path: "/", element: <Home /> },

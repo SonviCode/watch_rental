@@ -9,7 +9,7 @@
     "build": "node ace build",
     "dev": "node ace serve --watch",
     "test": "node ace test",
-    "testcoverage": "nyc node ace test",
+    "coverage": "nyc node ace test",
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit"
@@ -65,6 +65,7 @@
     "luxon": "^3.4.4",
     "mysql2": "^3.9.2",
     "reflect-metadata": "^0.2.1",
+    "ts-node": "^10.9.2",
     "twilio": "^5.0.4"
   },
   "eslintConfig": {

@@ -1,10 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, belongsTo, column, hasOne } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeCreate, belongsTo, column, hasOne, manyToMany } from '@adonisjs/lucid/orm'
 import { randomUUID } from 'node:crypto'
-import type { BelongsTo, HasOne } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasOne, ManyToMany } from '@adonisjs/lucid/types/relations'
 import Brand from './brand.js'
 import Material from './material.js'
-import Image from '#models/image'
+import Image from '#models/watch/image'
 
 export default class Watch extends BaseModel {
   static selfAssignPrimaryKey = true
@@ -29,8 +29,8 @@ export default class Watch extends BaseModel {
   @column({ serializeAs: null })
   declare materialId: string
 
-  @hasOne(() => Image)
-  declare Watch: HasOne<typeof Image>
+  @manyToMany(() => Image)
+  declare imageUrl: ManyToMany<typeof Image>
 
   @column()
   declare name: string

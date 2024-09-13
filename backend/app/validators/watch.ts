@@ -20,3 +20,9 @@ export const createMaterialValidator = vine.compile(
     materialName: vine.string(),
   })
 )
+
+export const createImageValidator = vine.compile(
+  vine.object({
+    imageUrl: vine.string(),
+  })
+)

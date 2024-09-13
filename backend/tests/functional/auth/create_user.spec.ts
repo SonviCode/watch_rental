@@ -1,7 +1,6 @@
-import { test } from '@japa/runner'
-import hash from '@adonisjs/core/services/hash'
 import { createRandomUser } from '#tests/faker/user_faker'
-import AuthController from '#controllers/auth_controller'
+import hash from '@adonisjs/core/services/hash'
+import { test } from '@japa/runner'
 
 test.group('creating user', () => {
   test('hashes user password', async ({ assert }) => {

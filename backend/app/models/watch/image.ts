@@ -1,8 +1,8 @@
-import { BaseModel, beforeCreate, column, hasOne } from '@adonisjs/lucid/orm'
-import type { HasOne } from '@adonisjs/lucid/types/relations'
+import { BaseModel, beforeCreate, column, manyToMany } from '@adonisjs/lucid/orm'
+import type { ManyToMany } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
 import { randomUUID } from 'node:crypto'
-import Watch from './watch/watch.js'
+import Watch from './watch.js'
 
 export default class Image extends BaseModel {
   static selfAssignPrimaryKey = true
@@ -12,8 +12,8 @@ export default class Image extends BaseModel {
     image.id = randomUUID()
   }
 
-  @hasOne(() => Watch)
-  declare Watch: HasOne<typeof Watch>
+  @manyToMany(() => Watch)
+  declare watch: ManyToMany<typeof Watch>
 
   @column({ isPrimary: true })
   declare id: string
