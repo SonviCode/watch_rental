@@ -1,4 +1,3 @@
-import WatchCard from "@/components/Card/WatchCard";
 import { useState } from "react";
 
 const SubscripCollections = () => {
@@ -38,6 +37,7 @@ const SubscripCollections = () => {
           </span>
         </div>
         <div className="w-full rounded-xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-2 sm:gap-5">
+          {/* <WatchCard />
           <WatchCard />
           <WatchCard />
           <WatchCard />
@@ -48,8 +48,7 @@ const SubscripCollections = () => {
           <WatchCard />
           <WatchCard />
           <WatchCard />
-          <WatchCard />
-          <WatchCard />
+          <WatchCard /> */}
         </div>
       </div>
     </section>

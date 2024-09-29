@@ -1,11 +1,17 @@
-import imgWatch from "@/assets/rolex.jpg";
 import WatchCard from "@/components/Card/WatchCard";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { API_WATCH } from "@/constants/Constants";
+import useFetchData from "@/hooks/useFetchData";
+import { Watch } from "@/types/watchTypes";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const WatchSection = () => {
+  const [watchs, setWatchs] = useState<Watch[]>([]);
+
+  const isLoading = useFetchData(setWatchs, API_WATCH);
+
+  if (isLoading) return;
+
   return (
     <section className="py-20">
       <h2 className="section-title mb-2">Louez vos montres</h2>
@@ -14,8 +20,11 @@ const WatchSection = () => {
         parfaite compagne pour chaque moment.
       </p>
       <div className="flex flex-col md:flex-row gap-10 mb-10">
-        <WatchCard />
-        <div className="rounded-lg bg-blacklight relative">
+        {watchs.map((watch, i) => (
+          <WatchCard watch={watch} key={i} />
+        ))}
+        {/* <WatchCard /> */}
+        {/* <div className="rounded-lg bg-blacklight relative">
           <div className="absolute top-3 right-3 bg-gray w-8 h-8 rounded-full flex items-center justify-center">
             <FontAwesomeIcon icon={faHeart} />
           </div>
@@ -71,7 +80,7 @@ const WatchSection = () => {
               En stock <FontAwesomeIcon icon={faCheck} />
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
       <Link
         to="/watchs"

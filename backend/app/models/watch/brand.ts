@@ -21,6 +21,9 @@ export default class Brand extends BaseModel {
   @column()
   declare brandName: string
 
+  @column()
+  declare logoImgUrl: string
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

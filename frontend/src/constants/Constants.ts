@@ -1,8 +1,10 @@
 // ---global
 export const BRAND_NAME = "TEMPO";
 
+// server test url
+export const SERVER_URL = "http://localhost:3333/";
 // ------API
-const API_ROOTDIR = "http://localhost:3333/api/v1/";
+const API_ROOTDIR = SERVER_URL + "api/v1/";
 // ---auth
 export const API_LOGIN = API_ROOTDIR + "auth/login";
 export const API_LOGOUT = API_ROOTDIR + "auth/logout";

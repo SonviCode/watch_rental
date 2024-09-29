@@ -4,8 +4,18 @@ import HomeBanner from "./HomeBanner/HomeBanner";
 import SortingBanner from "./SortingBanner/SortingBanner";
 import NavBar from "@/components/Layout/General/NavBar/NavBar";
 import Footer from "@/components/Layout/General/Footer/Footer";
+import { Watch } from "@/types/watchTypes";
+import { useState } from "react";
+import { API_WATCH } from "@/constants/Constants";
+import useFetchData from "@/hooks/useFetchData";
 
 const Watchs = () => {
+  const [watchs, setWatchs] = useState<Watch[]>([]);
+
+  const isLoading = useFetchData(setWatchs, API_WATCH);
+
+  if (isLoading) return;
+
   return (
     <>
       <NavBar />
@@ -18,10 +28,9 @@ const Watchs = () => {
               <SortingBanner />
 
               <div className="flex gap-10 p-10">
-                <WatchCard />
-                <WatchCard />
-                <WatchCard />
-                {/* <WatchCard /> */}
+                {watchs.map((watch, i) => (
+                  <WatchCard watch={watch} key={i} />
+                ))}
               </div>
             </div>
           </div>

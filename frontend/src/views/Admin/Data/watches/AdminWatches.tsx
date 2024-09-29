@@ -5,6 +5,8 @@ import { useState } from "react";
 import HandleWatches from "./HandleWatches";
 import HandleBrand from "./HandleBrand";
 import HandleMaterial from "./HandleMaterial";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const AdminWatches = () => {
   const [watches, setWatches] = useState<Watch[]>([]);
@@ -35,6 +37,7 @@ const AdminWatches = () => {
                   <th>Marque</th>
                   <th>Matière</th>
                   <th>Description</th>
+                  <th>Images</th>
                   <th>Disponible</th>
                   <th>
                     <span className="sr-only">Edit</span>
@@ -48,13 +51,20 @@ const AdminWatches = () => {
                     <td>{watch.brand.brandName}</td>
                     <td>{watch.material.materialName}</td>
                     <td>{watch.description}</td>
+                    <td>
+                      <img
+                        src={`http://localhost:3333/${watch.images[0].imageUrl}`}
+                        alt={watch.name}
+                        className="w-10"
+                      />
+                    </td>
                     <td>{watch.isAvailable ? "✅" : "❌"}</td>
                     <td className="pr-3 text-right">
                       <a
                         href="#"
                         className="font-medium text-greenfluo hover:underline"
                       >
-                        Modifier
+                        <FontAwesomeIcon icon={faEdit} />
                       </a>
                     </td>
                   </tr>

@@ -6,8 +6,7 @@ import router from '@adonisjs/core/services/router'
 export default function watchesRoutes() {
   router
     .group(() => {
-      router.get('/', [WatchController, 'getAllWatches'])
-      router.get('/:id', [WatchController, 'getWatchById'])
+      router.get('/', [WatchController, 'getWatches'])
       router.post('/', [WatchController, 'addWatch']).use(middleware.admin())
       //   router.put('/:id', [WatchController, 'updateSubscription']).use(middleware.admin())
     })

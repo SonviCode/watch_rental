@@ -8,9 +8,10 @@ export default class extends BaseSchema {
       table.uuid('id').primary().notNullable()
       table.uuid('brand_id').references('brands.id')
       table.uuid('material_id').references('materials.id')
+      table.uuid('subscription_id').references('subscriptions.id')
       table.string('name').notNullable()
       table.boolean('is_available').notNullable().defaultTo(true)
-      table.string('description').notNullable()
+      table.text('description').notNullable()
 
       table.timestamp('created_at').nullable()
       table.timestamp('updated_at').nullable()

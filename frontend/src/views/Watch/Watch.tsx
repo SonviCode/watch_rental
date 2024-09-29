@@ -1,67 +1,84 @@
-import rolexLogo from "@/assets/logo-rolex.png";
-import imgWatch from "@/assets/rolex.jpg";
-import imgBack from "@/assets/rolex-submariner-back.png";
+import { SERVER_URL } from "@/constants/Constants";
+import type { Watch } from "@/types/watchTypes";
 import { useState } from "react";
-import WatchCalendar from "./Calendar/WatchCalendar";
+import { Link, useLocation } from "react-router-dom";
 import Slug from "./Slug/Slug";
+import { setSubscription } from "@/store/slices/subscriptionSlice";
+import { useDispatch } from "react-redux";
 
 const Watch = () => {
-  const [img, setImg] = useState<string>(imgWatch);
+  const [imgIndex, setImgIndex] = useState<number>(0);
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  const { watch }: { watch: Watch } = location.state;
 
   return (
     <>
-      <Slug />
       <div className="flex flex-col md:flex-row gap-20">
-        <div className="md:w-1/2 flex flex-col items-center gap-10 justify-center">
+        <div className="md:w-1/2 flex flex-col items-center gap-10 justify-center ">
           <div className="relative">
             <img
               className="absolute top-3 right-3 w-20"
-              src={rolexLogo}
-              alt="logo rolex"
+              src={SERVER_URL + watch.brand.logoImgUrl}
+              alt={watch.name}
             />
             <img
-              src={img}
+              src={SERVER_URL + watch.images[imgIndex].imageUrl}
               alt="rolex"
-              className="rounded-lg h-[300px] w-[300px] object-cover bg-[#FFFFFF]"
+              className="rounded-lg h-full aspect-square object-cover bg-[#FFFFFF]"
             />
           </div>
           <div className="flex gap-5">
-            <img
-              src={imgWatch}
-              onClick={() => setImg(imgWatch)}
-              alt="rolex"
-              className={`${
-                img === imgWatch && "border-purple border-4"
-              } rounded-lg w-24 h-24 object-cover cursor-pointer bg-[#FFFFFF]`}
-            />
-            <img
-              src={imgBack}
-              onClick={() => setImg(imgBack)}
-              alt="rolex"
-              className={`${
-                img === imgBack && "border-purple border-4"
-              } rounded-lg w-24 h-24 object-cover cursor-pointer bg-[#FFFFFF]`}
-            />
-            <img
-              src={imgWatch}
-              alt="rolex"
-              className="rounded-lg  w-24 h-24 object-cover"
-            />
+            {watch.images.map((img, i) => (
+              <img
+                key={i}
+                src={
+                  SERVER_URL + watch.images[watch.images.indexOf(img)].imageUrl
+                }
+                onClick={() => setImgIndex(watch.images.indexOf(img))}
+                alt="rolex"
+                className={`${
+                  watch.images.indexOf(img) === imgIndex &&
+                  "border-purple border-4"
+                } rounded-lg w-24 h-24 object-cover cursor-pointer bg-[#FFFFFF]`}
+              />
+            ))}
           </div>
         </div>
-        <div className=" md:w-1/2 flex flex-col gap-2">
-          <div>
-            <p className="text-graylight">Rolex</p>
-            <h3 className="font-bold text-xl">SUBMARINER DATE</h3>
+        <div className="md:w-1/2 ">
+          <Slug watchName={watch.name} />
+          <div className="flex flex-col gap-2">
+            <div>
+              <p className="text-graylight">{watch.brand.brandName}</p>
+              <h3 className="font-bold text-xl">{watch.name}</h3>
+            </div>
+            <p className="text-graylight">
+              Bracelet en{" "}
+              <span className="text-base font-extrabold">
+                {watch.material.materialName}
+              </span>
+            </p>
+            <p>
+              Disponible dès l'abonnement{" "}
+              <span className="text-base font-extrabold uppercase">
+                {watch.subscription.title}
+              </span>{" "}
+            </p>
+            {/* <WatchCalendar /> */}
+            <Link
+              to="/purchase"
+              onClick={() => dispatch(setSubscription(watch.subscription))}
+              className="m-auto w-full flex justify-center gradient-btn rounded-lg px-2 py-1.5"
+            >
+              S'abonner
+            </Link>
           </div>
-          <p className="text-graylight text-sm">
-            <span className="text-base font-extrabold">59,99€</span> par jour
-          </p>
-          <WatchCalendar />
         </div>
       </div>
-      <div className="pt-10">
-        <h4 className="section-title">Description</h4>
+      <div className="pt-20">
+        <h4 className="section-title mb-5">Description</h4>
+        <p>{watch.description}</p>
       </div>
     </>
   );

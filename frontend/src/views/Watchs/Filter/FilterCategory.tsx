@@ -1,9 +1,17 @@
+import { Brand, Material } from "@/types/watchTypes";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { Subscription } from "react-redux";
 
-const FilterCategory = ({ Category }: { Category: FilterCategoryProps }) => {
-  const { name, elements } = Category;
+const FilterCategory = ({
+  category,
+  name,
+}: {
+  category: Subscription[] | Brand[] | Material[];
+  name: string;
+}) => {
+  // const { name, elements } = category;
 
   return (
     <div className=" border-t border-t-gray w-full text-gray-700 py-5 px-4 flex-col items-center justify-between relative ">
@@ -21,22 +29,32 @@ const FilterCategory = ({ Category }: { Category: FilterCategoryProps }) => {
       </div>
 
       <ul className="peer-checked:flex flex-col hidden gap-2 pt-2 z-20">
-        {elements.map((el: string, index: React.Key) => (
-          <li className="flex" key={index}>
-            <input
-              // onClick={(e) => getFilterProduct(e, el, key.keyRequest)}
-              id={el}
-              type="checkbox"
-              className="cursor-pointer accent-greenfluo "
-            />
-            <label
-              htmlFor={el}
-              className="grow pl-2 cursor-pointer first-letter:uppercase text-sm"
-            >
-              {el}
-            </label>
-          </li>
-        ))}
+        {category.map(
+          (el: Subscription | Brand | Material, index: React.Key) => {
+            const elementName = el.brandName
+              ? el.brandName
+              : el.materialName
+              ? el.materialName
+              : el.title;
+
+            return (
+              <li className="flex" key={index}>
+                <input
+                  // onClick={(e) => getFilterProduct(e, el, key.keyRequest)}
+                  id={elementName}
+                  type="checkbox"
+                  className="cursor-pointer accent-greenfluo "
+                />
+                <label
+                  htmlFor={elementName}
+                  className="grow pl-2 cursor-pointer first-letter:uppercase text-sm"
+                >
+                  {elementName}
+                </label>
+              </li>
+            );
+          }
+        )}
       </ul>
     </div>
   );
@@ -44,7 +62,7 @@ const FilterCategory = ({ Category }: { Category: FilterCategoryProps }) => {
 
 export default FilterCategory;
 
-type FilterCategoryProps = {
-  name: string;
-  elements: string[];
-};
+// type FilterCategoryProps = {
+//   name: string;
+//   elements: string[];
+// };

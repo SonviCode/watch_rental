@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, column } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeCreate, column, hasOne } from '@adonisjs/lucid/orm'
 import { randomUUID } from 'node:crypto'
+import Watch from './watch/watch.js'
+import type { HasOne } from '@adonisjs/lucid/types/relations'
 
 export default class Subscription extends BaseModel {
   static selfAssignPrimaryKey = true
@@ -9,6 +11,9 @@ export default class Subscription extends BaseModel {
   static assignUuid(subscription: Subscription) {
     subscription.id = randomUUID()
   }
+
+  @hasOne(() => Watch)
+  declare Watch: HasOne<typeof Watch>
 
   @column({ isPrimary: true })
   declare id: string

@@ -1,6 +1,8 @@
 import { API_GET_ALL_USERS } from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
 import { User } from "@/types/userType";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 
 const AdminUsers = () => {
@@ -50,7 +52,7 @@ const AdminUsers = () => {
                     href="#"
                     className="font-medium text-greenfluo hover:underline"
                   >
-                    Edit
+                    <FontAwesomeIcon icon={faEdit} />
                   </a>
                 </td>
               </tr>

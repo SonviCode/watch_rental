@@ -10,9 +10,17 @@ export default class ImageService {
         name: `${cuid()}.${image.extname}`,
       })
 
-      const imageUrl = `public/watchs/${image.fileName}`
+      const imageUrl = `watchs/${image.fileName}`
 
-      await watch.related('imageUrl').create({ imageUrl })
+      await watch.related('images').create({ imageUrl })
     }
+  }
+
+  static async createImageBrand(image: MultipartFile) {
+    await image.move(app.makePath('public/brand'), {
+      name: `${cuid()}.${image.extname}`,
+    })
+
+    return `brand/${image.fileName}`
   }
 }

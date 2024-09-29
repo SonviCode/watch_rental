@@ -46,6 +46,19 @@ const HandleBrand = ({
             Nom de la marque
           </label>
         </div>
+        <div className="relative">
+          <input
+            type="file"
+            id="logoImgUrl"
+            className="rounded-md bg-blacklight px-4 py-3 peer w-full"
+            placeholder=""
+            name="logoImgUrl"
+            required
+          />
+          <label className="label-form" htmlFor="logoImgUrl">
+            Image de la marque
+          </label>
+        </div>
         <button
           className={`${
             error

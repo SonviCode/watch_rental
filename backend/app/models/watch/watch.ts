@@ -1,10 +1,11 @@
+import Image from '#models/watch/image'
+import { BaseModel, beforeCreate, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
+import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, belongsTo, column, hasOne, manyToMany } from '@adonisjs/lucid/orm'
 import { randomUUID } from 'node:crypto'
-import type { BelongsTo, HasOne, ManyToMany } from '@adonisjs/lucid/types/relations'
 import Brand from './brand.js'
 import Material from './material.js'
-import Image from '#models/watch/image'
+import Subscription from '#models/subscription'
 
 export default class Watch extends BaseModel {
   static selfAssignPrimaryKey = true
@@ -29,8 +30,14 @@ export default class Watch extends BaseModel {
   @column({ serializeAs: null })
   declare materialId: string
 
+  @belongsTo(() => Subscription)
+  declare subscription: BelongsTo<typeof Subscription>
+
+  @column({ serializeAs: null })
+  declare subscriptionId: string
+
   @manyToMany(() => Image)
-  declare imageUrl: ManyToMany<typeof Image>
+  declare images: ManyToMany<typeof Image>
 
   @column()
   declare name: string

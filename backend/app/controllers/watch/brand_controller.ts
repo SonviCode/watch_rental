@@ -1,4 +1,5 @@
 import Brand from '#models/watch/brand'
+import ImageService from '#services/image_service'
 import { createBrandValidator } from '#validators/watch'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -18,7 +19,12 @@ export default class BrandController {
   }
 
   async createBrand({ request, response }: HttpContext) {
+    const image = request.file('logoImgUrl')
     const body = await request.validateUsing(createBrandValidator)
+
+    const logoImgUrl = await ImageService.createImageBrand(image!)
+
+    body.logoImgUrl = logoImgUrl
 
     const brand = await Brand.create(body)
 

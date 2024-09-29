@@ -1,24 +1,44 @@
 import Watch from '#models/watch/watch'
+import WatchRepository from '#repositories/watch/watch_repository'
+
 import ImageService from '#services/image_service'
 import { createWatchValidator } from '#validators/watch'
-import { cuid } from '@adonisjs/core/helpers'
 import type { HttpContext } from '@adonisjs/core/http'
-import app from '@adonisjs/core/services/app'
 
 export default class WatchController {
-  async getAllWatches({ response }: HttpContext) {
-    const watches = await Watch.query().preload('brand').preload('material')
+  async getWatches({ request, response }: HttpContext) {
+    const params = request.qs()
+    const isFetchParams = Object.keys(params).length !== 0
 
-    return response.ok(watches)
+    return isFetchParams
+      ? WatchRepository.getByElements(params)
+          .then((watches) => response.status(200).send(watches))
+          .catch(() => response.abort({ message: 'There is no watches' }))
+      : WatchRepository.get()
+          .then((watches) => response.status(200).send(watches))
+          .catch(() => response.abort({ message: 'Cannot get watches' }))
   }
 
-  async getWatchById({ request, response }: HttpContext) {
-    const watchId = request.param('id')
-
-    const watch = await Watch.find(watchId)
-
-    return response.ok(watch)
+  async getWatchsByElements({ request, response }: HttpContext) {
+    return WatchRepository.getByElements(request.qs())
+      .then((watches) => response.status(200).send(watches))
+      .catch(() => response.abort({ message: 'Cannot get watches' }))
   }
+
+  // async getWatchsByElements({ request, response }: HttpContext) {
+  //   // console.log(request.param)
+  //   // console.log(request.param('title'))
+  //   console.log(request.all())
+  //   console.log(request.params())
+
+  //   const watchSub = request.param('filter')
+
+  //   console.log(watchSub)
+
+  //   const watch = await Watch.findManyBy(watchSub)
+
+  //   return response.ok(watch)
+  // }
 
   async addWatch({ request, response }: HttpContext) {
     const images = request.files('imageUrl')

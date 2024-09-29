@@ -1,23 +1,35 @@
-import { API_SUBSCRIPTION } from "@/constants/Constants";
+import WatchPurchaseCard from "@/components/Card/WatchPurchaseCard";
+import {
+  API_SUBSCRIPTION,
+  API_WATCH
+} from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
+import { fetchGetWatchsByFilter } from "@/services/api/watch";
 import { setSubscription } from "@/store/slices/subscriptionSlice";
 import { RootState } from "@/store/store";
 import { Subscription } from "@/types/subscriptionTypes";
+import { Watch } from "@/types/watchTypes";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 const ReviewPurchase = () => {
   const [AllSubscriptions, setAllSubscriptions] = useState<Subscription[]>([]);
-
-  const dispatch = useDispatch();
+  const [watchs, setWatchs] = useState<Watch[]>([]);
+  const [watchSelected, setWatchSelected] = useState<Watch>();
 
   const subscription: Subscription = useSelector(
     (state: RootState) => state.subscription.value
   );
 
-  const isLoading = useFetchData(setAllSubscriptions, API_SUBSCRIPTION);
+  let isLoading = useFetchData(
+    setWatchs,
+    API_WATCH
+  );
+  isLoading = useFetchData(setAllSubscriptions, API_SUBSCRIPTION);
+
+  const dispatch = useDispatch();
 
   if (isLoading) return;
   // if (subscription.id!) return;
@@ -27,8 +39,19 @@ const ReviewPurchase = () => {
       (subscription) => e.target.value === subscription.id.toString()
     );
 
+    console.log();
+    
+
+    const formData = new FormData
+    formData.append("subscription_id", e.target.value)
+
     dispatch(setSubscription(subToDispatch[0]));
+   
+    
+    fetchGetWatchsByFilter(setWatchs, formData);
   };
+
+  // const handleGetWatchsFilter = () => {};
 
   const defaultValue = AllSubscriptions.filter(
     (sub) => sub.id === subscription.id
@@ -66,18 +89,26 @@ const ReviewPurchase = () => {
             Montres disponibles
           </label>
           <div className="flex flex-wrap gap-5 w-full">
-            <div className="bg-gray w-20 h-20 rounded-md"></div>
-            <div className="bg-gray w-20 h-20 rounded-md"></div>
-            <div className="bg-gray w-20 h-20 rounded-md"></div>
-            <div className="bg-gray w-20 h-20 rounded-md"></div>
-            <div className="bg-gray w-20 h-20 rounded-md"></div>
-            <div className="bg-gray w-20 h-20 rounded-md"></div>
-            <div className="bg-gray w-20 h-20 rounded-md"></div>
-            <div className="bg-gray w-20 h-20 rounded-md"></div>
-            <div className="bg-gray w-20 h-20 rounded-md"></div>
-            <div className="bg-gray w-20 h-20 rounded-md"></div>
-            <div className="bg-gray w-20 h-20 rounded-md"></div>
-            <div className="bg-gray w-20 h-20 rounded-md"></div>
+            {watchs.map((watch, i) => (
+              <WatchPurchaseCard
+                watch={watch}
+                watchSelected={watchSelected}
+                key={i}
+                onClick={() => setWatchSelected(watch)}
+              />
+            ))}
+            <div className="bg-gray w-28 h-28 rounded-md"></div>
+            <div className="bg-gray w-28 h-28 rounded-md"></div>
+            <div className="bg-gray w-28 h-28 rounded-md"></div>
+            <div className="bg-gray w-28 h-28 rounded-md"></div>
+            <div className="bg-gray w-28 h-28 rounded-md"></div>
+            <div className="bg-gray w-28 h-28 rounded-md"></div>
+            <div className="bg-gray w-28 h-28 rounded-md"></div>
+            <div className="bg-gray w-28 h-28 rounded-md"></div>
+            <div className="bg-gray w-28 h-28 rounded-md"></div>
+            <div className="bg-gray w-28 h-28 rounded-md"></div>
+            <div className="bg-gray w-28 h-28 rounded-md"></div>
+            <div className="bg-gray w-28 h-28 rounded-md"></div>
           </div>
         </div>
         <div className="flex flex-col gap-2">
@@ -85,7 +116,15 @@ const ReviewPurchase = () => {
             Montre sélectionnée
           </label>
           <div className="flex flex-wrap gap-5 w-full">
-            <div className="bg-gray w-20 h-20 rounded-md"></div>
+            {watchSelected ? (
+              <WatchPurchaseCard
+                watch={watchSelected}
+                watchSelected={watchSelected}
+                onClick={() => setWatchSelected(watchSelected)}
+              />
+            ) : (
+              <div className="bg-gray w-28 h-28 rounded-md"></div>
+            )}
           </div>
         </div>
       </form>

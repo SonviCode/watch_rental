@@ -1,6 +1,8 @@
 import { API_SUBSCRIPTION } from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
 import { Subscription } from "@/types/subscriptionTypes";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 
 const AdminSubscriptions = () => {
@@ -50,7 +52,7 @@ const AdminSubscriptions = () => {
                     href="#"
                     className="font-medium text-greenfluo hover:underline"
                   >
-                    Editer
+                    <FontAwesomeIcon icon={faEdit} />
                   </a>
                 </td>
               </tr>

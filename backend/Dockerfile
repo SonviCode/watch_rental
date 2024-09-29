@@ -20,7 +20,6 @@ FROM base as build
 WORKDIR /usr/src/app
 COPY --from=deps /usr/src/app/node_modules /usr/src/app/node_modules
 ADD . .
-# RUN pnpm run start
 RUN node ace build --ignore-ts-errors 
 
 # Production stage

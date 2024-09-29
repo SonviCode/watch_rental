@@ -1,19 +1,24 @@
-import rolexLogo from "@/assets/logo-rolex.png";
-import imgWatch from "@/assets/rolex.jpg";
+import { SERVER_URL } from "@/constants/Constants";
+import { setSubscription } from "@/store/slices/subscriptionSlice";
+import { Watch } from "@/types/watchTypes";
 import { faHeart as faHeartBorder } from "@fortawesome/free-regular-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-const WatchCard = () => {
+const WatchCard = ({ watch }: { watch: Watch }) => {
   const [isFav, setIsFav] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
 
   // const isFav =
 
   return (
     <Link
-      to="/watch/submariner-date"
+      to={`/watch/${watch.name}`}
+      state={{ watch }}
       className="bg-blacklight relative cursor-pointer rounded-lg"
     >
       <div
@@ -28,28 +33,30 @@ const WatchCard = () => {
         />
       </div>
       <div className="absolute right-3 top-3 flex h-8 w-10 items-center justify-center rounded-full">
-        <img src={rolexLogo} alt="logo rolex" />
+        <img
+          src={SERVER_URL + watch.brand.logoImgUrl}
+          alt={`logo ${watch.name}`}
+        />
       </div>
       <img
-        src={imgWatch}
-        alt="rolex"
+        src={SERVER_URL + watch.images[0].imageUrl}
+        alt={watch.name}
         className="max-h-[190px] w-full rounded-t-lg object-cover"
       />
-      <div className="p-5">
-        <p>SUBMARINER DATE</p>
+      <div className="p-5 ">
+        <p>{watch.name}</p>
         <p className="text-graylight text-xs mt-1 mb-2">
-          <span className="italic text-sm">Essentiel</span> - dès 145€/mois
+          <span className="italic text-sm">{watch.subscription.title}</span> -
+          dès {watch.subscription.price}€/mois
         </p>
-        {/* <p className="underline underline-offset-2 w-fit rounded-lg text-sm mb-2">Abonnement</p> */}
-        <button className="m-auto w-full text-center gradient-btn rounded-lg px-2 py-1.5">
+
+        <Link
+          to="/purchase"
+          onClick={() => dispatch(setSubscription(watch.subscription))}
+          className="m-auto w-full flex justify-center gradient-btn rounded-lg px-2 py-1.5"
+        >
           S'abonner
-        </button>
-        {/* <p className="text-graylight text-sm">
-          à partir de <span className="text-base">59,99€</span>
-        </p>
-        <p className="text-greenfluo">
-          En stock <FontAwesomeIcon icon={faCheck} />
-        </p> */}
+        </Link>
       </div>
     </Link>
   );

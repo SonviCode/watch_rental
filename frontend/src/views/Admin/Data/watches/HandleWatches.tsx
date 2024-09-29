@@ -1,6 +1,11 @@
-import { API_BRAND, API_MATERIAL } from "@/constants/Constants";
+import {
+  API_BRAND,
+  API_MATERIAL,
+  API_SUBSCRIPTION,
+} from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
 import { fetchAddWatch } from "@/services/api/watch";
+import { Subscription } from "@/types/subscriptionTypes";
 import { Brand, Material } from "@/types/watchTypes";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,11 +18,13 @@ const HandleWatches = ({
 }) => {
   const [error, setError] = useState<string>("");
   const [brands, setBrands] = useState<Brand[]>();
-  // const [image, setImage] = useState<FileList | null>();
   const [materials, setMaterials] = useState<Material[]>();
+  const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
 
-  useFetchData(setMaterials, API_MATERIAL);
-  const isLoading = useFetchData(setBrands, API_BRAND);
+  let isLoading: boolean;
+  isLoading = useFetchData(setSubscriptions, API_SUBSCRIPTION);
+  isLoading = useFetchData(setMaterials, API_MATERIAL);
+  isLoading = useFetchData(setBrands, API_BRAND);
 
   if (isLoading) return;
 
@@ -87,6 +94,22 @@ const HandleWatches = ({
           </select>
           <label className="label-form" htmlFor="material_id">
             Matière
+          </label>
+        </div>
+        <div className="relative">
+          <select
+            className="rounded-md bg-blacklight px-4 py-3 peer w-full"
+            name="subscription_id"
+            id="subscription_id"
+          >
+            {subscriptions!.map((sub, i) => (
+              <option key={i} value={sub.id}>
+                {sub.title}
+              </option>
+            ))}
+          </select>
+          <label className="label-form" htmlFor="subscription_id">
+            Abonnement
           </label>
         </div>
         <div className="relative">
