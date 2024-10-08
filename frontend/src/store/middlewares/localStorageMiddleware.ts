@@ -1,3 +1,4 @@
+import { watchState } from "../../types/watchTypes";
 export const localStorageSetItem =
   (store: any) => (next: any) => (action: any) => {
     const result = next(action);
@@ -14,12 +15,12 @@ export const localStorageSetItem =
 
 export const localStorageGetItem = () => {
   try {
-    const subscriptionState = localStorage.getItem("subscription");
+    const subState = localStorage.getItem("subscription");
+    const watchsState = localStorage.getItem("watchs");
 
     return {
-      subscription: subscriptionState
-        ? JSON.parse(subscriptionState)
-        : { value: {} },
+      subscription: subState ? JSON.parse(subState) : { value: {} },
+      watchs: watchsState ? JSON.parse(watchsState) : { value: [] },
     };
   } catch (e) {
     return undefined;

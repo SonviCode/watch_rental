@@ -1,18 +1,17 @@
-import { Brand, Material } from "@/types/watchTypes";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Subscription } from "react-redux";
 
 const FilterCategory = ({
+  keyRequest,
   category,
   name,
 }: {
-  category: Subscription[] | Brand[] | Material[];
+  keyRequest: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  category: any;
   name: string;
 }) => {
-  // const { name, elements } = category;
-
   return (
     <div className=" border-t border-t-gray w-full text-gray-700 py-5 px-4 flex-col items-center justify-between relative ">
       <input
@@ -29,32 +28,34 @@ const FilterCategory = ({
       </div>
 
       <ul className="peer-checked:flex flex-col hidden gap-2 pt-2 z-20">
-        {category.map(
-          (el: Subscription | Brand | Material, index: React.Key) => {
-            const elementName = el.brandName
-              ? el.brandName
-              : el.materialName
-              ? el.materialName
-              : el.title;
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        {category.map((el: any, index: React.Key) => {
+          // switch(el)
+          // case
+          const elementName = el.brandName
+            ? el.brandName
+            : el.materialName
+            ? el.materialName
+            : el.title;
 
-            return (
-              <li className="flex" key={index}>
-                <input
-                  // onClick={(e) => getFilterProduct(e, el, key.keyRequest)}
-                  id={elementName}
-                  type="checkbox"
-                  className="cursor-pointer accent-greenfluo "
-                />
-                <label
-                  htmlFor={elementName}
-                  className="grow pl-2 cursor-pointer first-letter:uppercase text-sm"
-                >
-                  {elementName}
-                </label>
-              </li>
-            );
-          }
-        )}
+          return (
+            <li className="flex" key={index}>
+              <input
+                // onClick={(e) => getFilterProduct(e, el, key.keyRequest)}
+                id={el.id}
+                name={keyRequest}
+                type="checkbox"
+                className="cursor-pointer accent-greenfluo "
+              />
+              <label
+                htmlFor={el.id}
+                className="grow pl-2 cursor-pointer first-letter:uppercase text-sm"
+              >
+                {elementName}
+              </label>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

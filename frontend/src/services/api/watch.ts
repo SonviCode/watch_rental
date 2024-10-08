@@ -40,14 +40,14 @@ export const fetchGetWatchsByFilter = async (
       API_WATCH + "?" + new URLSearchParams(formData as any).toString()
     );
 
-    const data = await res.json();
+    const watchs = await res.json();
 
     if (!res.ok) {
       // setError(data.errors[0].message);
       return;
     }
 
-    setWatchs(data);
+    setWatchs(watchs);
   } catch (e) {
     // setError(GENERIC_ERROR);
   }

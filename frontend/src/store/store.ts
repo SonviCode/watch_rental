@@ -2,6 +2,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slices/userSlice";
 import subscriptionReducer from "./slices/subscriptionSlice";
+import watchReducer from "./slices/watchSlice";
 import { localStorageGetItem, localStorageSetItem } from "./middlewares/localStorageMiddleware";
 
 // import {
@@ -15,6 +16,7 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
     subscription: subscriptionReducer,
+    watchs: watchReducer
   },
   devTools: true,
   preloadedState: localStorageGetItem(),

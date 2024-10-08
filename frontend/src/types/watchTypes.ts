@@ -34,3 +34,7 @@ export type Image = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export interface watchState {
+  value: Watch[];
+}
