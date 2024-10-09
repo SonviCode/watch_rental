@@ -2,22 +2,30 @@ import WatchPurchaseCard from "@/components/Card/WatchPurchaseCard";
 import { API_SUBSCRIPTION, API_WATCH } from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
 import { handleChangeSubscriptionSelectOption } from "@/services/handler/handleChange";
+import {
+  removePurchaseSelectedWatch,
+  setPurchaseSelectedWatch,
+} from "@/store/slices/purchaseSelectedWatchSlice";
 import { RootState } from "@/store/store";
 import { Subscription } from "@/types/subscriptionTypes";
 import { Watch } from "@/types/watchTypes";
+import { defaultIdSubscription } from "@/utils/purchaseUtils";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const ReviewPurchase = () => {
   const [allSubscriptions, setAllSubscriptions] = useState<Subscription[]>([]);
   const [watchs, setWatchs] = useState<Watch[]>([]);
-  const [watchSelected, setWatchSelected] = useState<Watch>();
 
   const subscription: Subscription = useSelector(
     (state: RootState) => state.subscription.value
   );
+  const watchSelected: Watch = useSelector(
+    (state: RootState) => state.purchaseSelectedWatch.value
+  );
+  const dispatch = useDispatch();
 
   let isLoading = useFetchData(
     setWatchs,
@@ -26,10 +34,6 @@ const ReviewPurchase = () => {
   isLoading = useFetchData(setAllSubscriptions, API_SUBSCRIPTION);
 
   if (isLoading) return;
-
-  const defaultIdSubscription = allSubscriptions.filter(
-    (sub) => sub.id === subscription.id
-  )[0].id;
 
   return (
     <section className="grow p-10">
@@ -42,14 +46,18 @@ const ReviewPurchase = () => {
             <select
               id="subscriptions"
               className="rounded-lg border w-full border-gray appearance-none bg-gray h-full py-2 px-4 pr-10 focus:outline-none focus:border-gray cursor-pointer"
-              onChange={(e) =>
+              onChange={(e) => {
                 handleChangeSubscriptionSelectOption(
                   e,
                   allSubscriptions,
                   setWatchs
-                )
-              }
-              defaultValue={defaultIdSubscription}
+                ),
+                  dispatch(removePurchaseSelectedWatch());
+              }}
+              defaultValue={defaultIdSubscription(
+                allSubscriptions,
+                subscription
+              )}
             >
               {allSubscriptions.map((sub, i) => (
                 <option key={i} value={sub.id}>
@@ -70,10 +78,10 @@ const ReviewPurchase = () => {
           <div className="flex flex-wrap gap-5 w-full">
             {watchs.map((watch, i) => (
               <WatchPurchaseCard
+                key={i}
                 watch={watch}
                 watchSelected={watchSelected}
-                key={i}
-                onClick={() => setWatchSelected(watch)}
+                onClick={() => dispatch(setPurchaseSelectedWatch(watch))}
               />
             ))}
             <div className="bg-gray w-28 h-28 rounded-md"></div>
@@ -95,11 +103,13 @@ const ReviewPurchase = () => {
             Montre sélectionnée
           </label>
           <div className="flex flex-wrap gap-5 w-full">
-            {watchSelected ? (
+            {Object.keys(watchSelected).length !== 0 ? (
               <WatchPurchaseCard
                 watch={watchSelected}
                 watchSelected={watchSelected}
-                onClick={() => setWatchSelected(watchSelected)}
+                onClick={() =>
+                  dispatch(setPurchaseSelectedWatch(watchSelected))
+                }
               />
             ) : (
               <div className="bg-gray w-28 h-28 rounded-md"></div>

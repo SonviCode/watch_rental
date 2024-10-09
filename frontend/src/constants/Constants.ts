@@ -31,6 +31,9 @@ export const DIFFERENT_PASSWORD = "Les mots de passes sont différents";
 export const INVALID_CREDENTIALS = "Informations d'identification invalide";
 export const GENERIC_ERROR = "Une erreur s'est produite, veuillez réessayer";
 
+// ---PURCHASE
+export const ERROR_SELECT_A_WATCH = "Vous devez sélectionnez une montre !"
+
 // ---Subscription
 
 // ---Watches

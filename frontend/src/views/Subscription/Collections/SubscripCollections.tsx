@@ -2,8 +2,7 @@ import WatchCard from "@/components/Card/WatchCard";
 import { API_SUBSCRIPTION, API_WATCH } from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
 import {
-  handleChangeSubscrioptionOnClik,
-  handleChangeSubscription,
+  handleChangeSubscriptionOnClik
 } from "@/services/handler/handleChange";
 import { Subscription } from "@/types/subscriptionTypes";
 import { Watch } from "@/types/watchTypes";
@@ -33,7 +32,7 @@ const SubscripCollections = () => {
             <span
               key={i}
               onClick={() => {
-                setIndex(i), handleChangeSubscrioptionOnClik(sub, setWatchs);
+                setIndex(i), handleChangeSubscriptionOnClik(sub, setWatchs);
               }}
               className={`${
                 index === i ? "bg-purple" : "bg-blacklight"

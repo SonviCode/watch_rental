@@ -1,6 +1,3 @@
-import { API_WATCH } from "@/constants/Constants";
-import { setWatchs } from "@/store/slices/watchSlice";
-import { store } from "@/store/store";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 /**
@@ -29,10 +26,6 @@ const useFetchData = (
         const data = await res.json();
 
         if (!res.ok) throw new Error(data.message);
-
-        if (api_url === API_WATCH) {
-          store.dispatch(setWatchs(data));
-        }
 
         setData(data);
       } catch (e) {

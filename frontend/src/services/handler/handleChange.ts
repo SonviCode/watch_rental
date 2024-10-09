@@ -32,7 +32,7 @@ export const handleChangeSubscriptionSelectOption = (
  * @param subscription 
  * @param setWatchs 
  */
-export const handleChangeSubscrioptionOnClik = (
+export const handleChangeSubscriptionOnClik = (
   subscription: Subscription,
   setWatchs: Dispatch<SetStateAction<Watch[]>>
 ) => {

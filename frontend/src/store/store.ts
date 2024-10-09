@@ -2,13 +2,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slices/userSlice";
 import subscriptionReducer from "./slices/subscriptionSlice";
-import watchReducer from "./slices/watchSlice";
-import { localStorageGetItem, localStorageSetItem } from "./middlewares/localStorageMiddleware";
-
-// import {
-//   localStorageSetItem,
-//   localStorageGetItem,
-// } from "./middleware/localStorageMiddleware";
+import purchaseSelectedWatchReducer from "./slices/purchaseSelectedWatchSlice";
+import {
+  localStorageGetItem,
+  localStorageSetItem,
+} from "./middlewares/localStorageMiddleware";
 
 export type RootState = ReturnType<typeof store.getState>;
 
@@ -16,7 +14,7 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
     subscription: subscriptionReducer,
-    watchs: watchReducer
+    purchaseSelectedWatch: purchaseSelectedWatchReducer,
   },
   devTools: true,
   preloadedState: localStorageGetItem(),

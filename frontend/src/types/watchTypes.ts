@@ -1,17 +1,19 @@
 import { Subscription } from "./subscriptionTypes";
 
-export type Watch = {
-  id: string;
-  brand: Brand;
-  name: string;
-  material: Material;
-  images: Image[];
-  subscription: Subscription;
-  isAvailable: boolean;
-  description: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
+export type Watch =
+  | {
+      id: string;
+      brand: Brand;
+      name: string;
+      material: Material;
+      images: Image[];
+      subscription: Subscription;
+      isAvailable: boolean;
+      description: string;
+      createdAt: Date;
+      updatedAt: Date;
+    }
+  | Record<string, never>;
 
 export type Brand = {
   id: string;
@@ -35,6 +37,6 @@ export type Image = {
   updatedAt: Date;
 };
 
-export interface watchState {
-  value: Watch[];
+export interface purchaseSelectedWatchState {
+  value: Watch | Record<string, never>;
 }

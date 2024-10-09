@@ -1,9 +1,9 @@
 import { BRAND_NAME } from "@/constants/Constants";
 import "@/style/index.css";
 import { Link } from "react-router-dom";
+import HowSection from "./HowSection/HowSection";
 import SubscripSection from "./SubscripSection/SubscripSection";
 import WatchSection from "./WatchSection/WatchSection";
-import HowSection from "./HowSection/HowSection";
 
 function Home() {
   return (

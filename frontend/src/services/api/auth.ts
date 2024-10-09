@@ -76,7 +76,8 @@ export const fetchLogin = async (
       return;
     }
 
-    navigate("/account");
+    // navigate("/account");
+    location.reload();
   } catch (e) {
     setError(GENERIC_ERROR);
   }
