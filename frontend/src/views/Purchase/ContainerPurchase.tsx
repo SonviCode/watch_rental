@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import ReviewPurchase from "./ReviewPurchase";
 import StepsPurchase from "./StepsPurchase";
+import StripePayment from "./stripe/StripePayment";
 import SummaryPurchase from "./SummaryPurchase";
 import UserDataPurchase from "./UserDataPurchase";
 
@@ -22,7 +23,7 @@ const defaultPurchaseSteps = [
   { title: "payment", icon: faCreditCard, step: 3, actif: false },
 ];
 
-const Purchase = () => {
+const ContainerPurchase = () => {
   const [purchaseSteps, setPurchaseSteps] =
     useState<purchaseStepsType[]>(defaultPurchaseSteps);
 
@@ -37,6 +38,14 @@ const Purchase = () => {
 
   if (!subscription.id) return <Navigate to="/subscription" />;
 
+  const getActiveStep = () => {
+    if (purchaseSteps[2].actif) return <StripePayment />;
+    if (purchaseSteps[1].actif) return <UserDataPurchase />;
+    return <ReviewPurchase />;
+  };
+
+  const activeStep = getActiveStep();
+
   return (
     <>
       <div className="flex h-full max-w-full bg-blacklight">
@@ -45,7 +54,7 @@ const Purchase = () => {
             purchaseSteps={purchaseSteps}
             setPurchaseSteps={setPurchaseSteps}
           />
-          {purchaseSteps[1].actif ? <UserDataPurchase /> : <ReviewPurchase />}
+          {activeStep}
         </div>
         <SummaryPurchase
           setPurchaseSteps={setPurchaseSteps}
@@ -56,4 +65,4 @@ const Purchase = () => {
   );
 };
 
-export default Purchase;
+export default ContainerPurchase;

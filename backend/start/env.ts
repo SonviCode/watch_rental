@@ -54,6 +54,14 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   /*
   |----------------------------------------------------------
+  | Variables for stripe configuration
+  |----------------------------------------------------------
+  */
+  STRIPE_PUBLIC_KEY: Env.schema.string(),
+  STRIPE_PRIVATE_KEY: Env.schema.string(),
+
+  /*
+  |----------------------------------------------------------
   | Variables for admin role
   |----------------------------------------------------------
   */

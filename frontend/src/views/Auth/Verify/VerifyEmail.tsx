@@ -39,14 +39,12 @@ const VerifyEmail = () => {
         />
         <button
           onClick={() => fetchVerifyMail(otp, setMessage, navigate)}
-          className="gradient-btn py-2 px-10 rounded-lg text-center "
+          className="gradient-bg py-2 px-10 rounded-lg text-center "
         >
           Valider
         </button>
         {message && (
-          <p className="text-red-600 underline cursor-pointer">
-            {message}
-          </p>
+          <p className="text-red-600 underline cursor-pointer">{message}</p>
         )}
       </div>
       <div className="flex gap-10 items-center">

@@ -9,11 +9,9 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { useSelector } from "react-redux";
 
 const SummaryPurchase = ({
-  // watchSelected,
   setPurchaseSteps,
   purchaseSteps,
 }: {
-  // watchSelected: Watch | undefined;
   setPurchaseSteps: Dispatch<SetStateAction<purchaseStepsType[]>>;
   purchaseSteps: purchaseStepsType[];
 }) => {
@@ -75,12 +73,14 @@ const SummaryPurchase = ({
         )}
       </div>
       <hr className="my-10" />
-      <button
-        onClick={() => handleContinuePurchase()}
-        className="mb-2 bg-greenfluo text-black font-bold border border-greenfluo w-full py-2 px-4 rounded-lg text-center"
-      >
-        S'abonner
-      </button>
+      {!purchaseSteps[2].actif && (
+        <button
+          onClick={() => handleContinuePurchase()}
+          className="mb-2 bg-greenfluo text-black font-bold w-full py-2 px-4 rounded-lg text-center"
+        >
+          Continuer
+        </button>
+      )}
       <p className="text-xs text-center">
         En effectuant une commande, vous acceptez les{" "}
         <span className="underline">conditions générales</span> et la{" "}

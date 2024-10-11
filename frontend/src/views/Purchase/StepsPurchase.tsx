@@ -11,6 +11,14 @@ const StepsPurchase = ({
   purchaseSteps: purchaseStepsType[];
   setPurchaseSteps: Dispatch<SetStateAction<purchaseStepsType[]>>;
 }) => {
+  const getActiveStep = () => {
+    if (purchaseSteps[2].actif) return "w-2/3";
+    if (purchaseSteps[1].actif) return "w-1/3";
+    return "";
+  };
+
+  const activeStep = getActiveStep();
+
   return (
     <>
       <div className=" pt-5 flex justify-around relative">
@@ -26,9 +34,7 @@ const StepsPurchase = ({
         ))}
         <span className="h-2.5 w-2/3 mt-4 bg-white absolute z-0"></span>
         <span
-          className={`left-[16%] h-2.5 mt-4 gradient-btn absolute z-0 ${
-            purchaseSteps[1].actif ? "w-1/3" : ""
-          }`}
+          className={`left-[16%] h-2.5 mt-4 gradient-bg absolute z-0 ${activeStep}`}
         ></span>
       </div>
       {purchaseSteps[1].actif && (

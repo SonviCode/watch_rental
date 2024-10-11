@@ -2,17 +2,14 @@ import { handleLoginSubmit } from "@/services/handler/handleSubmit";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [seePswd, setSeePswd] = useState(false);
   const [error, setError] = useState<string>("");
 
-  const navigate = useNavigate();
-
   return (
     <form
-      onSubmit={(e) => handleLoginSubmit(e, setError, navigate)}
+      onSubmit={(e) => handleLoginSubmit(e, setError)}
       onChange={() => setError("")}
       className=" flex flex-col gap-5"
     >

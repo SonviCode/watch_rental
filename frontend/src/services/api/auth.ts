@@ -20,7 +20,6 @@ import { API_RESEND_OTP_SMS, API_VERIFY_OTP_SMS } from '../../constants/Constant
 export const fetchSignUp = async (
   formData: FormData,
   setError: Dispatch<SetStateAction<string>>,
-  navigate: NavigateFunction
 ) => {
   try {
     const res = await fetch(API_SIGNUP, {
@@ -38,8 +37,7 @@ export const fetchSignUp = async (
     fetchLogin(
       data.email,
       formData.get("password") as string,
-      setError,
-      navigate
+      setError
     );
   } catch (e) {
     setError(GENERIC_ERROR);
@@ -58,7 +56,6 @@ export const fetchLogin = async (
   email: string,
   password: string,
   setError: Dispatch<SetStateAction<string>>,
-  navigate: NavigateFunction
 ) => {
   try {
     const res = await fetch(API_LOGIN, {

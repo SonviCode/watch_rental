@@ -7,12 +7,7 @@ export type User = {
   password?: string;
   birthday: Date;
   phoneNumber: number;
-  location: {
-    additional_address?: string;
-    address: string;
-    city: string;
-    postal_code: string;
-  };
+  location: Address;
   emailIsVerified: boolean;
   smsIsVerified: boolean;
   idIsVerified: boolean;
@@ -23,3 +18,10 @@ export type User = {
 export interface userState {
   value: User | undefined;
 }
+
+export type Address = { 
+  additional_address?: string;
+  address: string;
+  city: string;
+  postal_code: string;
+};

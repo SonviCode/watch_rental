@@ -15,6 +15,7 @@ import watchesRoutes from './routes/api/v1/watches.js'
 import brandsRoutes from './routes/api/v1/brands.js'
 import materialsRoutes from './routes/api/v1/material.js'
 import imagesRoutes from './routes/api/v1/images.js'
+import purchaseRoutes from './routes/api/v1/purchase.js'
 
 router
   .group(() => {
@@ -27,6 +28,7 @@ router
         brandsRoutes()
         materialsRoutes()
         imagesRoutes()
+        purchaseRoutes()
       })
       .prefix('v1')
   })

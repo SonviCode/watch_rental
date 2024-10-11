@@ -4,18 +4,15 @@ import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
-import { useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
   const [phone, setPhone] = useState<string>("");
   const [seePswd, setSeePswd] = useState(false);
   const [error, setError] = useState<string>("");
 
-  const navigate = useNavigate();
-
   return (
     <form
-      onSubmit={(e) => handleSignUpSubmit(e, setError, phone, navigate)}
+      onSubmit={(e) => handleSignUpSubmit(e, setError, phone)}
       onChange={() => setError("")}
       className=" flex flex-col gap-5"
     >

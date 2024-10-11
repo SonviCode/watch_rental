@@ -40,7 +40,7 @@ const VerifyPhoneNumber = () => {
         />
         <button
           onClick={() => fetchVerifySms(otp, setMessage, navigate)}
-          className="gradient-btn py-2 px-10 rounded-lg text-center "
+          className="gradient-bg py-2 px-10 rounded-lg text-center "
         >
           Valider
         </button>

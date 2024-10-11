@@ -13,7 +13,7 @@
       @apply text-transparent bg-gradient-to-r from-purple to-greenfluo bg-clip-text
     }
 
-    .gradient-btn {
+    .gradient-bg {
       @apply bg-gradient-to-r from-purple to-greenfluo
     }
 

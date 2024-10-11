@@ -84,7 +84,7 @@ const WatchSection = () => {
       </div>
       <Link
         to="/watchs"
-        className="gradient-btn p-4 rounded-lg text-center my-0 mx-auto block w-fit transition hover:scale-125 delay-100 duration-300 ease-in-out"
+        className="gradient-bg p-4 rounded-lg text-center my-0 mx-auto block w-fit transition hover:scale-125 delay-100 duration-300 ease-in-out"
       >
         Voir tout les modèles
       </Link>

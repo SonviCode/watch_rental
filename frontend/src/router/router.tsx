@@ -3,6 +3,10 @@ import AdminLayout from "@/components/Layout/Admin/AdminLayout";
 import GeneralLayout from "@/components/Layout/General/GeneralLayout";
 import PurchaseLayout from "@/components/Layout/Purchase/PurchaseLayout";
 import Account from "@/views/Account/Account";
+import Alerts from "@/views/Account/Alerts";
+import Favoris from "@/views/Account/Favoris";
+import Invoices from "@/views/Account/Invoices";
+import Orders from "@/views/Account/Orders";
 import Admin from "@/views/Admin/Admin";
 import AdminSubscriptions from "@/views/Admin/Data/subscriptions/AdminSubscriptions";
 import AdminUsers from "@/views/Admin/Data/users/AdminUsers";
@@ -13,17 +17,14 @@ import VerifyEmail from "@/views/Auth/Verify/VerifyEmail";
 import VerifyPhoneNumber from "@/views/Auth/Verify/VerifyPhoneNumber";
 import Contact from "@/views/Contact/Contact";
 import Home from "@/views/Home/Home";
-import Purchase from "@/views/Purchase/PurchaseContainer";
+import ContainerPurchase from "@/views/Purchase/ContainerPurchase";
+import PaymentCompleted from "@/views/Purchase/stripe/PaymentCompleted";
 import Subscription from "@/views/Subscription/Subscription";
 import Watch from "@/views/Watch/Watch";
 import Watchs from "@/views/Watchs/Watchs";
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import { ProtectedAdminRoute } from "./ProtectedAdminRoute";
 import { ProtectedAuthRoute } from "./ProtectedAuthRoute";
-import Alerts from "@/views/Account/Alerts";
-import Favoris from "@/views/Account/Favoris";
-import Orders from "@/views/Account/Orders";
-import Invoices from "@/views/Account/Invoices";
 
 export const router = createBrowserRouter([
   {
@@ -110,6 +111,9 @@ export const router = createBrowserRouter([
   },
   {
     element: <PurchaseLayout />,
-    children: [{ path: "/purchase", element: <Purchase /> }],
+    children: [
+      { path: "/purchase", element: <ContainerPurchase /> },
+      { path: "/paiement-effectue", element: <PaymentCompleted /> },
+    ],
   },
 ]);

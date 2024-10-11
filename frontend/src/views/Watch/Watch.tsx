@@ -69,7 +69,7 @@ const Watch = () => {
             <Link
               to="/purchase"
               onClick={() => dispatch(setSubscription(watch.subscription))}
-              className="m-auto w-full flex justify-center gradient-btn rounded-lg px-2 py-1.5"
+              className="m-auto w-full flex justify-center gradient-bg rounded-lg px-2 py-1.5"
             >
               S'abonner
             </Link>

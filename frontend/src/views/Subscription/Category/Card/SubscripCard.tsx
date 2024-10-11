@@ -41,7 +41,7 @@ const SubscripCard = ({ subscription }: { subscription: Subscription }) => {
         <Link
           to="/purchase"
           onClick={() => dispatch(setSubscription(subscription))}
-          className="gradient-btn py-2 px-4 rounded-lg text-center"
+          className="gradient-bg py-2 px-4 rounded-lg text-center"
         >
           S'abonner
         </Link>

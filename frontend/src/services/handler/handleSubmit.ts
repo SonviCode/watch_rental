@@ -1,13 +1,18 @@
 import { DIFFERENT_PASSWORD } from "@/constants/Constants";
 import { Dispatch, FormEvent, SetStateAction } from "react";
-import { NavigateFunction } from "react-router-dom";
 import { fetchLogin, fetchSignUp } from "../api/auth";
 
+/**
+ * 
+ * @param e 
+ * @param setError 
+ * @param phone 
+ * @returns 
+ */
 export const handleSignUpSubmit = (
   e: FormEvent<HTMLFormElement>,
   setError: Dispatch<SetStateAction<string>>,
-  phone: string,
-  navigate: NavigateFunction
+  phone: string
 ) => {
   e.preventDefault();
   const formData = new FormData(e.currentTarget);
@@ -28,13 +33,17 @@ export const handleSignUpSubmit = (
   formData.set("phone_number", phone.trim());
   formData.set("location", JSON.stringify(location));
 
-  fetchSignUp(formData, setError, navigate);
+  fetchSignUp(formData, setError);
 };
 
+/**
+ * 
+ * @param e 
+ * @param setError 
+ */
 export const handleLoginSubmit = (
   e: FormEvent<HTMLFormElement>,
   setError: Dispatch<SetStateAction<string>>,
-  navigate: NavigateFunction
 ) => {
   e.preventDefault();
 
@@ -46,5 +55,5 @@ export const handleLoginSubmit = (
   //   setMsg(INPUT_EMPTY);
   // }
 
-  fetchLogin(email, password, setError, navigate);
+  fetchLogin(email, password, setError);
 };
