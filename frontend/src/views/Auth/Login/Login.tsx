@@ -9,7 +9,7 @@ import { Link, Navigate } from "react-router-dom";
 const Login = () => {
   const [user, setUser] = useState<User>();
 
-  const isLoading = useFetchData(setUser, API_USER);
+  const { isLoading } = useFetchData(setUser, API_USER);
 
   if (isLoading) return;
 

@@ -1,7 +1,7 @@
 import {
-    API_PURCHASE_CREATE_STRIPE_PAYMENT,
-    BLACKLIGHT_COLOR,
-    GRAYLIGHT_COLOR
+  API_PURCHASE_CREATE_STRIPE_PAYMENT,
+  BLACKLIGHT_COLOR,
+  GRAYLIGHT_COLOR,
 } from "@/constants/Constants";
 import { RootState } from "@/store/store";
 import { Subscription } from "@/types/subscriptionTypes";
@@ -31,7 +31,6 @@ const StripePayment = () => {
           {
             id: subscription.id,
             amount: subscription.price * 100,
-            customer: "test",
           },
         ],
       }),

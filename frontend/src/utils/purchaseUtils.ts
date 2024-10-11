@@ -47,18 +47,37 @@ export const prevPurchaseStep = (
 };
 
 /**
- * if a watch is already selected, go directly to user data step
+ * Go to user step instead subscription or payment step
  *
  * @param purchaseSteps
  * @param setPurchaseSteps
  */
-export const goToUserStepIfAlreadySelectedWatch = (
+export const goToUserStep = (
   purchaseSteps: purchaseStepsType[],
   setPurchaseSteps: Dispatch<SetStateAction<purchaseStepsType[]>>
 ) => {
   const newPurchaseSteps: purchaseStepsType[] = [...purchaseSteps];
 
   newPurchaseSteps[1].actif = true;
+  newPurchaseSteps[2].actif = false;
+
+  setPurchaseSteps(newPurchaseSteps);
+};
+
+/**
+ * Go to the subscription step
+ *
+ * @param purchaseSteps
+ * @param setPurchaseSteps
+ */
+export const goToSubscriptionStep = (
+  purchaseSteps: purchaseStepsType[],
+  setPurchaseSteps: Dispatch<SetStateAction<purchaseStepsType[]>>
+) => {
+  const newPurchaseSteps: purchaseStepsType[] = [...purchaseSteps];
+
+  newPurchaseSteps[1].actif = false;
+  newPurchaseSteps[2].actif = false;
 
   setPurchaseSteps(newPurchaseSteps);
 };

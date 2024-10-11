@@ -8,7 +8,7 @@ import { useState } from "react";
 const AdminUsers = () => {
   const [users, setUsers] = useState<User[]>([]);
 
-  const isLoading = useFetchData(setUsers, API_GET_ALL_USERS);
+  const { isLoading } = useFetchData(setUsers, API_GET_ALL_USERS);
 
   if (isLoading) return;
 

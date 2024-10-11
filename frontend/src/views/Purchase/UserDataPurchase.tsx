@@ -14,7 +14,7 @@ import { formatPhoneNumber } from "@/utils/formatUtils";
 const UserDataPurchase = () => {
   const [user, setUser] = useState<User>();
 
-  const isLoading = useFetchData(setUser, API_USER);
+  const { isLoading } = useFetchData(setUser, API_USER);
 
   if (isLoading) return;
 

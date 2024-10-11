@@ -15,7 +15,7 @@ const Account = () => {
   // const [error, setError] = useState<string>("");
   const [user, setUser] = useState<User>();
 
-  const isLoading = useFetchData(setUser, API_USER);
+  const { isLoading } = useFetchData(setUser, API_USER);
 
   if (isLoading) return;
 

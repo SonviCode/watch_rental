@@ -14,7 +14,7 @@ const AdminWatches = () => {
   const [handleBrand, setHandleBrand] = useState<boolean>(false);
   const [handleMaterial, setHandleMaterial] = useState<boolean>(false);
 
-  const isLoading = useFetchData(setWatches, API_WATCH);
+  const { isLoading } = useFetchData(setWatches, API_WATCH);
 
   if (isLoading) return;
 

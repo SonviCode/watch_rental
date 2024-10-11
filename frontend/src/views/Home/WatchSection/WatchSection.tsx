@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const WatchSection = () => {
   const [watchs, setWatchs] = useState<Watch[]>([]);
 
-  const isLoading = useFetchData(setWatchs, API_WATCH);
+  const { isLoading } = useFetchData(setWatchs, API_WATCH);
 
   if (isLoading) return;
 

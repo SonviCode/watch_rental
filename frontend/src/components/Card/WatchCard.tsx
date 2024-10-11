@@ -6,19 +6,18 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const WatchCard = ({ watch }: { watch: Watch }) => {
   const [isFav, setIsFav] = useState<boolean>(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // const isFav =
-
   return (
-    <Link
-      to={`/watch/${watch.name}`}
-      state={{ watch }}
+    <div
+      onClick={() => navigate(`/watch/${watch.name}`, { state: { watch } })}
       className="bg-blacklight relative cursor-pointer rounded-lg"
     >
       <div
@@ -53,12 +52,12 @@ const WatchCard = ({ watch }: { watch: Watch }) => {
         <Link
           to="/purchase"
           onClick={() => dispatch(setSubscription(watch.subscription))}
-          className="m-auto w-full flex justify-center gradient-bg rounded-lg px-2 py-1.5"
+          className="z-10 m-auto w-full flex justify-center gradient-bg rounded-lg px-2 py-1.5"
         >
           S'abonner
         </Link>
       </div>
-    </Link>
+    </div>
   );
 };
 

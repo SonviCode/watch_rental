@@ -1,9 +1,7 @@
 import WatchCard from "@/components/Card/WatchCard";
 import { API_SUBSCRIPTION, API_WATCH } from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
-import {
-  handleChangeSubscriptionOnClik
-} from "@/services/handler/handleChange";
+import { handleChangeSubscriptionOnClik } from "@/services/handler/handleChange";
 import { Subscription } from "@/types/subscriptionTypes";
 import { Watch } from "@/types/watchTypes";
 import { useState } from "react";
@@ -13,12 +11,13 @@ const SubscripCollections = () => {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [index, setIndex] = useState<number>(0);
 
-  let isLoading: boolean;
-  isLoading = useFetchData(setSubscriptions, API_SUBSCRIPTION);
-  // isLoading = useFetchData(setWatchs,  `${API_WATCH}?subscription_id=${subscriptions[0].id}`);
-  isLoading = useFetchData(setWatchs, API_WATCH);
+  const { isLoading: subIsLoading } = useFetchData(
+    setSubscriptions,
+    API_SUBSCRIPTION
+  );
+  const { isLoading: watchIsLoading } = useFetchData(setWatchs, API_WATCH);
 
-  if (isLoading) return;
+  if (subIsLoading || watchIsLoading) return;
 
   return (
     <section className="py-10" id="collections">

@@ -1,6 +1,6 @@
 import { purchaseStepsType } from "@/types/purchaseTypes";
 import { Watch } from "@/types/watchTypes";
-import { goToUserStepIfAlreadySelectedWatch } from "@/utils/purchaseUtils";
+import { goToSubscriptionStep, goToUserStep } from "@/utils/purchaseUtils";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 
 export default function useCheckPurchaseStep(
@@ -16,10 +16,10 @@ export default function useCheckPurchaseStep(
     }
 
     const checkSteps = async () => {
-      // if a watch is already selected, go directly to user data step
-      if (Object.keys(watchSelected).length !== 0) {
-        goToUserStepIfAlreadySelectedWatch(purchaseSteps, setPurchaseSteps);
-      }
+      // if a watch is already selected, go directly to user data step, else go to subscription step
+      Object.keys(watchSelected).length !== 0
+        ? goToUserStep(purchaseSteps, setPurchaseSteps)
+        : goToSubscriptionStep(purchaseSteps, setPurchaseSteps);
     };
 
     checkSteps();

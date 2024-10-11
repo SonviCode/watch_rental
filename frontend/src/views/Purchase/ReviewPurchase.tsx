@@ -27,13 +27,16 @@ const ReviewPurchase = () => {
   );
   const dispatch = useDispatch();
 
-  let isLoading = useFetchData(
+  const { isLoading: watchIsLoading } = useFetchData(
     setWatchs,
     `${API_WATCH}?subscription_id=${subscription.id}`
   );
-  isLoading = useFetchData(setAllSubscriptions, API_SUBSCRIPTION);
+  const { isLoading: subIsLoading } = useFetchData(
+    setAllSubscriptions,
+    API_SUBSCRIPTION
+  );
 
-  if (isLoading) return;
+  if (subIsLoading || watchIsLoading) return;
 
   return (
     <section className="grow p-10">

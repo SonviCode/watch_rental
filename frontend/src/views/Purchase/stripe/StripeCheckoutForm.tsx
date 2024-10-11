@@ -1,5 +1,7 @@
-import { CLIENT_URL } from "@/constants/Constants";
+import { API_USER, CLIENT_URL } from "@/constants/Constants";
+import useFetchData from "@/hooks/useFetchData";
 import "@/style/custom/stripe.css";
+import { User } from "@/types/userType";
 import {
   PaymentElement,
   useElements,
@@ -14,6 +16,9 @@ export default function StripeCheckoutForm() {
 
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState<User>();
+
+  useFetchData(setUser, API_USER);
 
   const handleStripeCheckoutSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,7 +36,7 @@ export default function StripeCheckoutForm() {
       confirmParams: {
         payment_method_data: {
           billing_details: {
-            name: "Jenny Rosen",
+            name: user!.lastName + user!.firstName,
           },
         },
         return_url: CLIENT_URL + "paiement-effectue",

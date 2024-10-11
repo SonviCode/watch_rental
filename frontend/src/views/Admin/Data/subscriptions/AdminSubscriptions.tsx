@@ -8,7 +8,7 @@ import { useState } from "react";
 const AdminSubscriptions = () => {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
 
-  const isLoading = useFetchData(setSubscriptions, API_SUBSCRIPTION);
+  const { isLoading } = useFetchData(setSubscriptions, API_SUBSCRIPTION);
 
   if (isLoading) return;
 
@@ -29,7 +29,7 @@ const AdminSubscriptions = () => {
                 Prix de l'abonnement
               </th>
               <th scope="col" className="px-6 py-3">
-                Prix des montres 
+                Prix des montres
               </th>
               <th scope="col" className="px-6 py-3">
                 <span className="sr-only">Edit</span>
@@ -42,9 +42,7 @@ const AdminSubscriptions = () => {
                 <th scope="row" className=" py-4  ">
                   {subscription.title}
                 </th>
-                <td className="px-6 py-4 max-w-0">
-                  {subscription.switchText} 
-                </td>
+                <td className="px-6 py-4 max-w-0">{subscription.switchText}</td>
                 <td className="px-6 py-4">{subscription.price} €</td>
                 <td className="px-6 py-4">{subscription.watchMaxPrice} €</td>
                 <td className="px-6 py-4 text-right">

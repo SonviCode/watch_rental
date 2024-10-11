@@ -7,7 +7,7 @@ import { Navigate, Outlet } from "react-router-dom";
 export const ProtectedAuthRoute = ({ children }: { children: JSX.Element }) => {
   const [user, setUser] = useState<User>();
 
-  const isLoading = useFetchData(setUser, API_USER);
+  const { isLoading } = useFetchData(setUser, API_USER);
 
   if (isLoading) return;
 

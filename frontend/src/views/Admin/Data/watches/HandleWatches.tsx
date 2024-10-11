@@ -21,12 +21,14 @@ const HandleWatches = ({
   const [materials, setMaterials] = useState<Material[]>();
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
 
-  let isLoading: boolean;
-  isLoading = useFetchData(setSubscriptions, API_SUBSCRIPTION);
-  isLoading = useFetchData(setMaterials, API_MATERIAL);
-  isLoading = useFetchData(setBrands, API_BRAND);
+  const { isLoading: subIsLoading } = useFetchData(
+    setSubscriptions,
+    API_SUBSCRIPTION
+  );
+  const { isLoading: matIsLoading } = useFetchData(setMaterials, API_MATERIAL);
+  const { isLoading: brandIsLoading } = useFetchData(setBrands, API_BRAND);
 
-  if (isLoading) return;
+  if (subIsLoading || brandIsLoading || matIsLoading) return;
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

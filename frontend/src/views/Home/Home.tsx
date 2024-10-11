@@ -4,8 +4,18 @@ import { Link } from "react-router-dom";
 import HowSection from "./HowSection/HowSection";
 import SubscripSection from "./SubscripSection/SubscripSection";
 import WatchSection from "./WatchSection/WatchSection";
+import { useDispatch } from "react-redux";
+import { removePurchaseSelectedWatch } from "@/store/slices/purchaseSelectedWatchSlice";
+import { useEffect } from "react";
 
 function Home() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(removePurchaseSelectedWatch());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <section className="mb-20 md:h-[520px]">

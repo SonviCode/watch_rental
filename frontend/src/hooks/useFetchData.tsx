@@ -42,7 +42,7 @@ const useFetchData = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return isLoading;
+  return { isLoading };
 };
 
 export default useFetchData;

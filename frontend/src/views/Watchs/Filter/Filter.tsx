@@ -21,12 +21,14 @@ const Filter = ({
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [checkedItems, setCheckedItems] = useState<FormData>(new FormData());
 
-  let isLoading: boolean;
-  isLoading = useFetchData(setSubscriptions, API_SUBSCRIPTION);
-  isLoading = useFetchData(setMaterials, API_MATERIAL);
-  isLoading = useFetchData(setBrands, API_BRAND);
+  const { isLoading: subIsLoading } = useFetchData(
+    setSubscriptions,
+    API_SUBSCRIPTION
+  );
+  const { isLoading: matIsLoading } = useFetchData(setMaterials, API_MATERIAL);
+  const { isLoading: brandIsLoading } = useFetchData(setBrands, API_BRAND);
 
-  if (isLoading) return;
+  if (subIsLoading || brandIsLoading || matIsLoading) return;
 
   return (
     <div className="bg-blacklight h-auto w-[280px] p-10">

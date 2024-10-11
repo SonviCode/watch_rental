@@ -14,7 +14,7 @@ const VerifyPhoneNumber = () => {
   const [otp, setOtp] = useState<string>("");
   const navigate = useNavigate();
 
-  const isLoading = useFetchData(setUser, API_USER);
+  const { isLoading } = useFetchData(setUser, API_USER);
 
   if (isLoading) return;
 

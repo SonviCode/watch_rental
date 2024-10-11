@@ -8,7 +8,7 @@ import SubscripCategorySkeleton from "./SubscripCategorySkeleton";
 const SubscripCategory = () => {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
 
-  const isLoading = useFetchData(setSubscriptions, API_SUBSCRIPTION);
+  const { isLoading } = useFetchData(setSubscriptions, API_SUBSCRIPTION);
 
   if (isLoading) return <SubscripCategorySkeleton />;
 

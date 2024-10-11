@@ -10,7 +10,7 @@ export const ProtectedAdminRoute = ({
 }) => {
   const [isAdmin, setisAdmin] = useState<boolean>();
 
-  const isLoading = useFetchData(setisAdmin, API_IS_ADMIN);
+  const { isLoading } = useFetchData(setisAdmin, API_IS_ADMIN);
 
   if (isLoading) return;
 
