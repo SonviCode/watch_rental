@@ -22,7 +22,7 @@ import PaymentCompleted from "@/views/Purchase/stripe/PaymentCompleted";
 import Subscription from "@/views/Subscription/Subscription";
 import Watch from "@/views/Watch/Watch";
 import Watchs from "@/views/Watchs/Watchs";
-import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import { ProtectedAdminRoute } from "./ProtectedAdminRoute";
 import { ProtectedAuthRoute } from "./ProtectedAuthRoute";
 
@@ -33,9 +33,7 @@ export const router = createBrowserRouter([
     children: [
       {
         element: (
-          <ProtectedAuthRoute>
-            <Outlet />
-          </ProtectedAuthRoute>
+          <ProtectedAuthRoute/>
         ),
         children: [
           {
@@ -51,19 +49,11 @@ export const router = createBrowserRouter([
           },
           {
             path: "/verif-email",
-            element: (
-              <ProtectedAuthRoute>
-                <VerifyEmail />
-              </ProtectedAuthRoute>
-            ),
+            element: <VerifyEmail />,
           },
           {
             path: "/verif-sms",
-            element: (
-              <ProtectedAuthRoute>
-                <VerifyPhoneNumber />
-              </ProtectedAuthRoute>
-            ),
+            element: <VerifyPhoneNumber />,
           },
           // {
           //   path: "/factures",

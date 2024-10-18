@@ -1,17 +1,20 @@
-import { API_USER } from "@/constants/Constants";
-import useFetchData from "@/hooks/useFetchData";
+import useUser from "@/hooks/useUser";
 import { User } from "@/types/userType";
-import { useState } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useOutletContext } from "react-router-dom";
 
-export const ProtectedAuthRoute = ({ children }: { children: JSX.Element }) => {
-  const [user, setUser] = useState<User>();
+export type ContextType = { user: User | undefined };
 
-  const { isLoading } = useFetchData(setUser, API_USER);
+export const ProtectedAuthRoute = () => {
+  const { isLoading, user } = useUser();
 
   if (isLoading) return;
 
   if (!user) return <Navigate to="/login" />;
 
-  return children ? children : <Outlet />;
+  return <Outlet context={{ user } satisfies ContextType} />;
 };
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function useUserOutletContext() {
+  return useOutletContext<ContextType>();
+}

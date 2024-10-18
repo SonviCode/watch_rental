@@ -1,15 +1,10 @@
 // import { InputsLogin } from "@/types/Inputs/InputsAccount";
 import LoginForm from "@/components/Auth/LoginForm";
-import { API_USER } from "@/constants/Constants";
-import useFetchData from "@/hooks/useFetchData";
-import { User } from "@/types/userType";
-import { useState } from "react";
+import useUser from "@/hooks/useUser";
 import { Link, Navigate } from "react-router-dom";
 
 const Login = () => {
-  const [user, setUser] = useState<User>();
-
-  const { isLoading } = useFetchData(setUser, API_USER);
+  const { isLoading, user } = useUser();
 
   if (isLoading) return;
 

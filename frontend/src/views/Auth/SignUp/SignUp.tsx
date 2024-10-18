@@ -1,7 +1,13 @@
 import SignUpForm from "@/components/Auth/SignUpForm";
-import { Link } from "react-router-dom";
+import useUser from "@/hooks/useUser";
+import { Link, Navigate } from "react-router-dom";
 
 const SignUp = () => {
+  const { isLoading, user } = useUser();
+
+  if (isLoading) return;
+  if (user) return <Navigate to="/account" />;
+
   return (
     <div className="py-5 md:px-10">
       <h1 className="pb-5">
@@ -11,7 +17,7 @@ const SignUp = () => {
       <SignUpForm />
       <Link to="/login" className="flex mt-10">
         Déjà un compte ?{" "}
-        <span className="underline cursor-pointer">Se connecter</span>
+        <span className="underline cursor-pointer ml-2">Se connecter</span>
       </Link>
     </div>
   );

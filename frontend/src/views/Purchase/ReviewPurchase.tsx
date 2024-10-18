@@ -9,6 +9,7 @@ import {
 import { RootState } from "@/store/store";
 import { Subscription } from "@/types/subscriptionTypes";
 import { Watch } from "@/types/watchTypes";
+import { isObjectEmpty } from "@/utils/globalUtils";
 import { defaultIdSubscription } from "@/utils/purchaseUtils";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -37,6 +38,8 @@ const ReviewPurchase = () => {
   );
 
   if (subIsLoading || watchIsLoading) return;
+
+  const watchIsSelected = isObjectEmpty(watchSelected);
 
   return (
     <section className="grow p-10">
@@ -106,7 +109,7 @@ const ReviewPurchase = () => {
             Montre sélectionnée
           </label>
           <div className="flex flex-wrap gap-5 w-full">
-            {Object.keys(watchSelected).length !== 0 ? (
+            {watchIsSelected ? (
               <WatchPurchaseCard
                 watch={watchSelected}
                 watchSelected={watchSelected}

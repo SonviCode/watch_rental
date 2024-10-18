@@ -1,24 +1,22 @@
-import { API_USER } from "@/constants/Constants";
-import useFetchData from "@/hooks/useFetchData";
+import { useUserOutletContext } from "@/router/ProtectedAuthRoute";
 import {
   fetchLogout,
   fetchResendOtpEmail,
   fetchVerifyMail,
 } from "@/services/api/auth";
 import "@/style/custom/otpInputStyle.css";
-import { User } from "@/types/userType";
 import { useState } from "react";
 import OtpInput from "react-otp-input";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const VerifyEmail = () => {
   const [message, setMessage] = useState<string>("");
-  const [user, setUser] = useState<User | undefined>();
   const [otp, setOtp] = useState<string>("");
+  const { user } = useUserOutletContext();
+
   const navigate = useNavigate();
 
-  useFetchData(setUser, API_USER);
-
+  // if (isLoading) return;
   if (user?.emailIsVerified) return <Navigate to="/account" />;
 
   return (

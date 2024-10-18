@@ -1,10 +1,11 @@
-import { ERROR_SELECT_A_WATCH } from "@/constants/Constants";
+import useUser from "@/hooks/useUser";
+import { handleContinuePurchaseToNextStep } from "@/services/handler/handlePurchase";
 import { RootState } from "@/store/store";
 import { purchaseStepsType } from "@/types/purchaseTypes";
 import { Subscription } from "@/types/subscriptionTypes";
 import { Watch } from "@/types/watchTypes";
 import { formatEuros } from "@/utils/formatUtils";
-import { nextPurchaseStep } from "@/utils/purchaseUtils";
+import { isObjectEmpty } from "@/utils/globalUtils";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -16,6 +17,7 @@ const SummaryPurchase = ({
   purchaseSteps: purchaseStepsType[];
 }) => {
   const [messages, setMessages] = useState<string>("");
+  const { isLoading, user } = useUser();
   const subscription: Subscription = useSelector(
     (state: RootState) => state.subscription.value
   );
@@ -23,15 +25,9 @@ const SummaryPurchase = ({
     (state: RootState) => state.purchaseSelectedWatch.value
   );
 
-  const handleContinuePurchase = () => {
-    if (!watchSelected) {
-      setMessages(ERROR_SELECT_A_WATCH);
-      return;
-    }
+  if (isLoading) return;
 
-    setMessages("");
-    nextPurchaseStep(purchaseSteps, setPurchaseSteps);
-  };
+  const watchIsSelected = isObjectEmpty(watchSelected);
 
   return (
     <section className="p-10 lg:min-w-[300px] lg:w-1/3 w-full bg-black mt-2">
@@ -61,12 +57,12 @@ const SummaryPurchase = ({
         <h3 className="gradient-text font-bold text-xl">
           Montre sélectionée :
         </h3>
-        {Object.keys(watchSelected).length !== 0 && (
+        {watchIsSelected && (
           <p>
             {watchSelected.brand.brandName} - {watchSelected.name}
           </p>
         )}
-        {Object.keys(watchSelected).length === 0 && messages && (
+        {watchIsSelected && messages && (
           <p className="text-sm italic text-center text-pretty text-red-600">
             {messages}
           </p>
@@ -75,7 +71,15 @@ const SummaryPurchase = ({
       <hr className="my-10" />
       {!purchaseSteps[2].actif && (
         <button
-          onClick={() => handleContinuePurchase()}
+          onClick={() =>
+            handleContinuePurchaseToNextStep(
+              setMessages,
+              setPurchaseSteps,
+              purchaseSteps,
+              watchIsSelected,
+              user!
+            )
+          }
           className="mb-2 bg-greenfluo text-black font-bold w-full py-2 px-4 rounded-lg text-center"
         >
           Continuer

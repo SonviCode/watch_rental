@@ -1,5 +1,6 @@
 import { purchaseStepsType } from "@/types/purchaseTypes";
 import { Watch } from "@/types/watchTypes";
+import { isObjectEmpty } from "@/utils/globalUtils";
 import { goToSubscriptionStep, goToUserStep } from "@/utils/purchaseUtils";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 
@@ -17,7 +18,7 @@ export default function useCheckPurchaseStep(
 
     const checkSteps = async () => {
       // if a watch is already selected, go directly to user data step, else go to subscription step
-      Object.keys(watchSelected).length !== 0
+      isObjectEmpty(watchSelected)
         ? goToUserStep(purchaseSteps, setPurchaseSteps)
         : goToSubscriptionStep(purchaseSteps, setPurchaseSteps);
     };

@@ -1,6 +1,4 @@
-import { API_USER } from "@/constants/Constants";
-import useFetchData from "@/hooks/useFetchData";
-import { User } from "@/types/userType";
+import { useUserOutletContext } from "@/router/ProtectedAuthRoute";
 import { formatPhoneNumber } from "@/utils/formatUtils";
 import {
   faLocationDot,
@@ -8,16 +6,13 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
 import { Navigate } from "react-router-dom";
 
 const Account = () => {
   // const [error, setError] = useState<string>("");
-  const [user, setUser] = useState<User>();
+  const { user } = useUserOutletContext();
 
-  const { isLoading } = useFetchData(setUser, API_USER);
-
-  if (isLoading) return;
+  // if (isLoading) return;
 
   if (!user?.emailIsVerified) return <Navigate to="/verif-email" />;
   // if (!user?.smsIsVerified) return <Navigate to="/verif-sms" />;

@@ -29,7 +29,7 @@ const useFetchData = (
 
         setData(data);
       } catch (e) {
-        // store.dispatch(setUser(null));
+        console.log(e);
       } finally {
         setLoading(false);
       }

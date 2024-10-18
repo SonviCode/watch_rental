@@ -39,7 +39,7 @@ const NavBar = () => {
               Contact
             </NavLink>
             <NavLink
-              to="/account"
+              to="/login"
               className="hover:underline underline-offset-4"
             >
               Mon compte

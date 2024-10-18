@@ -1,25 +1,18 @@
-import { API_USER } from "@/constants/Constants";
-import useFetchData from "@/hooks/useFetchData";
-import { User } from "@/types/userType";
-import { useState } from "react";
-import { Navigate } from "react-router-dom";
-import AuthPurchase from "./AuthPurchase";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useUser from "@/hooks/useUser";
+import { formatPhoneNumber } from "@/utils/formatUtils";
 import {
   faLocationDot,
   faRectangleList,
 } from "@fortawesome/free-solid-svg-icons";
-import { formatPhoneNumber } from "@/utils/formatUtils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Navigate } from "react-router-dom";
+import AuthPurchase from "./AuthPurchase";
 
 const UserDataPurchase = () => {
-  const [user, setUser] = useState<User>();
-
-  const { isLoading } = useFetchData(setUser, API_USER);
+  const { isLoading, user } = useUser();
 
   if (isLoading) return;
-
   if (!user) return <AuthPurchase />;
-
   if (!user?.emailIsVerified) return <Navigate to="/verif-email" />;
 
   return (

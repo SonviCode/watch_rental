@@ -1,25 +1,27 @@
-export type User = {
-  role?: string;
-  id: number;
-  lastName: string;
-  firstName: string;
-  email: string;
-  password?: string;
-  birthday: Date;
-  phoneNumber: number;
-  location: Address;
-  emailIsVerified: boolean;
-  smsIsVerified: boolean;
-  idIsVerified: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-};
+export type User =
+  | {
+      role?: string;
+      id: number;
+      lastName: string;
+      firstName: string;
+      email: string;
+      password?: string;
+      birthday: Date;
+      phoneNumber: number;
+      location: Address;
+      emailIsVerified: boolean;
+      smsIsVerified: boolean;
+      idIsVerified: boolean;
+      createdAt: Date;
+      updatedAt: Date;
+    }
+  | Record<string, never>;
 
 export interface userState {
-  value: User | undefined;
+  value: User | Record<string, never>;
 }
 
-export type Address = { 
+export type Address = {
   additional_address?: string;
   address: string;
   city: string;
