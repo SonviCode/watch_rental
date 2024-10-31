@@ -5,6 +5,8 @@ export default class UserController {
   async getUserConnectedInfo({ auth, response }: HttpContext) {
     const user = await User.find(auth.user?.id)
 
+    await user?.load('address')
+
     return response.ok(user)
   }
 

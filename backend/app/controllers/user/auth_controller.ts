@@ -13,17 +13,13 @@ const client = twilio(accountSid, authToken)
 
 export default class AuthController {
   async signup({ request, response }: HttpContext) {
-    const body = request.body()
-
     // if (!body['g-recaptcha-response']) {
     //   return response.abort({ errors: [{ message: CAPTCHA_NOT_VALID }] })
     // }
 
-    body.location = JSON.parse(body.location)
+    const body = await request.validateUsing(signUpValidator)
 
-    const payload = await signUpValidator.validate(body)
-
-    const user = await User.create(payload)
+    const user = await User.create(body)
 
     return response.created(user)
   }

@@ -1,14 +1,14 @@
 export type User =
   | {
       role?: string;
-      id: number;
+      id: string;
       lastName: string;
       firstName: string;
       email: string;
       password?: string;
       birthday: Date;
       phoneNumber: number;
-      location: Address;
+      address: Address[];
       emailIsVerified: boolean;
       smsIsVerified: boolean;
       idIsVerified: boolean;
@@ -22,8 +22,10 @@ export interface userState {
 }
 
 export type Address = {
-  additional_address?: string;
-  address: string;
+  mainAddress: string;
+  country: string;
+  additionalAddress?: string;
   city: string;
-  postal_code: string;
+  zipCode: string;
+  billingAddress?: string;
 };

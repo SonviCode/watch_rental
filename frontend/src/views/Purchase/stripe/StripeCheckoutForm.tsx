@@ -1,77 +1,55 @@
-import { API_USER, CLIENT_URL } from "@/constants/Constants";
+import { API_USER, paymentElementOptions } from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
+import { handleStripeCheckoutSubmit } from "@/services/handler/handleStripeSubmit";
+import { RootState } from "@/store/store";
 import "@/style/custom/stripe.css";
+import { Subscription } from "@/types/subscriptionTypes";
 import { User } from "@/types/userType";
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { StripePaymentElementOptions } from "@stripe/stripe-js";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function StripeCheckoutForm() {
-  const stripe = useStripe();
-  const elements = useElements();
-
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<User>();
 
+  const stripe = useStripe();
+  const elements = useElements();
+  const navigate = useNavigate();
+
+  const subscription: Subscription = useSelector(
+    (state: RootState) => state.subscription.value
+  );
+
   useFetchData(setUser, API_USER);
-
-  const handleStripeCheckoutSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!stripe || !elements) {
-      // Stripe.js hasn't yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
-      return;
-    }
-
-    setIsLoading(true);
-
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        payment_method_data: {
-          billing_details: {
-            name: user!.lastName + user!.firstName,
-          },
-        },
-        return_url: CLIENT_URL + "paiement-effectue",
-      },
-    });
-
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message!);
-    } else {
-      setMessage("An unexpected error occurred.");
-    }
-
-    setIsLoading(false);
-  };
-
-  const paymentElementOptions: StripePaymentElementOptions = {
-    layout: "tabs",
-  };
 
   return (
     <>
       <form
         id="payment-form"
         className="p-10 flex flex-col gap-5"
-        onSubmit={(e) => handleStripeCheckoutSubmit(e)}
+        onSubmit={(e) =>
+          handleStripeCheckoutSubmit(
+            e,
+            stripe,
+            elements,
+            user,
+            subscription,
+            setMessage,
+            setIsLoading,
+            navigate
+          )
+        }
       >
         <PaymentElement id="payment-element" options={paymentElementOptions} />
         <div className="">
           <input
-            // onClick={(e) => getFilterProduct(e, el, key.keyRequest)}
             id="generalConditionsOfSale"
             name="generalConditionsOfSale"
             type="checkbox"
@@ -101,7 +79,6 @@ export default function StripeCheckoutForm() {
             )}
           </span>
         </button>
-        {/* Show any error or success messages */}
         {message && (
           <div
             className="text-lg text-graylight text-center"
@@ -111,21 +88,6 @@ export default function StripeCheckoutForm() {
           </div>
         )}
       </form>
-      {/* [DEV]: Display dynamic payment methods annotation and integration checker */}
-      {/* <div id="dpm-annotation">
-        <p>
-        Payment methods are dynamically displayed based on customer location,
-        order amount, and currency.&nbsp;
-        <a
-        href={dpmCheckerLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        id="dpm-integration-checker"
-        >
-        Preview payment methods by transaction
-        </a>
-        </p>
-        </div> */}
     </>
   );
 }

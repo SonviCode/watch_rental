@@ -1,12 +1,13 @@
 import { withAuthFinder } from '@adonisjs/auth'
 import { compose } from '@adonisjs/core/helpers'
 import hash from '@adonisjs/core/services/hash'
-import { BaseModel, beforeCreate, column, hasOne } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeCreate, belongsTo, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
+import type { BelongsTo, HasMany, HasOne } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
-import type { Location } from '../../types/user_types.js'
-import UserOtpVerification from './user_otp_verification.js'
-import type { HasOne } from '@adonisjs/lucid/types/relations'
 import { randomUUID } from 'node:crypto'
+import Address from './address.js'
+import Rental from './rental.js'
+import UserOtpVerification from './user_otp_verification.js'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -21,8 +22,17 @@ export default class User extends compose(BaseModel, AuthFinder) {
     user.id = randomUUID()
   }
 
+  @hasOne(() => Rental)
+  declare rental: HasOne<typeof Rental>
+
   @hasOne(() => UserOtpVerification)
   declare userOtpVerification: HasOne<typeof UserOtpVerification>
+
+  @hasMany(() => Address)
+  declare address: HasMany<typeof Address>
+
+  @column({ serializeAs: null })
+  declare addressId: string
 
   @column({ isPrimary: true })
   declare id: string
@@ -47,9 +57,6 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @column()
   declare birthDate: DateTime
-
-  @column()
-  declare location: Location
 
   @column()
   declare emailIsVerified: boolean

@@ -1,6 +1,6 @@
 export type Subscription =
   | {
-      id: number;
+      id: string;
       title: string;
       switchText: string;
       description: string;

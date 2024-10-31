@@ -1,3 +1,10 @@
+import {
+  faClock,
+  faCreditCard,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+import { StripePaymentElementOptions } from "@stripe/stripe-js";
+
 // ---global
 export const BRAND_NAME = "TEMPO";
 
@@ -19,6 +26,8 @@ export const API_IS_ADMIN = API_ROOTDIR + "auth/admin";
 // ---user
 export const API_USER = API_ROOTDIR + "user";
 export const API_GET_ALL_USERS = API_ROOTDIR + "user/all-users";
+// ---address
+export const API_ADDRESS = API_ROOTDIR + "address";
 // ---purchase
 export const API_PURCHASE = API_ROOTDIR + "purchase";
 export const API_PURCHASE_CREATE_STRIPE_PAYMENT =
@@ -31,14 +40,33 @@ export const API_WATCH = API_ROOTDIR + "watch";
 export const API_BRAND = API_ROOTDIR + "brand";
 // ---material
 export const API_MATERIAL = API_ROOTDIR + "material";
+// ---rental
+export const API_RENTAL = API_ROOTDIR + "rental";
 
 // ---ACCOUNT
 export const DIFFERENT_PASSWORD = "Les mots de passes sont différents";
 export const INVALID_CREDENTIALS = "Informations d'identification invalide";
+export const INVALID_OTP_CODE = "Le code est incorrect, veuillez réessayer";
 export const GENERIC_ERROR = "Une erreur s'est produite, veuillez réessayer";
 
 // ---PURCHASE
 export const ERROR_SELECT_A_WATCH = "Vous devez sélectionnez une montre !";
+export const ERROR_SELECT_A_DATE =
+  "Vous devez sélectionnez une date de début de location !";
+export const defaultPurchaseSteps = [
+  { title: "subscription", icon: faClock, step: 1, actif: true },
+  { title: "userData", icon: faUser, step: 2, actif: false },
+  { title: "payment", icon: faCreditCard, step: 3, actif: false },
+];
+export const returnUrlAfterSuccessPayment = "paiement-effectue";
+export const paymentElementOptions: StripePaymentElementOptions = {
+  layout: "tabs",
+};
+export const dateTimeFormatOptions: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+};
 
 // ---Subscription
 

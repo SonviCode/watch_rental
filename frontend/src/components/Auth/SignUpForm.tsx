@@ -70,7 +70,7 @@ const SignUpForm = () => {
           Mot de passe
         </label>
         <FontAwesomeIcon
-          className="absolute text-graylight  right-2 top-1/2 -translate-y-1/2"
+          className="absolute text-graylight right-4 top-1/2 -translate-y-1/2"
           icon={seePswd ? faEyeSlash : faEye}
           onClick={() => setSeePswd(!seePswd)}
         />
@@ -87,7 +87,7 @@ const SignUpForm = () => {
           Confirmer le mot de passe
         </label>
         <FontAwesomeIcon
-          className="absolute text-graylight  right-2 top-1/2 -translate-y-1/2"
+          className="absolute text-graylight right-4 top-1/2 -translate-y-1/2"
           icon={seePswd ? faEyeSlash : faEye}
           onClick={() => setSeePswd(!seePswd)}
         />
@@ -109,12 +109,13 @@ const SignUpForm = () => {
         <div className="w-1/2 relative">
           <input
             type="text"
-            id="address"
+            id="main_address"
+            name="main_address"
             className="rounded-md bg-blacklight px-4 py-3 peer w-full"
             placeholder=""
             required
           />
-          <label className="label-form" htmlFor="address">
+          <label className="label-form" htmlFor="main_address">
             Adresse
           </label>
         </div>
@@ -122,6 +123,7 @@ const SignUpForm = () => {
           <input
             type="text"
             id="additional_address"
+            name="additional_address"
             className="rounded-md bg-blacklight px-4 py-3 peer w-full"
             placeholder=""
           />
@@ -136,6 +138,7 @@ const SignUpForm = () => {
           <input
             type="text"
             id="city"
+            name="city"
             className="rounded-md bg-blacklight px-4 py-3 peer w-full"
             placeholder=""
             required
@@ -147,12 +150,26 @@ const SignUpForm = () => {
         <div className="w-1/2 relative">
           <input
             type="text"
-            id="postal_code"
+            id="country"
+            name="country"
             className="rounded-md bg-blacklight px-4 py-3 peer w-full"
             placeholder=""
             required
           />
-          <label className="label-form" htmlFor="postal_code">
+          <label className="label-form" htmlFor="country">
+            Pays
+          </label>
+        </div>
+        <div className="w-1/2 relative">
+          <input
+            type="text"
+            id="zip_code"
+            name="zip_code"
+            className="rounded-md bg-blacklight px-4 py-3 peer w-full"
+            placeholder=""
+            required
+          />
+          <label className="label-form" htmlFor="zip_code">
             Code postal
           </label>
         </div>

@@ -1,4 +1,4 @@
-const AuthController = () => import('#controllers/auth_controller')
+const AuthController = () => import('#controllers/user/auth_controller')
 
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'

@@ -10,9 +10,9 @@ import { Navigate } from "react-router-dom";
 
 const Account = () => {
   // const [error, setError] = useState<string>("");
-  const { user } = useUserOutletContext();
+  const { user, isLoading } = useUserOutletContext();
 
-  // if (isLoading) return;
+  if (isLoading) return;
 
   if (!user?.emailIsVerified) return <Navigate to="/verif-email" />;
   // if (!user?.smsIsVerified) return <Navigate to="/verif-sms" />;
@@ -41,9 +41,9 @@ const Account = () => {
           <h2 className="uppercase font-bold mb-3">
             <FontAwesomeIcon icon={faLocationDot} /> Adresse
           </h2>
-          <p>{user?.location.address}</p>
+          <p>{user?.address.mainAddress}</p>
           <p>
-            {user?.location.postal_code} - {user?.location.city}
+            {user?.address.zipCode} - {user?.address.city}
           </p>
         </div>
       </div>

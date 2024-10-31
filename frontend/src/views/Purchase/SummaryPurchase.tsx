@@ -1,3 +1,4 @@
+import { dateTimeFormatOptions } from "@/constants/Constants";
 import useUser from "@/hooks/useUser";
 import { handleContinuePurchaseToNextStep } from "@/services/handler/handlePurchase";
 import { RootState } from "@/store/store";
@@ -6,15 +7,18 @@ import { Subscription } from "@/types/subscriptionTypes";
 import { Watch } from "@/types/watchTypes";
 import { formatEuros } from "@/utils/formatUtils";
 import { isObjectEmpty } from "@/utils/globalUtils";
+import { Value } from "node_modules/react-date-picker/dist/esm/shared/types";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useSelector } from "react-redux";
 
 const SummaryPurchase = ({
   setPurchaseSteps,
   purchaseSteps,
+  rentalStartDate,
 }: {
   setPurchaseSteps: Dispatch<SetStateAction<purchaseStepsType[]>>;
   purchaseSteps: purchaseStepsType[];
+  rentalStartDate: Value;
 }) => {
   const [messages, setMessages] = useState<string>("");
   const { isLoading, user } = useUser();
@@ -27,7 +31,9 @@ const SummaryPurchase = ({
 
   if (isLoading) return;
 
-  const watchIsSelected = isObjectEmpty(watchSelected);
+  const isWatchSelected = !isObjectEmpty(watchSelected);
+
+  console.log(messages);
 
   return (
     <section className="p-10 lg:min-w-[300px] lg:w-1/3 w-full bg-black mt-2">
@@ -46,29 +52,37 @@ const SummaryPurchase = ({
           </p>
         </div>
       </div>
-      <hr className="my-10" />
+      <hr className="my-5" />
       <div className="text-end flex flex-col">
         <span className="font-extrabold">{subscription.price}€/mois</span>
         <span className="gradient-text font-bold text-xl">Sans engagement</span>
         <span className="">Livraison gratuite à domicile</span>
       </div>
-      <hr className="my-10" />
+      <hr className="my-5" />
+      <div className="flex flex-col">
+        <span className="text-sm">Date de début de la location : </span>
+        <span className="font-bold">
+          {rentalStartDate &&
+            rentalStartDate.toLocaleString("fr-FR", dateTimeFormatOptions)}
+        </span>
+      </div>
+      <hr className="my-5" />
       <div className="flex flex-col gap-2">
         <h3 className="gradient-text font-bold text-xl">
           Montre sélectionée :
         </h3>
-        {watchIsSelected && (
+        {isWatchSelected && (
           <p>
             {watchSelected.brand.brandName} - {watchSelected.name}
           </p>
         )}
-        {watchIsSelected && messages && (
+        {messages && (
           <p className="text-sm italic text-center text-pretty text-red-600">
             {messages}
           </p>
         )}
       </div>
-      <hr className="my-10" />
+      <hr className="my-5" />
       {!purchaseSteps[2].actif && (
         <button
           onClick={() =>
@@ -76,7 +90,8 @@ const SummaryPurchase = ({
               setMessages,
               setPurchaseSteps,
               purchaseSteps,
-              watchIsSelected,
+              isWatchSelected,
+              rentalStartDate,
               user!
             )
           }

@@ -3,11 +3,8 @@ import { RootState } from "@/store/store";
 import { purchaseStepsType } from "@/types/purchaseTypes";
 import { Subscription } from "@/types/subscriptionTypes";
 import { Watch } from "@/types/watchTypes";
-import {
-  faClock,
-  faCreditCard,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+
+import { defaultPurchaseSteps } from "@/constants/Constants";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
@@ -16,16 +13,16 @@ import StepsPurchase from "./StepsPurchase";
 import StripePayment from "./stripe/StripePayment";
 import SummaryPurchase from "./SummaryPurchase";
 import UserDataPurchase from "./UserDataPurchase";
-
-const defaultPurchaseSteps = [
-  { title: "subscription", icon: faClock, step: 1, actif: true },
-  { title: "userData", icon: faUser, step: 2, actif: false },
-  { title: "payment", icon: faCreditCard, step: 3, actif: false },
-];
+import { Value } from "node_modules/react-date-picker/dist/esm/shared/types";
+import usePersistedState from "@/hooks/usePersistedState";
 
 const ContainerPurchase = () => {
   const [purchaseSteps, setPurchaseSteps] =
     useState<purchaseStepsType[]>(defaultPurchaseSteps);
+  const [rentalStartDate, setRentalStartDate] = usePersistedState<Value>(
+    null,
+    "rentalStartDate"
+  );
 
   const subscription: Subscription = useSelector(
     (state: RootState) => state.subscription.value
@@ -34,14 +31,19 @@ const ContainerPurchase = () => {
     (state: RootState) => state.purchaseSelectedWatch.value
   );
 
-  useCheckPurchaseStep(watchSelected, purchaseSteps, setPurchaseSteps);
+  useCheckPurchaseStep(watchSelected, rentalStartDate, purchaseSteps, setPurchaseSteps);
 
   if (!subscription.id) return <Navigate to="/subscription" />;
 
   const getActiveStep = () => {
     if (purchaseSteps[2].actif) return <StripePayment />;
     if (purchaseSteps[1].actif) return <UserDataPurchase />;
-    return <ReviewPurchase />;
+    return (
+      <ReviewPurchase
+        rentalStartDate={rentalStartDate}
+        setRentalStartDate={setRentalStartDate}
+      />
+    );
   };
 
   const activeStep = getActiveStep();
@@ -59,6 +61,7 @@ const ContainerPurchase = () => {
         <SummaryPurchase
           setPurchaseSteps={setPurchaseSteps}
           purchaseSteps={purchaseSteps}
+          rentalStartDate={rentalStartDate}
         />
       </div>
     </>

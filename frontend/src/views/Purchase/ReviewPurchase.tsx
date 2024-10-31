@@ -1,22 +1,24 @@
 import WatchPurchaseCard from "@/components/Card/WatchPurchaseCard";
+import InputDateStartRental from "@/components/Purchase/InputDateStartRental";
+import SubscriptionSelectPurchase from "@/components/Purchase/SubscriptionSelectPurchase";
 import { API_SUBSCRIPTION, API_WATCH } from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
-import { handleChangeSubscriptionSelectOption } from "@/services/handler/handleChange";
-import {
-  removePurchaseSelectedWatch,
-  setPurchaseSelectedWatch,
-} from "@/store/slices/purchaseSelectedWatchSlice";
+import { setPurchaseSelectedWatch } from "@/store/slices/purchaseSelectedWatchSlice";
 import { RootState } from "@/store/store";
 import { Subscription } from "@/types/subscriptionTypes";
 import { Watch } from "@/types/watchTypes";
 import { isObjectEmpty } from "@/utils/globalUtils";
-import { defaultIdSubscription } from "@/utils/purchaseUtils";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { Value } from "node_modules/react-date-picker/dist/esm/shared/types";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const ReviewPurchase = () => {
+const ReviewPurchase = ({
+  setRentalStartDate,
+  rentalStartDate,
+}: {
+  setRentalStartDate: Dispatch<SetStateAction<Value>>;
+  rentalStartDate: Value;
+}) => {
   const [allSubscriptions, setAllSubscriptions] = useState<Subscription[]>([]);
   const [watchs, setWatchs] = useState<Watch[]>([]);
 
@@ -39,43 +41,21 @@ const ReviewPurchase = () => {
 
   if (subIsLoading || watchIsLoading) return;
 
-  const watchIsSelected = isObjectEmpty(watchSelected);
+  const isWatchSelected = !isObjectEmpty(watchSelected);
 
   return (
     <section className="grow p-10">
       <form className="grow flex flex-col gap-5">
-        <div className="flex flex-col gap-2 max-w-sm">
-          <label htmlFor="subscriptions" className="text-sm">
-            Abonnement sélectionné
-          </label>
-          <div className="relative">
-            <select
-              id="subscriptions"
-              className="rounded-lg border w-full border-gray appearance-none bg-gray h-full py-2 px-4 pr-10 focus:outline-none focus:border-gray cursor-pointer"
-              onChange={(e) => {
-                handleChangeSubscriptionSelectOption(
-                  e,
-                  allSubscriptions,
-                  setWatchs
-                ),
-                  dispatch(removePurchaseSelectedWatch());
-              }}
-              defaultValue={defaultIdSubscription(
-                allSubscriptions,
-                subscription
-              )}
-            >
-              {allSubscriptions.map((sub, i) => (
-                <option key={i} value={sub.id}>
-                  {sub.title}
-                </option>
-              ))}
-            </select>
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              className=" text-white absolute pointer-events-none right-4 top-1/2 -translate-y-1/2"
-            />
-          </div>
+        <div className="flex gap-10 justify-between">
+          <SubscriptionSelectPurchase
+            setWatchs={setWatchs}
+            allSubscriptions={allSubscriptions}
+            subscription={subscription}
+          />
+          <InputDateStartRental
+            setRentalStartDate={setRentalStartDate}
+            rentalStartDate={rentalStartDate}
+          />
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="subscriptions" className="text-sm">
@@ -109,7 +89,7 @@ const ReviewPurchase = () => {
             Montre sélectionnée
           </label>
           <div className="flex flex-wrap gap-5 w-full">
-            {watchIsSelected ? (
+            {isWatchSelected ? (
               <WatchPurchaseCard
                 watch={watchSelected}
                 watchSelected={watchSelected}

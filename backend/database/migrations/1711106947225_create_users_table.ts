@@ -13,7 +13,7 @@ export default class extends BaseSchema {
       table.string('role').defaultTo('USER').notNullable()
       table.string('phone_number').notNullable()
       table.timestamp('birth_date').notNullable()
-      table.json('location').notNullable()
+      table.uuid('address_id').references('addresses.id')
       table.boolean('email_is_verified').defaultTo(false)
       table.boolean('sms_is_verified').defaultTo(false)
       table.boolean('id_is_verified').defaultTo(false)

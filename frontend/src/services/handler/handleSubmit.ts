@@ -3,13 +3,13 @@ import { Dispatch, FormEvent, SetStateAction } from "react";
 import { fetchLogin, fetchSignUp } from "../api/auth";
 
 /**
- * 
- * @param e 
- * @param setError 
- * @param phone 
- * @returns 
+ *
+ * @param e
+ * @param setError
+ * @param phone
+ * @returns
  */
-export const handleSignUpSubmit = (
+export const handleSignUpSubmit = async (
   e: FormEvent<HTMLFormElement>,
   setError: Dispatch<SetStateAction<string>>,
   phone: string
@@ -22,28 +22,19 @@ export const handleSignUpSubmit = (
     setError(DIFFERENT_PASSWORD);
     return;
   }
-
-  const location = {
-    address: elements.address.value,
-    additional_address: elements.additional_address.value,
-    city: elements.city.value,
-    postal_code: elements.postal_code.value,
-  };
-
   formData.set("phone_number", phone.trim());
-  formData.set("location", JSON.stringify(location));
 
   fetchSignUp(formData, setError);
 };
 
 /**
- * 
- * @param e 
- * @param setError 
+ *
+ * @param e
+ * @param setError
  */
 export const handleLoginSubmit = (
   e: FormEvent<HTMLFormElement>,
-  setError: Dispatch<SetStateAction<string>>,
+  setError: Dispatch<SetStateAction<string>>
 ) => {
   e.preventDefault();
 

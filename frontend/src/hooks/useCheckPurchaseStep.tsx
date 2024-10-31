@@ -2,10 +2,12 @@ import { purchaseStepsType } from "@/types/purchaseTypes";
 import { Watch } from "@/types/watchTypes";
 import { isObjectEmpty } from "@/utils/globalUtils";
 import { goToSubscriptionStep, goToUserStep } from "@/utils/purchaseUtils";
+import { Value } from "node_modules/react-date-picker/dist/esm/shared/types";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 
 export default function useCheckPurchaseStep(
   watchSelected: Watch,
+  rentalStartDate: Value,
   purchaseSteps: purchaseStepsType[],
   setPurchaseSteps: Dispatch<SetStateAction<purchaseStepsType[]>>
 ) {
@@ -17,10 +19,10 @@ export default function useCheckPurchaseStep(
     }
 
     const checkSteps = async () => {
-      // if a watch is already selected, go directly to user data step, else go to subscription step
-      isObjectEmpty(watchSelected)
-        ? goToUserStep(purchaseSteps, setPurchaseSteps)
-        : goToSubscriptionStep(purchaseSteps, setPurchaseSteps);
+      // if a watch and a date is already selected, go directly to user data step, else go to subscription step
+      isObjectEmpty(watchSelected) || rentalStartDate === null
+        ? goToSubscriptionStep(purchaseSteps, setPurchaseSteps)
+        : goToUserStep(purchaseSteps, setPurchaseSteps);
     };
 
     checkSteps();

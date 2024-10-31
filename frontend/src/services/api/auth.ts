@@ -6,10 +6,15 @@ import {
   API_VERIFY_OTP_MAIL,
   GENERIC_ERROR,
   INVALID_CREDENTIALS,
+  INVALID_OTP_CODE,
 } from "@/constants/Constants";
 import { Dispatch, SetStateAction } from "react";
 import { NavigateFunction } from "react-router-dom";
-import { API_RESEND_OTP_SMS, API_VERIFY_OTP_SMS } from '../../constants/Constants';
+import {
+  API_RESEND_OTP_SMS,
+  API_VERIFY_OTP_SMS,
+} from "../../constants/Constants";
+import { fetchCreateAddress } from "./user";
 
 /**
  * service to sign up and add user
@@ -19,7 +24,7 @@ import { API_RESEND_OTP_SMS, API_VERIFY_OTP_SMS } from '../../constants/Constant
  */
 export const fetchSignUp = async (
   formData: FormData,
-  setError: Dispatch<SetStateAction<string>>,
+  setError: Dispatch<SetStateAction<string>>
 ) => {
   try {
     const res = await fetch(API_SIGNUP, {
@@ -34,11 +39,11 @@ export const fetchSignUp = async (
       return;
     }
 
-    fetchLogin(
-      data.email,
-      formData.get("password") as string,
-      setError
-    );
+    formData.set("user_id", data.id);
+
+    await fetchCreateAddress(formData, setError);
+
+    fetchLogin(data.email, formData.get("password") as string, setError);
   } catch (e) {
     setError(GENERIC_ERROR);
   }
@@ -55,7 +60,7 @@ export const fetchSignUp = async (
 export const fetchLogin = async (
   email: string,
   password: string,
-  setError: Dispatch<SetStateAction<string>>,
+  setError: Dispatch<SetStateAction<string>>
 ) => {
   try {
     const res = await fetch(API_LOGIN, {
@@ -101,8 +106,7 @@ export const fetchLogout = async (navigate: NavigateFunction) => {
  */
 export const fetchVerifyMail = async (
   code: string,
-  setError: Dispatch<SetStateAction<string>>,
-  navigate: NavigateFunction
+  setError: Dispatch<SetStateAction<string>>
 ) => {
   try {
     const res = await fetch(API_VERIFY_OTP_MAIL, {
@@ -116,11 +120,11 @@ export const fetchVerifyMail = async (
     });
 
     if (!res.ok) {
-      setError(INVALID_CREDENTIALS);
+      setError(INVALID_OTP_CODE);
       return;
     }
 
-    navigate("/account");
+    location.reload();
   } catch (e) {
     setError(GENERIC_ERROR);
   }

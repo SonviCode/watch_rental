@@ -36,14 +36,12 @@ const VerifyEmail = () => {
           inputStyle="inputStyle"
         />
         <button
-          onClick={() => fetchVerifyMail(otp, setMessage, navigate)}
+          onClick={() => fetchVerifyMail(otp, setMessage)}
           className="gradient-bg py-2 px-10 rounded-lg text-center "
         >
           Valider
         </button>
-        {message && (
-          <p className="text-red-600 underline cursor-pointer">{message}</p>
-        )}
+        {message && <p className="text-red-600 underline">{message}</p>}
       </div>
       <div className="flex gap-10 items-center">
         <div className="text-sm italic flex flex-col items-center">

@@ -1,4 +1,4 @@
-import { API_USER, GENERIC_ERROR } from "@/constants/Constants";
+import { API_ADDRESS, API_USER, GENERIC_ERROR } from "@/constants/Constants";
 import { User } from "@/types/userType";
 import { Dispatch, SetStateAction } from "react";
 
@@ -24,6 +24,33 @@ export const fetchUserInfo = async (
     }
 
     setUser(data);
+  } catch (e) {
+    setError(GENERIC_ERROR);
+  }
+};
+
+/**
+ *
+ * @param formData
+ * @param setError
+ * @returns
+ */
+export const fetchCreateAddress = async (
+  formData: FormData,
+  setError: Dispatch<SetStateAction<string>>
+) => {
+  try {
+    const res = await fetch(API_ADDRESS, {
+      method: "POST",
+      body: formData,
+      credentials: "include",
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.errors[0].message);
+    }
+    return data.id;
   } catch (e) {
     setError(GENERIC_ERROR);
   }
