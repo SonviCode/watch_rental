@@ -30,7 +30,6 @@ export const handleContinuePurchaseToNextStep = (
     setMessages(ERROR_SELECT_A_WATCH);
     return;
   }
-  console.log(rentalStartDate);
 
   if (!rentalStartDate) {
     setMessages(ERROR_SELECT_A_DATE);

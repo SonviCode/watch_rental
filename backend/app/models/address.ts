@@ -15,6 +15,7 @@ export default class Address extends BaseModel {
   @hasOne(() => User)
   declare User: HasOne<typeof User>
 
+  @column()
   declare userId: string
 
   @column({ isPrimary: true })

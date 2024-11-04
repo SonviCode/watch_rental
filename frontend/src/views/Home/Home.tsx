@@ -13,7 +13,8 @@ function Home() {
 
   useEffect(() => {
     dispatch(removePurchaseSelectedWatch());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    localStorage.clear();
   }, []);
 
   return (

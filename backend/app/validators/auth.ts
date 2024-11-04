@@ -14,7 +14,6 @@ export const signUpValidator = vine.compile(
     password: vine.string().minLength(8).maxLength(32),
     phone_number: vine.string().trim().maxLength(10),
     birth_date: vine.date(),
-    address_id: vine.string(),
   })
 )
 

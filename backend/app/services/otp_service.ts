@@ -5,8 +5,8 @@ import { Authenticator } from '@adonisjs/auth'
 import { Authenticators } from '@adonisjs/auth/types'
 import type { Request } from '@adonisjs/core/http'
 import hash from '@adonisjs/core/services/hash'
-import mail from '@adonisjs/mail/services/main'
 import twilio from 'twilio'
+import MailService from './mail_service.js'
 
 const accountSid = env.get('TWILIO_ACCOUNT_SID')
 const authToken = env.get('TWILIO_AUTH_TOKEN')
@@ -22,15 +22,7 @@ export default class OtpService {
 
       // eslint-disable-next-line @typescript-eslint/naming-convention
       const user_id = user.id
-
-      await mail.send((message) => {
-        message
-          .from('service@tempo.fr')
-          .to(user.email)
-          .subject('Vérification de votre e-mail')
-          .htmlView('emails/verify_email_html', { user, otp })
-        // message.textView('emails/verify_email_text', user)
-      })
+      MailService.sendOtpVerification(user, otp)
 
       UserOtpVerification.updateOrCreate({ user_id }, { user_id, otp: otpHashed })
     } catch (error) {}
@@ -47,15 +39,9 @@ export default class OtpService {
     const otpIsChecked = await hash.verify(userOtpverif?.otp!, otpCode)
     if (!otpIsChecked) throw new Error('Mauvais code !')
 
+    MailService.emailVerified(user)
+
     user.emailIsVerified = true
-    await mail.send((message) => {
-      message
-        .from('service@tempo.fr')
-        .to(user.email)
-        .subject('Votre e-mail a bien été vérifié !')
-        .htmlView('emails/verified_email_html', { user })
-      // message.textView('emails/verify_email_text', user)
-    })
     await user.save()
   }
 

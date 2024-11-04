@@ -3,3 +3,9 @@ export function addMinutes(date: Date, minutes: number) {
 
   return date
 }
+
+export function addMonth(date: Date, month: number) {
+  date.setMonth(date.getMonth() + month)
+
+  return date
+}

@@ -1,20 +1,19 @@
+import { defaultPurchaseSteps } from "@/constants/Constants";
 import useCheckPurchaseStep from "@/hooks/useCheckPurchaseStep";
+import usePersistedState from "@/hooks/usePersistedState";
 import { RootState } from "@/store/store";
 import { purchaseStepsType } from "@/types/purchaseTypes";
 import { Subscription } from "@/types/subscriptionTypes";
 import { Watch } from "@/types/watchTypes";
-
-import { defaultPurchaseSteps } from "@/constants/Constants";
+import { Value } from "node_modules/react-date-picker/dist/esm/shared/types";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import AddressPurchase from "./AddressPurchase";
 import ReviewPurchase from "./ReviewPurchase";
 import StepsPurchase from "./StepsPurchase";
 import StripePayment from "./stripe/StripePayment";
 import SummaryPurchase from "./SummaryPurchase";
-import UserDataPurchase from "./UserDataPurchase";
-import { Value } from "node_modules/react-date-picker/dist/esm/shared/types";
-import usePersistedState from "@/hooks/usePersistedState";
 
 const ContainerPurchase = () => {
   const [purchaseSteps, setPurchaseSteps] =
@@ -31,13 +30,19 @@ const ContainerPurchase = () => {
     (state: RootState) => state.purchaseSelectedWatch.value
   );
 
-  useCheckPurchaseStep(watchSelected, rentalStartDate, purchaseSteps, setPurchaseSteps);
+  useCheckPurchaseStep(
+    watchSelected,
+    rentalStartDate,
+    purchaseSteps,
+    setPurchaseSteps
+  );
 
   if (!subscription.id) return <Navigate to="/subscription" />;
 
   const getActiveStep = () => {
-    if (purchaseSteps[2].actif) return <StripePayment />;
-    if (purchaseSteps[1].actif) return <UserDataPurchase />;
+    if (purchaseSteps[2].actif)
+      return <StripePayment rentalStartDate={rentalStartDate} />;
+    if (purchaseSteps[1].actif) return <AddressPurchase />;
     return (
       <ReviewPurchase
         rentalStartDate={rentalStartDate}

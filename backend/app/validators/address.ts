@@ -2,6 +2,7 @@ import vine from '@vinejs/vine'
 
 export const createAddressValidator = vine.compile(
   vine.object({
+    user_id: vine.string(),
     main_address: vine.string(),
     country: vine.string(),
     additional_address: vine.string().optional(),

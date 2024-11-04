@@ -5,16 +5,22 @@ import { RootState } from "@/store/store";
 import "@/style/custom/stripe.css";
 import { Subscription } from "@/types/subscriptionTypes";
 import { User } from "@/types/userType";
+import { Watch } from "@/types/watchTypes";
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
+import { Value } from "node_modules/react-date-picker/dist/esm/shared/types";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export default function StripeCheckoutForm() {
+export default function StripeCheckoutForm({
+  rentalStartDate,
+}: {
+  rentalStartDate: Value;
+}) {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<User>();
@@ -25,6 +31,9 @@ export default function StripeCheckoutForm() {
 
   const subscription: Subscription = useSelector(
     (state: RootState) => state.subscription.value
+  );
+  const watchSelected: Watch = useSelector(
+    (state: RootState) => state.purchaseSelectedWatch.value
   );
 
   useFetchData(setUser, API_USER);
@@ -41,6 +50,9 @@ export default function StripeCheckoutForm() {
             elements,
             user,
             subscription,
+            watchSelected,
+            rentalStartDate,
+            message,
             setMessage,
             setIsLoading,
             navigate

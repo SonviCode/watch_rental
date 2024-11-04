@@ -10,10 +10,11 @@ import { Appearance, loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import StripeCheckoutForm from "./StripeCheckoutForm";
+import { Value } from "node_modules/react-date-picker/dist/esm/shared/types";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
-const StripePayment = () => {
+const StripePayment = ({ rentalStartDate }: { rentalStartDate: Value }) => {
   const [clientSecret, setClientSecret] = useState("");
   // const [dpmCheckerLink, setDpmCheckerLink] = useState("");
 
@@ -63,7 +64,7 @@ const StripePayment = () => {
           options={{ clientSecret, appearance, loader }}
           stripe={stripePromise}
         >
-          <StripeCheckoutForm />
+          <StripeCheckoutForm rentalStartDate={rentalStartDate} />
         </Elements>
       )}
     </>

@@ -33,8 +33,6 @@ const SummaryPurchase = ({
 
   const isWatchSelected = !isObjectEmpty(watchSelected);
 
-  console.log(messages);
-
   return (
     <section className="p-10 lg:min-w-[300px] lg:w-1/3 w-full bg-black mt-2">
       <h2 className="italic text-sm mb-5">Sommaire de commande</h2>

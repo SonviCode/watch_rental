@@ -6,12 +6,12 @@ import Watch from './watch/watch.js'
 import Subscription from './subscription.js'
 import User from './user.js'
 
-export default class Rental extends BaseModel {
+export default class Invoice extends BaseModel {
   static selfAssignPrimaryKey = true
 
   @beforeCreate()
-  static assignUuid(rental: Rental) {
-    rental.id = randomUUID()
+  static assignUuid(invoice: Invoice) {
+    invoice.id = randomUUID()
   }
 
   @manyToMany(() => Watch, {

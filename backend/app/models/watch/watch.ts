@@ -36,7 +36,9 @@ export default class Watch extends BaseModel {
   @column({ serializeAs: null })
   declare subscriptionId: string
 
-  @manyToMany(() => Image)
+  @manyToMany(() => Image, {
+    pivotTimestamps: true,
+  })
   declare images: ManyToMany<typeof Image>
 
   @column()

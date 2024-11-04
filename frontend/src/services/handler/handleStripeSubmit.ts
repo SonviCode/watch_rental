@@ -1,9 +1,11 @@
 import { Subscription } from "@/types/subscriptionTypes";
+import { Watch } from "@/types/watchTypes";
 import { User } from "@/types/userType";
 import { Stripe, StripeElements } from "@stripe/stripe-js";
 import { Dispatch, FormEvent, SetStateAction } from "react";
 import { NavigateFunction } from "react-router-dom";
-import { fetchcreateRental } from "../api/rental";
+import { fetchCreateRental } from "../api/rental";
+import { Value } from "node_modules/react-date-picker/dist/esm/shared/types";
 
 export const handleStripeCheckoutSubmit = async (
   e: FormEvent<HTMLFormElement>,
@@ -11,6 +13,9 @@ export const handleStripeCheckoutSubmit = async (
   elements: StripeElements | null,
   user: User | undefined,
   subscription: Subscription,
+  watchSelected: Watch,
+  rentalStartDate: Value,
+  message: string,
   setMessage: Dispatch<SetStateAction<string>>,
   setIsLoading: Dispatch<SetStateAction<boolean>>,
   navigate: NavigateFunction
@@ -20,6 +25,8 @@ export const handleStripeCheckoutSubmit = async (
   const formData = new FormData();
   formData.append("user_id", user!.id);
   formData.append("subscription_id", subscription.id);
+  formData.append("date_start", rentalStartDate?.toString());
+  formData.append("watch_id", watchSelected.id);
 
   if (!stripe || !elements) {
     return;
@@ -46,11 +53,12 @@ export const handleStripeCheckoutSubmit = async (
     } else {
       setMessage("An unexpected error occurred.");
     }
+  } else {
+    const rental_id = await fetchCreateRental(setMessage, formData);
+
+    if (rental_id) {
+      navigate("/paiement-effectue", { state: { rental_id } });
+    }
   }
-
-  fetchcreateRental(setMessage, formData);
-
-  navigate("/paiement-effectue");
-
   setIsLoading(false);
 };
