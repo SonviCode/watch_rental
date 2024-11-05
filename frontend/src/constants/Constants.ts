@@ -42,6 +42,9 @@ export const API_BRAND = API_ROOTDIR + "brand";
 export const API_MATERIAL = API_ROOTDIR + "material";
 // ---rental
 export const API_RENTAL = API_ROOTDIR + "rental";
+// ---invoice
+export const API_INVOICE = API_ROOTDIR + "invoice";
+export const API_INVOICES_BY_USER = API_ROOTDIR + "invoice/user/";
 
 // ---ACCOUNT
 export const DIFFERENT_PASSWORD = "Les mots de passes sont différents";

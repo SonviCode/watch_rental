@@ -1,10 +1,8 @@
+import { BaseModel, beforeCreate, belongsTo, column } from '@adonisjs/lucid/orm'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
 import { randomUUID } from 'node:crypto'
-import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
-import Watch from './watch/watch.js'
-import Subscription from './subscription.js'
-import User from './user.js'
+import Rental from './rental.js'
 
 export default class Invoice extends BaseModel {
   static selfAssignPrimaryKey = true
@@ -14,31 +12,32 @@ export default class Invoice extends BaseModel {
     invoice.id = randomUUID()
   }
 
-  @manyToMany(() => Watch, {
-    pivotTimestamps: true,
-  })
-  declare watch: ManyToMany<typeof Watch>
+  @belongsTo(() => Rental)
+  declare rental: BelongsTo<typeof Rental>
+
+  @column({ serializeAs: null })
+  declare rentalId: string
 
   @column({ isPrimary: true })
   declare id: string
 
-  @belongsTo(() => User)
-  declare user: BelongsTo<typeof User>
+  @column()
+  declare invoiceNumber: string
 
-  @column({ serializeAs: null })
-  declare userId: string
+  @column()
+  declare amount: number
 
-  @belongsTo(() => Subscription)
-  declare subscription: BelongsTo<typeof Subscription>
+  @column()
+  declare pdfUrl: string
 
-  @column({ serializeAs: null })
-  declare subscriptionId: string
+  @column()
+  declare status: string
 
-  @column.dateTime()
-  declare dateStart: DateTime
+  @column()
+  declare dateStart: Date
 
-  @column.dateTime()
-  declare dateEnd: DateTime
+  @column()
+  declare dateEnd: Date
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

@@ -18,6 +18,7 @@ import imagesRoutes from './routes/api/v1/images.js'
 import purchaseRoutes from './routes/api/v1/purchase.js'
 import rentalsRoutes from './routes/api/v1/rentals.js'
 import addressesRoutes from './routes/api/v1/address.js'
+import invoiceRoutes from './routes/api/v1/invoices.js'
 
 router
   .group(() => {
@@ -33,6 +34,7 @@ router
         purchaseRoutes()
         rentalsRoutes()
         addressesRoutes()
+        invoiceRoutes()
       })
       .prefix('v1')
   })

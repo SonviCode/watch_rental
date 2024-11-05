@@ -1,4 +1,5 @@
-import { API_RENTAL, GENERIC_ERROR } from "@/constants/Constants";
+import { API_INVOICE, GENERIC_ERROR } from "@/constants/Constants";
+import { FetchInvoiceData } from "@/types/invoiceTypes";
 import { Dispatch, SetStateAction } from "react";
 
 /**
@@ -7,14 +8,17 @@ import { Dispatch, SetStateAction } from "react";
  * @param setError
  * @returns
  */
-export const fetchCreateRental = async (
+export const fetchCreateInvoice = async (
   setError: Dispatch<SetStateAction<string>>,
-  formData: FormData
+  invoiceData: FetchInvoiceData
 ) => {
   try {
-    const res = await fetch(API_RENTAL, {
+    const res = await fetch(API_INVOICE, {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(invoiceData),
       credentials: "include",
     });
 
@@ -25,7 +29,7 @@ export const fetchCreateRental = async (
       return;
     }
 
-    return data;
+    return data.id;
   } catch (e) {
     setError(GENERIC_ERROR);
   }

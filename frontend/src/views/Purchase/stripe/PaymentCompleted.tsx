@@ -1,21 +1,39 @@
-import { API_RENTAL } from "@/constants/Constants";
+import { API_INVOICE, API_RENTAL, SERVER_URL } from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
+import { Invoice } from "@/types/invoiceTypes";
 import { Rental } from "@/types/rentalTypes";
-import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleCheck,
+  faFilePdf,
+  faHome,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const PaymentCompleted = () => {
   const [rental, setRental] = useState<Rental>();
+  const [invoice, setInvoice] = useState<Invoice>();
   const location = useLocation();
   const navigate = useNavigate();
 
   const rental_id = location.state?.rental_id;
-  const { isLoading } = useFetchData(setRental, API_RENTAL + "/" + rental_id);
+  const invoice_id = location.state?.invoice_id;
 
-  if (isLoading) return;
-  if (!rental) return navigate("/");
+  const { isLoading: isRentalLoading } = useFetchData(
+    setRental,
+    API_RENTAL + "/" + rental_id
+  );
+  const { isLoading: isInvoiceLoading } = useFetchData(
+    setInvoice,
+    API_INVOICE + "/" + invoice_id
+  );
+
+  if (isRentalLoading || isInvoiceLoading) return;
+  if (!rental) {
+    navigate("/");
+    return;
+  }
 
   return (
     <div className="p-5 flex flex-col gap-5">
@@ -66,6 +84,20 @@ const PaymentCompleted = () => {
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <div className="flex justify-between">
+        <Link to="/" className="rounded-lg border border-purple px-4 py-2">
+          Retour à l'accueil <FontAwesomeIcon icon={faHome} />
+        </Link>
+        <a
+          href={SERVER_URL + invoice?.pdfUrl}
+          target="_blank"
+          download
+          className="rounded-lg border border-purple px-4 py-2"
+        >
+          Télécharger la facture <FontAwesomeIcon icon={faFilePdf} />
+        </a>
       </div>
     </div>
   );

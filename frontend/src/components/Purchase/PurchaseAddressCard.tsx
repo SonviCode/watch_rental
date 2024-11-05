@@ -10,8 +10,8 @@ const PurchaseAddressCard = ({
   setSelectedAddress,
 }: {
   address: Address;
-  selectedAddress: Address;
-  setSelectedAddress: Dispatch<SetStateAction<Address>>;
+  selectedAddress?: Address | undefined;
+  setSelectedAddress?: Dispatch<SetStateAction<Address | undefined>>;
 }) => {
   const isSelected = selectedAddress === address;
 

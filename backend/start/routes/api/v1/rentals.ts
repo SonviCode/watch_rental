@@ -6,8 +6,9 @@ import router from '@adonisjs/core/services/router'
 export default function rentalsRoutes() {
   router
     .group(() => {
-      router.get('/', [RentalController, 'getRentals'])
-      router.get('/:id', [RentalController, 'getRental'])
+      router.get('/', [RentalController, 'getRentals']).use(middleware.admin())
+      router.get('/user/:user_id', [RentalController, 'getRentalsByUserId'])
+      router.get('/:id', [RentalController, 'getRentalById'])
       router.post('/', [RentalController, 'createRental'])
     })
     .use(middleware.auth())

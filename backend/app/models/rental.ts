@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeCreate, belongsTo, column, hasOne, manyToMany } from '@adonisjs/lucid/orm'
 import { randomUUID } from 'node:crypto'
-import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasOne, ManyToMany } from '@adonisjs/lucid/types/relations'
 import Watch from './watch/watch.js'
 import Subscription from './subscription.js'
 import User from './user.js'
+import Invoice from './invoice.js'
 
 export default class Rental extends BaseModel {
   static selfAssignPrimaryKey = true
@@ -13,6 +14,9 @@ export default class Rental extends BaseModel {
   static assignUuid(rental: Rental) {
     rental.id = randomUUID()
   }
+
+  @hasOne(() => Invoice)
+  declare invoice: HasOne<typeof Invoice>
 
   @manyToMany(() => Watch, {
     pivotTimestamps: true,
@@ -34,11 +38,11 @@ export default class Rental extends BaseModel {
   @column({ serializeAs: null })
   declare subscriptionId: string
 
-  @column.dateTime()
-  declare dateStart: DateTime
+  @column()
+  declare dateStart: Date
 
-  @column.dateTime()
-  declare dateEnd: DateTime
+  @column()
+  declare dateEnd: Date
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

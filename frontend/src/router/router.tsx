@@ -6,7 +6,7 @@ import Account from "@/views/Account/Account";
 import Alerts from "@/views/Account/Alerts";
 import Favoris from "@/views/Account/Favoris";
 import Invoices from "@/views/Account/Invoices";
-import Orders from "@/views/Account/Orders";
+import Rentals from "@/views/Account/Rentals";
 import Admin from "@/views/Admin/Admin";
 import AdminSubscriptions from "@/views/Admin/Data/subscriptions/AdminSubscriptions";
 import AdminUsers from "@/views/Admin/Data/users/AdminUsers";
@@ -43,7 +43,7 @@ export const router = createBrowserRouter([
               { path: "/account", element: <Account /> },
               { path: "/account/favoris", element: <Favoris /> },
               { path: "/account/alerts", element: <Alerts /> },
-              { path: "/account/orders", element: <Orders /> },
+              { path: "/account/location", element: <Rentals /> },
               { path: "/account/invoices", element: <Invoices /> },
             ],
           },
@@ -55,14 +55,6 @@ export const router = createBrowserRouter([
             path: "/verif-sms",
             element: <VerifyPhoneNumber />,
           },
-          // {
-          //   path: "/factures",
-          //   element: (
-          //     <ProtectedAuthRoute>
-          //       <Invoices />
-          //     </ProtectedAuthRoute>
-          //   ),
-          // },
         ],
       },
       { path: "/", element: <Home /> },

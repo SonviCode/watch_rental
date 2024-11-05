@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Facture FV240904362</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+        .header, .footer {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .header p, .footer p {
+            font-size: 10px;
+            margin: 5px 0;
+        }
+        .section {
+            margin: 20px 0;
+        }
+        .section h2 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+        .info-table, .items-table, .totals-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .info-table td, .items-table th, .items-table td, .totals-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            font-size: 12px;
+        }
+        .items-table th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+        .totals-table td {
+            text-align: right;
+        }
+        .totals-table tr:first-child td {
+            font-weight: bold;
+        }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <h1>Tempo Watch</h1>
+        <p>1, rue des Vosges, 67000 - STRASBOURG, France</p>
+        <p>Tel: 02 30 17 02 80 | E-mail: contact@tempo-watch.com</p>
+        <p>www.tempo-watch.com</p>
+    </div>
+
+    <!-- Livraison -->
+    <div class="section">
+        <h2>LIVRAISON</h2>
+        <p>
+            {{ rental.user.firstName }}<br>
+            20 rue des Vosges<br>
+            67640 - LIPSHEIM, France<br>
+            Tel: 0782934530<br>
+            E-mail: tom.sonvico@free.fr
+        </p>
+    </div>
+
+    <!-- Facturation -->
+    <div class="section">
+        <h2>FACTURATION</h2>
+        <p>
+            Sonvico Tom<br>
+            20 rue des Vosges<br>
+            67640 - LIPSHEIM, France<br>
+            Tel: 0782934530<br>
+            E-mail: tom.sonvico@free.fr
+        </p>
+    </div>
+
+    <!-- Détails Facture -->
+    <div class="section">
+        <h2>FACTURE</h2>
+        <table class="info-table">
+            <tr>
+                <td>Client : C408234</td>
+                <td>Transporteur :</td>
+                <td>Date de facture : 12/09/2024</td>
+                <td>N° de facture : FV240904362</td>
+            </tr>
+            <tr>
+                <td>N° Commande : BL240904163</td>
+                <td>Date : 11/09/2024</td>
+                <td>Ref Commande : CV240903520</td>
+                <td>N° de livraison : 811347</td>
+            </tr>
+            <tr>
+                <td>Paiement : HIPAY</td>
+                <td>Statut : Réglé</td>
+                <td>Montant réglé : 51,60 €</td>
+                <td>Date : 11/09/2024</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Détails des articles -->
+    <div class="section">
+        <h2>Détails des Articles</h2>
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th>Article</th>
+                    <th>Description</th>
+                    <th>PU Net TTC</th>
+                    <th>Quantité</th>
+                    <th>Montant TTC</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A47729</td>
+                    <td>AUTOTERM Sortie air a volet Ø 60 mm</td>
+                    <td class="text-right">11,40</td>
+                    <td class="text-right">1</td>
+                    <td class="text-right">11,40</td>
+                </tr>
+                <tr>
+                    <td>A47732</td>
+                    <td>AUTOTERM Bride ø 60 mm</td>
+                    <td class="text-right">3,05</td>
+                    <td class="text-right">4</td>
+                    <td class="text-right">12,20</td>
+                </tr>
+                <tr>
+                    <td>A47727</td>
+                    <td>AUTOTERM Sortie air fixe Ø 60 mm</td>
+                    <td class="text-right">5,40</td>
+                    <td class="text-right">2</td>
+                    <td class="text-right">10,80</td>
+                </tr>
+                <tr>
+                    <td>A47711</td>
+                    <td>AUTOTERM Raccord T Ø 60 mm</td>
+                    <td class="text-right">8,60</td>
+                    <td class="text-right">1</td>
+                    <td class="text-right">8,60</td>
+                </tr>
+                <tr>
+                    <td>A47714</td>
+                    <td>AUTOTERM Raccord Y 45° Ø 60 mm</td>
+                    <td class="text-right">8,60</td>
+                    <td class="text-right">1</td>
+                    <td class="text-right">8,60</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Totaux -->
+    <div class="section">
+        <h2>Totaux</h2>
+        <table class="totals-table">
+            <tr>
+                <td class="text-left">Total lignes TTC</td>
+                <td>51,60 €</td>
+            </tr>
+            <tr>
+                <td class="text-left">Base taxe</td>
+                <td>43,00 €</td>
+            </tr>
+            <tr>
+                <td class="text-left">Taux</td>
+                <td>20,00%</td>
+            </tr>
+            <tr>
+                <td class="text-left">Montant taxe</td>
+                <td>8,60 €</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Facture acquittée</p>
+        <p>
+            RESERVE DE PROPRIETE : loi du 12/05/1980 N°80335 - Le matériel livré reste l'entière propriété de Tempo Watch.
+        </p>
+        <p>
+            Tempo Watch-SARL LHL Développement - RCS STRASBOURG 538847542 - N° TVA : FR02538847542
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

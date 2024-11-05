@@ -6,6 +6,7 @@ import { Dispatch, FormEvent, SetStateAction } from "react";
 import { NavigateFunction } from "react-router-dom";
 import { fetchCreateRental } from "../api/rental";
 import { Value } from "node_modules/react-date-picker/dist/esm/shared/types";
+import { fetchCreateInvoice } from "../api/invoice";
 
 export const handleStripeCheckoutSubmit = async (
   e: FormEvent<HTMLFormElement>,
@@ -54,10 +55,20 @@ export const handleStripeCheckoutSubmit = async (
       setMessage("An unexpected error occurred.");
     }
   } else {
-    const rental_id = await fetchCreateRental(setMessage, formData);
+    const rental = await fetchCreateRental(setMessage, formData);
 
-    if (rental_id) {
-      navigate("/paiement-effectue", { state: { rental_id } });
+    const invoiceData = {
+      rental_id: rental.id,
+      amount: subscription.price,
+      date_start: new Date(rental.dateStart),
+      subscription,
+    };
+    const invoice_id = await fetchCreateInvoice(setMessage, invoiceData);
+
+    if (rental) {
+      navigate("/paiement-effectue", {
+        state: { rental_id: rental.id, invoice_id },
+      });
     }
   }
   setIsLoading(false);

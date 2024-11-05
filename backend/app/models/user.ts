@@ -1,8 +1,8 @@
 import { withAuthFinder } from '@adonisjs/auth'
 import { compose } from '@adonisjs/core/helpers'
 import hash from '@adonisjs/core/services/hash'
-import { BaseModel, beforeCreate, belongsTo, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
-import type { BelongsTo, HasMany, HasOne } from '@adonisjs/lucid/types/relations'
+import { BaseModel, beforeCreate, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
+import type { HasMany, HasOne } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
 import { randomUUID } from 'node:crypto'
 import Address from './address.js'
@@ -31,8 +31,8 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @hasMany(() => Address)
   declare address: HasMany<typeof Address>
 
-  @column({ serializeAs: null })
-  declare addressId: string
+  // @column({ serializeAs: null })
+  // declare addressId: string
 
   @column({ isPrimary: true })
   declare id: string
