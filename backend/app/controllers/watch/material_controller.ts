@@ -1,5 +1,5 @@
 import Material from '#models/watch/material'
-import { createMaterialValidator } from '#validators/watch'
+import { createMaterialValidator } from '#validators/watch_validator'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class MaterialController {

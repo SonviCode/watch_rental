@@ -1,10 +1,10 @@
 import Invoice from '#models/invoice'
 import RentalRepository from '#repositories/watch/rental_repository'
 import PdfService from '#services/pdf_service'
-import { createInvoiceValidator } from '#validators/invoice'
+import { createInvoiceValidator } from '#validators/invoice_validator'
 import type { HttpContext } from '@adonisjs/core/http'
-import { addMonth } from '../utils/date.js'
-import { generateInvoiceNumber } from '../utils/generation.js'
+import { addMonth } from '../utils/date_utils.js'
+import { generateInvoiceNumber } from '../utils/generation_utils.js'
 import InvoiceRepository from '#repositories/watch/invoice_repository'
 
 export default class InvoiceController {
@@ -36,7 +36,7 @@ export default class InvoiceController {
       amount: body.amount,
       invoice_number: invoiceNumber,
       pdf_url: `pdf/invoice/${invoiceNumber}.pdf`,
-      status: 'test',
+      status_id: '4a7dadb5-af08-4074-aa98-feb13a3d264b',
       date_start: new Date(body.date_start),
       date_end: addMonth(new Date(body.date_start), 1),
     }

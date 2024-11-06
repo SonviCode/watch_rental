@@ -2,7 +2,7 @@ import { EMAIL_IS_VERIFIED, OTP_EMAIL_IS_RESEND } from '#constants/constants'
 import User from '#models/user'
 import OtpService from '#services/otp_service'
 import env from '#start/env'
-import { loginValidator, signUpValidator } from '#validators/auth'
+import { loginValidator, signUpValidator } from '#validators/auth_validator'
 import type { HttpContext } from '@adonisjs/core/http'
 import twilio from 'twilio'
 

@@ -25,6 +25,7 @@ import Watchs from "@/views/Watchs/Watchs";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { ProtectedAdminRoute } from "./ProtectedAdminRoute";
 import { ProtectedAuthRoute } from "./ProtectedAuthRoute";
+import AdminStatus from "@/views/Admin/Data/status/AdminStatus";
 
 export const router = createBrowserRouter([
   {
@@ -32,9 +33,7 @@ export const router = createBrowserRouter([
     errorElement: <Navigate to="/" />,
     children: [
       {
-        element: (
-          <ProtectedAuthRoute/>
-        ),
+        element: <ProtectedAuthRoute />,
         children: [
           {
             path: "/account",
@@ -88,6 +87,10 @@ export const router = createBrowserRouter([
       {
         path: "/admin/watches",
         element: <AdminWatches />,
+      },
+      {
+        path: "/admin/status",
+        element: <AdminStatus />,
       },
     ],
   },

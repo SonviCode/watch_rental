@@ -1,6 +1,6 @@
 import Brand from '#models/watch/brand'
 import ImageService from '#services/image_service'
-import { createBrandValidator } from '#validators/watch'
+import { createBrandValidator } from '#validators/watch_validator'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class BrandController {

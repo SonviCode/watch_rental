@@ -7,8 +7,8 @@ const WatchPurchaseCard = ({
   onClick,
 }: {
   watch: Watch;
-  watchSelected: Watch | undefined;
-  onClick: React.MouseEventHandler<HTMLDivElement> | undefined;
+  watchSelected?: Watch | undefined;
+  onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
 }) => {
   let isWatchSelected = false;
 

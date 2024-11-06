@@ -24,7 +24,7 @@ export const fetchAddWatch = async (
 };
 
 /**
- * Service to create a watch
+ * Service to get a watch by a custom filter
  *
  * @param setError
  * @returns
@@ -39,6 +39,33 @@ export const fetchGetWatchsByFilter = async (
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       API_WATCH + "?" + new URLSearchParams(formData as any).toString()
     );
+
+    const watchs = await res.json();
+
+    if (!res.ok) {
+      // setError(data.errors[0].message);
+      return;
+    }
+
+    setWatchs(watchs);
+  } catch (e) {
+    // setError(GENERIC_ERROR);
+  }
+};
+
+/**
+ * Service to get a watch by a subscription id
+ *
+ * @param setError
+ * @returns
+ */
+export const fetchGetWatchsBySubId = async (
+  setWatchs: Dispatch<SetStateAction<Watch[]>>,
+  // setError: Dispatch<SetStateAction<string>>,
+  subscriptionId: string
+) => {
+  try {
+    const res = await fetch(`${API_WATCH}?subscription_id=${subscriptionId}`);
 
     const watchs = await res.json();
 

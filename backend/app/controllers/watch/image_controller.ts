@@ -1,5 +1,5 @@
 import Image from '#models/watch/image'
-import { createImageValidator } from '#validators/watch'
+import { createImageValidator } from '#validators/watch_validator'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class ImageController {

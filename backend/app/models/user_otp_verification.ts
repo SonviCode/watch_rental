@@ -1,7 +1,7 @@
 import { BaseModel, beforeCreate, beforeSave, beforeUpdate, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 import { randomUUID } from 'node:crypto'
-import { addMinutes } from '../utils/date.js'
+import { addMinutes } from '../utils/date_utils.js'
 
 export default class UserOtpVerification extends BaseModel {
   static selfAssignPrimaryKey = true

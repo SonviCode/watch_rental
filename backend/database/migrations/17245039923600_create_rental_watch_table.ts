@@ -8,6 +8,8 @@ export default class extends BaseSchema {
       table.increments('id').primary()
       table.uuid('watch_id').references('watches.id')
       table.uuid('rental_id').references('rentals.id')
+      table.timestamp('date_start').nullable()
+      table.timestamp('date_end').nullable()
       table.timestamp('created_at').nullable()
       table.timestamp('updated_at').nullable()
     })

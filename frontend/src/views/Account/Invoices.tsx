@@ -20,10 +20,10 @@ const Invoices = () => {
   console.log(invoices);
 
   return (
-    <div className="flex flex-1 pl-10 flex-col gap-10 p-5 w-full">
+    <div className="flex flex-1 pl-10 flex-col gap-10 py-5 w-full">
       <h1
         data-testid="account-invoices-title"
-        className="uppercase font-bold text-xl mb-5"
+        className="uppercase font-bold text-xl"
       >
         <FontAwesomeIcon icon={faFileInvoice} className="mr-5" />
         Mes factures

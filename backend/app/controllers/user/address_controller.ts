@@ -1,5 +1,5 @@
 import Address from '#models/address'
-import { createAddressValidator } from '#validators/address'
+import { createAddressValidator } from '#validators/address_validator'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class RentalController {

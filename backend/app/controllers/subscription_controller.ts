@@ -1,5 +1,5 @@
 import Subscription from '#models/subscription'
-import { createSubscriptionValidator } from '#validators/subscription'
+import { createSubscriptionValidator } from '#validators/subscription_validator'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class SubscriptionController {

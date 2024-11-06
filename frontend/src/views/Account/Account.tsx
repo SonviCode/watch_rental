@@ -20,7 +20,7 @@ const Account = () => {
   // if (!user?.smsIsVerified) return <Navigate to="/verif-sms" />;
 
   return (
-    <div className="flex flex-1 flex-col gap-5 p-5 pl-10 w-full">
+    <div className="flex flex-1 flex-col gap-10 py-5 pl-10 w-full">
       <h1 data-testid="account-title" className="uppercase font-bold text-xl ">
         <FontAwesomeIcon icon={faUser} className="mr-5" />
         Compte principal
@@ -36,6 +36,8 @@ const Account = () => {
           <p>{user?.email}</p>
           <p> {formatPhoneNumber(user?.phoneNumber.toString(), false)}</p>
         </div>
+      </div>
+      <div className="flex flex-col gap-5">
         <h2 className="uppercase font-bold">
           <FontAwesomeIcon icon={faLocationDot} /> Adresse
         </h2>

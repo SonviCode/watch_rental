@@ -40,8 +40,13 @@ export const API_WATCH = API_ROOTDIR + "watch";
 export const API_BRAND = API_ROOTDIR + "brand";
 // ---material
 export const API_MATERIAL = API_ROOTDIR + "material";
+// ---status
+export const API_STATUS = API_ROOTDIR + "status";
 // ---rental
 export const API_RENTAL = API_ROOTDIR + "rental";
+export const API_RENTALS_BY_USER = API_ROOTDIR + "rental/user/";
+export const API_UNSUBSCRIBE_RENTAL = API_ROOTDIR + "rental/unsubscribe/";
+export const API_ADD_WATCH_RENTAL = API_ROOTDIR + "rental/watches/";
 // ---invoice
 export const API_INVOICE = API_ROOTDIR + "invoice";
 export const API_INVOICES_BY_USER = API_ROOTDIR + "invoice/user/";

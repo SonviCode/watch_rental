@@ -2,7 +2,7 @@ import Watch from '#models/watch/watch'
 import WatchRepository from '#repositories/watch/watch_repository'
 
 import ImageService from '#services/image_service'
-import { createWatchValidator } from '#validators/watch'
+import { createWatchValidator } from '#validators/watch_validator'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class WatchController {

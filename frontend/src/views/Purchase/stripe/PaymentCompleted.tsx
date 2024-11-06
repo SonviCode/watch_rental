@@ -71,7 +71,7 @@ const PaymentCompleted = () => {
               </td>
             </tr>
             <tr className="even:bg-blacklight  border-b">
-              <td className="px-6 py-4 font-medium">Montre séléctionée</td>
+              <td className="px-6 py-4 font-medium">Montre sélectionnée</td>
               <td className="px-6 py-4 text-right">{rental?.watch[0].name}</td>
             </tr>
             <tr className="even:bg-blacklight rounded-lg">

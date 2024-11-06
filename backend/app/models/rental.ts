@@ -6,6 +6,7 @@ import Watch from './watch/watch.js'
 import Subscription from './subscription.js'
 import User from './user.js'
 import Invoice from './invoice.js'
+import Status from './status.js'
 
 export default class Rental extends BaseModel {
   static selfAssignPrimaryKey = true
@@ -37,6 +38,15 @@ export default class Rental extends BaseModel {
 
   @column({ serializeAs: null })
   declare subscriptionId: string
+
+  @belongsTo(() => Status)
+  declare status: BelongsTo<typeof Status>
+
+  @column({ serializeAs: null })
+  declare statusId: string
+
+  @column()
+  declare rentalNumber: string
 
   @column()
   declare dateStart: Date
