@@ -1,9 +1,11 @@
 import {
+  faCalendar,
   faClock,
+  faFileInvoice,
   faHome,
   faLayerGroup,
   faSignal,
-  faUser,
+  faUser
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
@@ -48,6 +50,20 @@ const AsideAdmin = () => {
         >
           <FontAwesomeIcon icon={faSignal} />
           Status
+        </Link>
+        <Link
+          to="/admin/factures"
+          className="flex text-sm items-center gap-5 mb-5"
+        >
+          <FontAwesomeIcon icon={faFileInvoice} />
+          Factures
+        </Link>
+        <Link
+          to="/admin/locations"
+          className="flex text-sm items-center gap-5 mb-5"
+        >
+          <FontAwesomeIcon icon={faCalendar} />
+          Locations
         </Link>
       </div>
     </aside>

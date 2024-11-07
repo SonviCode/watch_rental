@@ -5,14 +5,19 @@ import { createRentalValidator, updateRentalValidator } from '#validators/rental
 import type { HttpContext } from '@adonisjs/core/http'
 import { addMonth } from '../utils/date_utils.js'
 import { STATUS_ID_ACTIVE_RENTAL, STATUS_ID_CLOSED_RENTAL } from '#constants/constants'
+import { generateRentalNumber } from '../utils/generation_utils.js'
 
 export default class RentalController {
   /**
    * get all rentals : for admin only
    *
-   * @param {request, response}
+   * @param {response}
    */
-  async getAllRentals({ request, response }: HttpContext) {}
+  async getAllRentals({ response }: HttpContext) {
+    const rentals = await RentalRepository.getAll()
+
+    return response.ok(rentals)
+  }
 
   /**
    * get a user's rentals
@@ -53,7 +58,9 @@ export default class RentalController {
 
     const rentalBody = {
       user_id: body.user_id,
-      subscription_id: body.subscription_id,
+      rental_number: generateRentalNumber(body.subscription.title),
+      numberWatchesRemaining: body.subscription.numberMaxWatches - 1,
+      subscription_id: body.subscription.id,
       date_start: new Date(body.date_start),
       status_id: STATUS_ID_ACTIVE_RENTAL,
     }
@@ -97,11 +104,13 @@ export default class RentalController {
    * @returns HTTP response status and rental
    */
   async updateWatchesOfRental({ request, response }: HttpContext) {
+    const rentalId = request.param('id')
     const body = await request.validateUsing(updateRentalValidator)
 
-    const rental = await RentalRepository.getById(body.rental_id)
+    const rental = await RentalRepository.getById(rentalId)
 
-    rental.related('watch').attach({ [body.watch_id]: { date_start: new Date(body.date_start) } })
+    await RentalRepository.updateCurrentWatchOnRental(rental)
+    await RentalRepository.createNextWatchOnRental(rental, body.watch_id)
 
     await rental.save()
 

@@ -12,6 +12,8 @@ export type Watch =
       description: string;
       createdAt: Date;
       updatedAt: Date;
+      pivotDateStart?: Date;
+      pivotDateEnd?: Date;
     }
   | Record<string, never>;
 

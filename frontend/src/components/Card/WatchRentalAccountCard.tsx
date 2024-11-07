@@ -1,12 +1,17 @@
-import { fetchUnsubscribeRental } from "@/services/api/rental";
+import {
+  fetchUnsubscribeRental,
+  fetchUpdateWatchesOfRental,
+} from "@/services/api/rental";
 import { fetchGetWatchsBySubId } from "@/services/api/watch";
 import { Rental } from "@/types/rentalTypes";
 import { User } from "@/types/userType";
 import { Watch } from "@/types/watchTypes";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import WatchPurchaseCard from "./WatchPurchaseCard";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { addYear } from "@/utils/dateUtils";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import ConfirmModal from "../Modal/ConfirmModal";
+import WatchPurchaseCard from "./WatchPurchaseCard";
 
 const WatchRentalAccountCard = ({
   rental,
@@ -22,19 +27,9 @@ const WatchRentalAccountCard = ({
   const [nbWatchesInRental, setNbWatchesInRental] = useState<number>(
     rental.watch.length
   );
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUnsubscribeModalOpen, setIsUnsubscribeModalOpen] = useState(false);
+  const [isWatchModalOpen, setIsWatchModalOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
-
-  const confirmUnsubscribe = (rentalId: string) => {
-    fetchUnsubscribeRental(rentalId, setRentals, user.id);
-    setIsModalOpen(false);
-  };
-
-  const handleWatchSelected = (watch: Watch) => {
-    setWatchSelected(watch);
-
-    !watchSelected && setNbWatchesInRental(nbWatchesInRental + 1);
-  };
 
   useEffect(() => {
     if (isFullScreen) {
@@ -48,9 +43,34 @@ const WatchRentalAccountCard = ({
     return () => {
       document.body.classList.remove("overflow-hidden");
     };
-  }, [isFullScreen]);
+  }, [isFullScreen, rental.watch.length]);
 
-  const numbersOfWatchesRemaining = 4 - nbWatchesInRental;
+  const handleWatchSelected = (watch: Watch) => {
+    setWatchSelected(watch);
+
+    !watchSelected && setNbWatchesInRental(nbWatchesInRental + 1);
+  };
+
+  const confirmUnsubscribe = () => {
+    fetchUnsubscribeRental(rental.id, setRentals, user.id);
+    setIsUnsubscribeModalOpen(false);
+  };
+
+  const confirmChangedWatch = () => {
+    fetchUpdateWatchesOfRental(
+      rental,
+      rental.id,
+      setRentals,
+      setWatchSelected,
+      setIsFullScreen,
+      user.id,
+      watchSelected!
+    );
+    setIsWatchModalOpen(false);
+  };
+
+  const numbersOfWatchesRemaining =
+    rental.subscription.numberMaxWatches - nbWatchesInRental;
 
   return (
     <div
@@ -58,30 +78,22 @@ const WatchRentalAccountCard = ({
                   ${isFullScreen ? "fixed inset-0 z-50 p-8" : ""} 
                   bg-blacklight rounded-lg p-5 flex flex-col gap-5 items-center`}
     >
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-blacklight rounded-lg p-10 shadow-lg text-center flex flex-col gap-10">
-            {/* <h3>Confirm Deletion</h3> */}
-            <p>Êtes-vous sûr de vouloir vous désabonner ?</p>
-            <div className="flex justify-between">
-              <button
-                className="border rounded-lg p-2"
-                onClick={() => confirmUnsubscribe(rental.id)}
-              >
-                Oui, sûr
-              </button>
-              <button
-                className="border rounded-lg p-2"
-                onClick={() => setIsModalOpen(false)}
-              >
-                Annuler
-              </button>
-            </div>
-          </div>
-        </div>
+      {isUnsubscribeModalOpen && (
+        <ConfirmModal
+          setIsUnsubscribeModalOpen={setIsUnsubscribeModalOpen}
+          onClick={() => confirmUnsubscribe()}
+          content={"Êtes-vous sûr de vouloir vous désabonner ?"}
+        />
+      )}
+      {isWatchModalOpen && (
+        <ConfirmModal
+          setIsUnsubscribeModalOpen={setIsWatchModalOpen}
+          onClick={() => confirmChangedWatch()}
+          content={"Êtes-vous sûr de vouloir changer de montre ?"}
+        />
       )}
       <div className="flex flex-col items-start gap-5 w-full">
-        <h2>Numéro de location : {rental.id}</h2>
+        <h2>Numéro de location : {rental.rentalNumber}</h2>
         <p>
           Date de début de la location :{" "}
           {new Date(rental.dateStart).toLocaleDateString("fr-FR")}
@@ -104,35 +116,45 @@ const WatchRentalAccountCard = ({
             <div key={i} className="bg-gray w-28 h-28 rounded-md"></div>
           ))}
       </div>
-      {watchSelected ? (
-        <button className="text-greenfluo border border-white rounded-lg w-fit p-2">
-          Confirmer la nouvelle montre
-        </button>
-      ) : (
-        <button
-          onClick={() => {
-            setIsFullScreen(true);
-            !isFullScreen &&
-              fetchGetWatchsBySubId(setWatchs, rental.subscription.id);
-          }}
-          className="text-greenfluo border border-white rounded-lg w-fit p-2"
-        >
-          Choisir une nouvelle montre
-        </button>
-      )}
-      {isFullScreen &&
-        watchs.map((watch, i) => (
-          <WatchPurchaseCard
-            key={i}
-            watch={watch}
-            watchSelected={watchSelected}
-            onClick={() => handleWatchSelected(watch)}
-          />
+      {rental.numberWatchesRemaining !== 0 &&
+        (watchSelected ? (
+          <button
+            onClick={() => setIsWatchModalOpen(true)}
+            className="text-greenfluo border border-white rounded-lg w-fit p-2"
+          >
+            Confirmer la nouvelle montre
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              setIsFullScreen(true);
+              !isFullScreen &&
+                fetchGetWatchsBySubId(setWatchs, rental.subscription.id);
+            }}
+            className="text-greenfluo border border-white rounded-lg w-fit p-2"
+          >
+            Choisir une nouvelle montre
+          </button>
         ))}
+      {isFullScreen && (
+        <div className="flex gap-10">
+          {watchs.map((watch, i) => (
+            <WatchPurchaseCard
+              key={i}
+              watch={watch}
+              watchSelected={watchSelected}
+              onClick={() => handleWatchSelected(watch)}
+            />
+          ))}
+        </div>
+      )}
       <div className="text-graylight">
         <p className="text-sm">
-          Vous pouvez encore changer de montre 3 fois jusqu'au{" "}
-          {new Date(rental.dateStart).toLocaleDateString("fr-FR")},
+          {rental.numberWatchesRemaining === 0
+            ? "Vous ne pouvez plus changer de montre"
+            : `Vous pouvez encore changer de montre ${rental.numberWatchesRemaining} fois`}{" "}
+          jusqu'au{" "}
+          {addYear(new Date(rental.dateStart), 1).toLocaleDateString("fr-FR")},
         </p>
         <p className="text-xs">
           pour plus d'informations, voir les{" "}
@@ -158,7 +180,7 @@ const WatchRentalAccountCard = ({
       {!isFullScreen && (
         <div className="flex justify-end w-full">
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsUnsubscribeModalOpen(true)}
             className="text-purplelight"
           >
             Se désabonner

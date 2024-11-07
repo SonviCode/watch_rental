@@ -6,9 +6,17 @@ import { randomUUID } from 'node:crypto'
 import Brand from './brand.js'
 import Material from './material.js'
 import Subscription from '#models/subscription'
+import Rental from '#models/rental'
 
 export default class Watch extends BaseModel {
   static selfAssignPrimaryKey = true
+
+  serializeExtras() {
+    return {
+      pivotDateStart: this.$extras.pivot_date_start,
+      pivotDateEnd: this.$extras.pivot_date_end,
+    }
+  }
 
   @beforeCreate()
   static assignUuid(watch: Watch) {
@@ -35,6 +43,12 @@ export default class Watch extends BaseModel {
 
   @column({ serializeAs: null })
   declare subscriptionId: string
+
+  @manyToMany(() => Rental, {
+    pivotColumns: ['date_start', 'date_end'],
+    pivotTimestamps: true,
+  })
+  declare rental: ManyToMany<typeof Rental>
 
   @manyToMany(() => Image, {
     pivotTimestamps: true,

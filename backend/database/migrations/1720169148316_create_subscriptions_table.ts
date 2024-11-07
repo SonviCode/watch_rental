@@ -11,6 +11,7 @@ export default class extends BaseSchema {
       table.string('switch_text').notNullable()
       table.integer('price').notNullable()
       table.integer('watch_max_price').notNullable()
+      table.integer('number_max_watches').notNullable()
 
       table.timestamp('created_at').nullable()
       table.timestamp('updated_at').nullable()

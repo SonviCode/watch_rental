@@ -49,6 +49,9 @@ export default class Rental extends BaseModel {
   declare rentalNumber: string
 
   @column()
+  declare numberWatchesRemaining: number
+
+  @column()
   declare dateStart: Date
 
   @column()

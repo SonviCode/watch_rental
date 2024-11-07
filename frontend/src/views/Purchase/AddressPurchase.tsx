@@ -1,15 +1,13 @@
 import PurchaseAddressCard from "@/components/Purchase/PurchaseAddressCard";
 import useUser from "@/hooks/useUser";
-import { Address } from "@/types/userType";
 import { faLocationDot, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import AuthPurchase from "./AuthPurchase";
 
 const AddressPurchase = () => {
   const { isLoading, user } = useUser();
-  const [selectedAddress, setSelectedAddress] = useState<Address>();
+  // const [selectedAddress, setSelectedAddress] = useState<Address>();
 
   if (isLoading) return;
   if (!user) return <AuthPurchase />;
@@ -29,8 +27,8 @@ const AddressPurchase = () => {
           <PurchaseAddressCard
             key={i}
             address={address}
-            selectedAddress={selectedAddress}
-            setSelectedAddress={setSelectedAddress}
+            // selectedAddress={selectedAddress}
+            // setSelectedAddress={setSelectedAddress}
           />
         ))}
         <div className="border p-5  rounded-lg flex justify-center items-center gap-5 max-w-1/2 w-full">

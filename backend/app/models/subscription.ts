@@ -37,6 +37,9 @@ export default class Subscription extends BaseModel {
   @column()
   declare watchMaxPrice: number
 
+  @column()
+  declare numberMaxWatches: number
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

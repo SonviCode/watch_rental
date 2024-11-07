@@ -1,5 +1,5 @@
 import { API_INVOICE, GENERIC_ERROR } from "@/constants/Constants";
-import { FetchInvoiceData } from "@/types/invoiceTypes";
+import { FetchCreateInvoiceData } from "@/types/invoiceTypes";
 import { Dispatch, SetStateAction } from "react";
 
 /**
@@ -10,7 +10,7 @@ import { Dispatch, SetStateAction } from "react";
  */
 export const fetchCreateInvoice = async (
   setError: Dispatch<SetStateAction<string>>,
-  invoiceData: FetchInvoiceData
+  invoiceData: FetchCreateInvoiceData
 ) => {
   try {
     const res = await fetch(API_INVOICE, {

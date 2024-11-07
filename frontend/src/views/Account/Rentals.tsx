@@ -45,7 +45,7 @@ const Rentals = () => {
               />
             ))
           ) : (
-            <p>Vous n'avez aucune location en cours</p>
+            <p className="bg-blacklight rounded-lg p-5">Vous n'avez aucune location en cours</p>
           )}
         </div>
       </div>

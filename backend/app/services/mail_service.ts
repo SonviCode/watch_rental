@@ -10,7 +10,6 @@ export default class MailService {
         .to(user.email)
         .subject('Vérification de votre e-mail')
         .htmlView('emails/verify_email_html', { user, otp })
-      // message.textView('emails/verify_email_text', user)
     })
   }
 
@@ -21,15 +20,13 @@ export default class MailService {
         .to(user.email)
         .subject('Votre e-mail a bien été vérifié !')
         .htmlView('emails/verified_email_html', { user })
-      // message.textView('emails/verify_email_text', user)
     })
   }
 
   static async paymentSuccessful(rental: Rental) {
-    const { user } = rental
-    const { subscription } = rental
+    const { user, subscription } = rental
 
-    console.log(rental)
+    console.log(import.meta.url)
 
     await mail.send((message) => {
       message
@@ -37,7 +34,6 @@ export default class MailService {
         .to(user.email)
         .subject('Confirmation de paiement')
         .htmlView('emails/confirm_payment_email_html', { user, subscription })
-      // message.textView('emails/verify_email_text', user)
     })
   }
 }

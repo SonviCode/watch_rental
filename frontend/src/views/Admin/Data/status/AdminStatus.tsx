@@ -16,7 +16,7 @@ const AdminStatus = () => {
 
   return (
     <section className="p-5 w-full">
-      <h1 className="tracking-wide uppercase text-xl mb-5">Abonnements</h1>
+      <h1 className="tracking-wide uppercase text-xl mb-5">Status</h1>
       {handleStatus ? (
         <HandleStatus setHandleStatus={setHandleStatus} />
       ) : (

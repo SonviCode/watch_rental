@@ -52,7 +52,6 @@ export default function StripeCheckoutForm({
             subscription,
             watchSelected,
             rentalStartDate,
-            message,
             setMessage,
             setIsLoading,
             navigate

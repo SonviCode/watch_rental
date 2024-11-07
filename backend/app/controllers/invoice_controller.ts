@@ -8,7 +8,17 @@ import { generateInvoiceNumber } from '../utils/generation_utils.js'
 import InvoiceRepository from '#repositories/watch/invoice_repository'
 
 export default class InvoiceController {
-  async getInvoices({ request, response }: HttpContext) {}
+  /**
+   * get all invoices only for admin
+   *
+   * @param { response }
+   * @returns all invoices
+   */
+  async getAllInvoices({ response }: HttpContext) {
+    const invoices = await InvoiceRepository.getAll()
+
+    return response.ok(invoices)
+  }
 
   async getInvoiceById({ request, response }: HttpContext) {
     const invoiceId = request.param('id')

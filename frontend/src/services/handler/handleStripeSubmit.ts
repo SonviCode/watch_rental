@@ -7,6 +7,8 @@ import { NavigateFunction } from "react-router-dom";
 import { fetchCreateRental } from "../api/rental";
 import { Value } from "node_modules/react-date-picker/dist/esm/shared/types";
 import { fetchCreateInvoice } from "../api/invoice";
+import { FetchCreateInvoiceData } from "@/types/invoiceTypes";
+import { FetchCreateRentalData } from "@/types/rentalTypes";
 
 export const handleStripeCheckoutSubmit = async (
   e: FormEvent<HTMLFormElement>,
@@ -16,18 +18,11 @@ export const handleStripeCheckoutSubmit = async (
   subscription: Subscription,
   watchSelected: Watch,
   rentalStartDate: Value,
-  message: string,
   setMessage: Dispatch<SetStateAction<string>>,
   setIsLoading: Dispatch<SetStateAction<boolean>>,
   navigate: NavigateFunction
 ) => {
   e.preventDefault();
-
-  const formData = new FormData();
-  formData.append("user_id", user!.id);
-  formData.append("subscription_id", subscription.id);
-  formData.append("date_start", rentalStartDate?.toString());
-  formData.append("watch_id", watchSelected.id);
 
   if (!stripe || !elements) {
     return;
@@ -55,15 +50,22 @@ export const handleStripeCheckoutSubmit = async (
       setMessage("An unexpected error occurred.");
     }
   } else {
-    const rental = await fetchCreateRental(setMessage, formData);
+    const createRentalData: FetchCreateRentalData = {
+      user_id: user!.id,
+      subscription: subscription,
+      date_start: rentalStartDate,
+      watch_id: watchSelected.id,
+    };
 
-    const invoiceData = {
+    const rental = await fetchCreateRental(setMessage, createRentalData);
+
+    const createInvoiceData: FetchCreateInvoiceData = {
       rental_id: rental.id,
       amount: subscription.price,
       date_start: new Date(rental.dateStart),
       subscription,
     };
-    const invoice_id = await fetchCreateInvoice(setMessage, invoiceData);
+    const invoice_id = await fetchCreateInvoice(setMessage, createInvoiceData);
 
     if (rental) {
       navigate("/paiement-effectue", {

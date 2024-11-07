@@ -2,16 +2,13 @@ import { Address } from "@/types/userType";
 // import { formatPhoneNumber } from "@/utils/formatUtils";
 import { faCircleCheck, faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Dispatch, SetStateAction } from "react";
 
 const PurchaseAddressCard = ({
   address,
   selectedAddress,
-  setSelectedAddress,
 }: {
   address: Address;
   selectedAddress?: Address | undefined;
-  setSelectedAddress?: Dispatch<SetStateAction<Address | undefined>>;
 }) => {
   const isSelected = selectedAddress === address;
 

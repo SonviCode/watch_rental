@@ -6,6 +6,7 @@ export type Subscription =
       description: string;
       price: number;
       watchMaxPrice: number;
+      numberMaxWatches: number;
       createdAt: Date;
       updatedAt: Date;
     }

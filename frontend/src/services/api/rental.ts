@@ -1,10 +1,12 @@
 import {
+  API_ADD_WATCH_RENTAL,
   API_RENTAL,
   API_RENTALS_BY_USER,
   API_UNSUBSCRIBE_RENTAL,
   GENERIC_ERROR,
 } from "@/constants/Constants";
-import { Rental } from "@/types/rentalTypes";
+import { FetchCreateRentalData, Rental } from "@/types/rentalTypes";
+import { Watch } from "@/types/watchTypes";
 import { Dispatch, SetStateAction } from "react";
 
 /**
@@ -15,12 +17,15 @@ import { Dispatch, SetStateAction } from "react";
  */
 export const fetchCreateRental = async (
   setError: Dispatch<SetStateAction<string>>,
-  formData: FormData
+  createRentalData: FetchCreateRentalData
 ) => {
   try {
     const res = await fetch(API_RENTAL, {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(createRentalData),
       credentials: "include",
     });
 
@@ -91,6 +96,53 @@ export const fetchRentalsByUserId = async (
     }
 
     setRentals(data);
+  } catch (e) {
+    // setError(GENERIC_ERROR);
+  }
+};
+
+/**
+ *
+ * @param rentalId
+ * @returns
+ */
+export const fetchUpdateWatchesOfRental = async (
+  // setError: Dispatch<SetStateAction<string>>,
+  rental: Rental,
+  rentalId: string,
+  setRentals: Dispatch<SetStateAction<Rental[]>>,
+  setWatchSelected: Dispatch<SetStateAction<Watch | undefined>>,
+  setIsFullScreen: Dispatch<SetStateAction<boolean>>,
+  userId: string,
+  watchSelected: Watch
+) => {
+  const rentalData = {
+    subscription_id: rental.subscription.id,
+    watch_id: watchSelected.id,
+  };
+
+  try {
+    const res = await fetch(API_ADD_WATCH_RENTAL + rentalId, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(rentalData),
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      // setError(data.errors[0].message);
+      return;
+    }
+
+    await fetchRentalsByUserId(setRentals, userId);
+    setWatchSelected(undefined);
+    setIsFullScreen(false);
+
+    return data;
   } catch (e) {
     // setError(GENERIC_ERROR);
   }

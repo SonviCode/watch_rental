@@ -1,5 +1,6 @@
 import { SERVER_URL } from "@/constants/Constants";
 import { Watch } from "@/types/watchTypes";
+import { MouseEventHandler } from "react";
 
 const WatchPurchaseCard = ({
   watch,
@@ -8,7 +9,7 @@ const WatchPurchaseCard = ({
 }: {
   watch: Watch;
   watchSelected?: Watch | undefined;
-  onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
+  onClick?: MouseEventHandler<HTMLDivElement> | undefined;
 }) => {
   let isWatchSelected = false;
 
@@ -19,10 +20,22 @@ const WatchPurchaseCard = ({
   return (
     <div
       onClick={onClick}
-      className={`${
-        isWatchSelected && "border-purple border-4"
-      } bg-[#FFFFFF] w-28 h-28 rounded-md text-sm text-center relative cursor-pointer`}
+      className={`${isWatchSelected && "border-purple border-4"}
+      ${watch.pivotDateEnd ? "opacity-50" : ""} ${onClick ? "cursor-pointer" : ""}
+       bg-[#FFFFFF] w-28 h-28 rounded-md text-sm text-center relative `}
     >
+      {/* {watch.pivotDateStart && (
+        <div className="text-graylight text-xs flex flex-col absolute -top-10">
+          <span>
+            {new Date(watch.pivotDateStart).toLocaleDateString("fr-FR")} -{" "}
+          </span>
+          <span>
+            {watch.pivotDateEnd
+              ? new Date(watch.pivotDateEnd).toLocaleDateString("fr-FR")
+              : "/"}
+          </span>
+        </div>
+      )} */}
       <div className="absolute right-2 top-3 flex h-4 w-6 items-center justify-center rounded-full">
         <img
           src={SERVER_URL + watch.brand.logoImgUrl}

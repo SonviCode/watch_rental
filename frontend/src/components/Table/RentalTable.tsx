@@ -15,10 +15,7 @@ const RentalTable = ({ rentals }: { rentals: Rental[] }) => {
             Status
           </th>
           <th scope="col" className="px-6 py-3">
-            Début
-          </th>
-          <th scope="col" className="px-6 py-3">
-            Fin
+            Début - Fin
           </th>
           <th scope="col" className="px-6 py-3">
             Montre(s) sélectionnée(s)
@@ -31,7 +28,9 @@ const RentalTable = ({ rentals }: { rentals: Rental[] }) => {
             key={i}
             className="even:bg-blacklight last:rounded-b-lg last:border-none border-b"
           >
-            <td className="px-6 py-4 last:rounded-bl-lg">{rental.id}</td>
+            <td className="px-6 py-4 last:rounded-bl-lg">
+              {rental.rentalNumber}
+            </td>
             <td className="px-6 py-4">{rental.subscription.title}</td>
             <td
               className={`${
@@ -43,20 +42,34 @@ const RentalTable = ({ rentals }: { rentals: Rental[] }) => {
               {rental.status.statusName}
             </td>
             <td className="px-6 py-4">
-              {new Date(rental.dateStart).toLocaleDateString("fr-FR")}
-            </td>
-            <td className="px-6 py-4">
+              {new Date(rental.dateStart).toLocaleDateString("fr-FR")} -{" "}
               {rental.dateEnd
                 ? new Date(rental.dateEnd).toLocaleDateString("fr-FR")
-                : "/"}
+                : "actif"}
             </td>
             <td className="last:rounded-br-lg px-6 py-4">
-              {rental.watch.map((watch, i) => (
-                <p key={i}>
-                  {watch.name}
-                  <br />
-                </p>
-              ))}
+              {[...rental.watch]
+                .sort(
+                  (a, b) =>
+                    new Date(b.pivotDateStart!).getTime() -
+                    new Date(a.pivotDateStart!).getTime()
+                )
+                .map((watch, i) => (
+                  <div className="flex gap-2 items-center">
+                    <p key={i}>{watch.name}</p>
+                    <span className="text-graylight text-xs">
+                      {new Date(watch.pivotDateStart!).toLocaleDateString(
+                        "fr-FR"
+                      )}{" "}
+                      -{" "}
+                      {watch.pivotDateEnd
+                        ? new Date(watch.pivotDateEnd).toLocaleDateString(
+                            "fr-FR"
+                          )
+                        : "actif"}
+                    </span>
+                  </div>
+                ))}
             </td>
           </tr>
         ))}

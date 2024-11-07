@@ -14,7 +14,7 @@ export type Invoice = {
   updatedAt: Date;
 };
 
-export type FetchInvoiceData = {
+export type FetchCreateInvoiceData = {
   rental_id: string;
   amount: number;
   date_start: Date;

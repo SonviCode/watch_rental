@@ -7,7 +7,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').primary().notNullable()
       table.uuid('rental_id').references('rentals.id')
-      table.uuid('status_id').references('status.id')
+      table.uuid('status_id').references('statuses.id')
       table.string('invoice_number')
       table.integer('amount')
       table.string('pdf_url')
