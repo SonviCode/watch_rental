@@ -9,7 +9,7 @@ export const UserFactory = Factory.define(User, ({ faker }) => {
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
     email: faker.internet.email(),
-    // birthDate: DateTime.fromJSDate(faker.date.recent()),
+    birthDate: DateTime.fromJSDate(faker.date.anytime()), //to fix with birthdate
     password: 'test',
     phoneNumber: faker.phone.number(),
     role: 'USER',

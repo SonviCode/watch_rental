@@ -52,7 +52,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare role: string
 
-  @column()
+  @column.dateTime()
   declare birthDate: DateTime
 
   @column()
