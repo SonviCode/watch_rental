@@ -32,7 +32,9 @@ const Watchs = () => {
                   watchs.map((watch, i) => <WatchCard watch={watch} key={i} />)
                 ) : (
                   <div>
-                    <p>Il n'y a aucune montre disponible avec ces filtres</p>
+                    <p data-testid="no-watches">
+                      Il n'y a aucune montre disponible avec ces filtres
+                    </p>
                   </div>
                 )}
               </div>

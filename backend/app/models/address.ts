@@ -13,6 +13,7 @@ export default class Address extends BaseModel {
   }
 
   @hasOne(() => User)
+  @column({ serializeAs: null })
   declare User: HasOne<typeof User>
 
   @column()

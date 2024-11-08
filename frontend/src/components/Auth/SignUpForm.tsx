@@ -196,6 +196,7 @@ const SignUpForm = () => {
         theme={"dark"}
       />
       <button
+      data-testid="signup-btn"
         className={`${
           error
             ? "border-red-600 hover:bg-red-600"

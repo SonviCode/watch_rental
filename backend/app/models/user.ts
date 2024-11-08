@@ -31,9 +31,6 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @hasMany(() => Address)
   declare address: HasMany<typeof Address>
 
-  // @column({ serializeAs: null })
-  // declare addressId: string
-
   @column({ isPrimary: true })
   declare id: string
 

@@ -4,7 +4,7 @@ import useUser from "@/hooks/useUser";
 import { Link, Navigate } from "react-router-dom";
 
 const Login = () => {
-  const { isLoading, user } = useUser();
+  const { isLoading, user } = useUser() ;
 
   if (isLoading) return;
 

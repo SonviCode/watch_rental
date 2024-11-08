@@ -27,5 +27,5 @@ export type Address = {
   additionalAddress?: string;
   city: string;
   zipCode: string;
-  billingAddress?: string;
+  billingAddress?: boolean;
 };

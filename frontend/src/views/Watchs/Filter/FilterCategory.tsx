@@ -29,7 +29,7 @@ const FilterCategory = ({
 
       <ul className="peer-checked:flex flex-col hidden gap-2 pt-2 z-20">
         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-        {category.map((el: any, index: React.Key) => {
+        {category && category.map((el: any, index: React.Key) => {
           // switch(el)
           // case
           const elementName = el.brandName
