@@ -1,4 +1,5 @@
 import vine from '@vinejs/vine'
+import { DateTime } from 'luxon'
 
 export const signUpValidator = vine.compile(
   vine.object({
@@ -13,7 +14,9 @@ export const signUpValidator = vine.compile(
       }),
     password: vine.string().minLength(8).maxLength(32),
     phone_number: vine.string().trim().maxLength(10),
-    birth_date: vine.date(),
+    birth_date: vine
+      .date({ formats: { utc: true } })
+      .transform((date) => DateTime.fromJSDate(date)),
   })
 )
 
