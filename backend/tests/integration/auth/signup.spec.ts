@@ -2,9 +2,6 @@ import { faker } from '@faker-js/faker'
 import { test } from '@japa/runner'
 
 test.group('AuthController.signup', (group) => {
-  group.teardown(async () => {
-    await () // Nettoyer uniquement la table `users`
-  })
   test('it should create a new user and return 201', async ({ client }) => {
     const userData = {
       first_name: faker.person.firstName(),
