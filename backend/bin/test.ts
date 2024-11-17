@@ -13,7 +13,6 @@
 process.env.NODE_ENV = 'test'
 
 import { Ignitor, prettyPrintError } from '@adonisjs/core'
-import testUtils from '@adonisjs/core/services/test_utils'
 import { configure, processCLIArgs, run } from '@japa/runner'
 import 'reflect-metadata'
 

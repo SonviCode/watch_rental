@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { test } from '@japa/runner'
 
-test.group('AuthController.signup', (group) => {
+test.group('AuthController.signup', () => {
   test('it should create a new user and return 201', async ({ client }) => {
     const userData = {
       first_name: faker.person.firstName(),
