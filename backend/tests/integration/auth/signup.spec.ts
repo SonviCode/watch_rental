@@ -1,30 +1,16 @@
-import { faker } from '@faker-js/faker'
+import { userDataFullRandom, userDataWithoutEmail } from '#tests/data/user/user_data'
+import mail from '@adonisjs/mail/services/main'
 import { test } from '@japa/runner'
 
 test.group('AuthController.signup', () => {
   test('it should create a new user and return 201', async ({ client }) => {
-    const userData = {
-      first_name: faker.person.firstName(),
-      last_name: faker.person.lastName(),
-      email: faker.internet.email(),
-      birth_date: faker.date.anytime(), //to fix with birthdate
-      password: faker.string.alpha(10),
-      phone_number: faker.string.alpha(10),
-    }
-
-    const response = await client.post('api/v1/auth/signup').json(userData)
+    const response = await client.post('api/v1/auth/signup').json(userDataFullRandom)
 
     response.assertStatus(201)
   })
 
   test('it should return a validation error if email is missing', async ({ client }) => {
-    const userDataWithoutEmail = {
-      first_name: faker.person.firstName(),
-      last_name: faker.person.lastName(),
-      birth_date: faker.date.anytime(), //to fix with birthdate
-      password: faker.string.alpha(10),
-      phone_number: faker.string.alpha(10),
-    }
+    mail.fake()
 
     const response = await client.post('api/v1/auth/signup').json(userDataWithoutEmail)
 

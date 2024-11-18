@@ -7,7 +7,7 @@ export default function usersRoutes() {
   router
     .group(() => {
       router.get('', [UserController, 'getUserConnectedInfo'])
-      router.get('all-users', [UserController, 'getAllUsers']).use(middleware.admin())
+      router.get('/all-users', [UserController, 'getAllUsers']).use(middleware.admin())
       router.get(':id', [UserController, 'getUserById'])
     })
     .use(middleware.auth())

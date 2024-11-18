@@ -24,6 +24,10 @@ export default class AdminMiddleware {
 
     const user = await ctx.auth.authenticateUsing()
 
-    if (user.role === env.get('ROLE_ADMIN')) return next()
+    if (user.role !== env.get('ROLE_ADMIN')) {
+      return ctx.response.forbidden()
+    }
+
+    return next()
   }
 }
