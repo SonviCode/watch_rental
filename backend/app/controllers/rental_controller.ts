@@ -109,8 +109,20 @@ export default class RentalController {
 
     const rental = await RentalRepository.getById(rentalId)
 
-    await RentalRepository.updateCurrentWatchOnRental(rental)
-    await RentalRepository.createNextWatchOnRental(rental, body.watch_id)
+    if (
+      new Date(body.date_start_of_new_watch).getTime() <
+      addMonth(new Date(rental.watch[rental.watch.length - 1].$extras.date_start), 1).getTime()
+    )
+      return response
+        .status(400)
+        .send('La date doit être au minimum 1 mois après le dernier changement de montre')
+
+    await RentalRepository.updateCurrentWatchOnRental(rental, body.date_start_of_new_watch)
+    await RentalRepository.createNextWatchOnRental(
+      rental,
+      body.watch_id,
+      body.date_start_of_new_watch
+    )
 
     await rental.save()
 

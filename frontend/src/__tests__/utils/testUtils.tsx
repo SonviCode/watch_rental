@@ -1,13 +1,9 @@
 import { routes } from "@/router/router";
-import { store } from "@/store/store";
 import { render, RenderOptions } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReactElement } from "react";
-import { Provider } from "react-redux";
-import { CLIENT_URL, SERVER_URL } from "../../constants/Constants";
 import {
   BrowserRouter,
-  createBrowserRouter,
   createMemoryRouter,
   RouterProvider,
 } from "react-router-dom";
@@ -44,12 +40,9 @@ export const renderWithRouter = (
 ) => {
   window.history.pushState({}, "Test page", path);
 
-  const { pathname } = new URL("http://localhost:5173" + path);
+  console.log(ui);
+  
 
-  // const router = createMemoryRouter(
-  //   [{ path: pathname, element: <Provider store={store}>{ui}</Provider> }],
-  //   { initialEntries: [path] }
-  // );
   const router = createMemoryRouter(routes, { initialEntries: [path] });
 
   return {

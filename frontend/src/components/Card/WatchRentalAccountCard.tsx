@@ -9,7 +9,9 @@ import { Watch } from "@/types/watchTypes";
 import { addYear } from "@/utils/dateUtils";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Value } from "node_modules/react-date-picker/dist/esm/shared/types";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import InputDateStart from "../DatePicker/InputDateStart";
 import ConfirmModal from "../Modal/ConfirmModal";
 import WatchPurchaseCard from "./WatchPurchaseCard";
 
@@ -22,8 +24,10 @@ const WatchRentalAccountCard = ({
   setRentals: Dispatch<SetStateAction<Rental[]>>;
   user: User;
 }) => {
+  const [error, setError] = useState<string>("");
   const [watchs, setWatchs] = useState<Watch[]>([]);
   const [watchSelected, setWatchSelected] = useState<Watch>();
+  const [newWatchStartDate, setNewWatchStartDate] = useState<Value>(null);
   const [nbWatchesInRental, setNbWatchesInRental] = useState<number>(
     rental.watch.length
   );
@@ -58,13 +62,15 @@ const WatchRentalAccountCard = ({
 
   const confirmChangedWatch = () => {
     fetchUpdateWatchesOfRental(
+      setError,
       rental,
       rental.id,
       setRentals,
       setWatchSelected,
       setIsFullScreen,
       user.id,
-      watchSelected!
+      watchSelected!,
+      newWatchStartDate
     );
     setIsWatchModalOpen(false);
   };
@@ -75,7 +81,9 @@ const WatchRentalAccountCard = ({
   return (
     <div
       className={`transition-all duration-1000 ease 
-                  ${isFullScreen ? "fixed inset-0 z-50 p-8" : ""} 
+                  ${
+                    isFullScreen ? "fixed inset-0 z-50 p-8 overflow-y-auto" : ""
+                  } 
                   bg-blacklight rounded-lg p-5 flex flex-col gap-5 items-center`}
     >
       {isUnsubscribeModalOpen && (
@@ -100,9 +108,31 @@ const WatchRentalAccountCard = ({
         </p>
         <p>Abonnement : {rental.subscription.title}</p>
       </div>
-      <div className="flex gap-10">
+      {isFullScreen && (
+        <InputDateStart
+          setStartDate={setNewWatchStartDate}
+          startDate={newWatchStartDate}
+          text={"Date de récupération de la nouvelle montre"}
+          minDate={rental.watch[rental.watch.length - 1].pivotDateStart}
+        />
+      )}
+      <div className="flex gap-10 items-end">
         {rental.watch.map((watch, i) => (
-          <WatchPurchaseCard key={i} watch={watch} />
+          <div key={i} className="relative flex flex-col">
+            {watch.pivotDateStart && (
+              <div className="text-graylight text-xs flex flex-col">
+                <span>
+                  {new Date(watch.pivotDateStart).toLocaleDateString("fr-FR")} -{" "}
+                </span>
+                <span>
+                  {watch.pivotDateEnd
+                    ? new Date(watch.pivotDateEnd).toLocaleDateString("fr-FR")
+                    : "actif"}
+                </span>
+              </div>
+            )}
+            <WatchPurchaseCard key={i} watch={watch} />
+          </div>
         ))}
         {watchSelected && (
           <WatchPurchaseCard
@@ -136,18 +166,7 @@ const WatchRentalAccountCard = ({
             Choisir une nouvelle montre
           </button>
         ))}
-      {isFullScreen && (
-        <div className="flex gap-10">
-          {watchs.map((watch, i) => (
-            <WatchPurchaseCard
-              key={i}
-              watch={watch}
-              watchSelected={watchSelected}
-              onClick={() => handleWatchSelected(watch)}
-            />
-          ))}
-        </div>
-      )}
+      {error && <span className="italic text-red-600">{error} !</span>}
       <div className="text-graylight">
         <p className="text-sm">
           {rental.numberWatchesRemaining === 0
@@ -156,26 +175,42 @@ const WatchRentalAccountCard = ({
           jusqu'au{" "}
           {addYear(new Date(rental.dateStart), 1).toLocaleDateString("fr-FR")},
         </p>
+        <p>
+          La durée minimum avant d'échanger votre montre est d'un mois de
+          location.
+        </p>
         <p className="text-xs">
           pour plus d'informations, voir les{" "}
           <span className="underline">conditions générales de location</span>
         </p>
       </div>
       {isFullScreen && (
-        <button
-          onClick={() => setIsFullScreen(false)}
-          className="text-purplelight border rounded-lg p-2"
-        >
-          Annuler
-        </button>
-      )}
-      {isFullScreen && (
-        <button
-          onClick={() => setIsFullScreen(false)}
-          className="text-purplelight text-5xl absolute right-10 p-2"
-        >
-          <FontAwesomeIcon icon={faXmark} />
-        </button>
+        <>
+          <div className="flex gap-10">
+            {watchs.map((watch, i) => (
+              <WatchPurchaseCard
+                key={i}
+                watch={watch}
+                watchSelected={watchSelected}
+                onClick={() => handleWatchSelected(watch)}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={() => setIsFullScreen(false)}
+            className="text-purplelight border rounded-lg p-2"
+          >
+            Annuler
+          </button>
+
+          <button
+            onClick={() => setIsFullScreen(false)}
+            className="text-purplelight text-5xl absolute right-10"
+          >
+            <FontAwesomeIcon icon={faXmark} />
+          </button>
+        </>
       )}
       {!isFullScreen && (
         <div className="flex justify-end w-full">

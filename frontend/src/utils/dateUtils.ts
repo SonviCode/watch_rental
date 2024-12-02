@@ -9,3 +9,27 @@ export function addYear(date: Date, year: number) {
 
   return date;
 }
+
+/**
+ *
+ * @param date : current date
+ * @param year : month to add
+ * @returns new date with month added
+ */
+export function addMonth(date: Date, month: number) {
+  date.setMonth(date.getMonth() + month);
+
+  return date;
+}
+
+/**
+ *
+ * @param date : current date
+ * @param days : days to add
+ * @returns new date with days added
+ */
+export function addDays(date: Date, days: number) {
+  date.setDate(date.getDate() + days);
+
+  return date;
+}

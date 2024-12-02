@@ -1,5 +1,5 @@
 import WatchPurchaseCard from "@/components/Card/WatchPurchaseCard";
-import InputDateStartRental from "@/components/Purchase/InputDateStartRental";
+import InputDateStart from "@/components/DatePicker/InputDateStart";
 import SubscriptionSelectPurchase from "@/components/Purchase/SubscriptionSelectPurchase";
 import { API_SUBSCRIPTION, API_WATCH } from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
@@ -52,9 +52,10 @@ const ReviewPurchase = ({
             allSubscriptions={allSubscriptions}
             subscription={subscription}
           />
-          <InputDateStartRental
-            setRentalStartDate={setRentalStartDate}
-            rentalStartDate={rentalStartDate}
+          <InputDateStart
+            setStartDate={setRentalStartDate}
+            startDate={rentalStartDate}
+            text={"Date de démarrage de la location"}
           />
         </div>
         <div className="flex flex-col gap-2">

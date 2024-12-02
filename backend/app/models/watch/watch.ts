@@ -13,6 +13,7 @@ export default class Watch extends BaseModel {
 
   serializeExtras() {
     return {
+      pivotId: this.$extras.pivot_id,
       pivotDateStart: this.$extras.pivot_date_start,
       pivotDateEnd: this.$extras.pivot_date_end,
     }

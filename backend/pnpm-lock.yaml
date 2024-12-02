@@ -50,9 +50,6 @@ importers:
       stripe:
         specifier: ^17.2.0
         version: 17.2.0
-      ts-node:
-        specifier: ^10.9.2
-        version: 10.9.2(@swc/core@1.4.8)(@types/node@20.11.30)(typescript@5.4.3)
       twilio:
         specifier: ^5.0.4
         version: 5.0.4
@@ -105,6 +102,9 @@ importers:
       prettier:
         specifier: ^3.2.4
         version: 3.2.5
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@swc/core@1.4.8)(@types/node@20.11.30)(typescript@5.4.3)
       typescript:
         specifier: ^5.3.3
         version: 5.4.3

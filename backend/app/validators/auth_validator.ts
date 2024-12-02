@@ -1,4 +1,4 @@
-import vine from '@vinejs/vine'
+import vine, { SimpleMessagesProvider } from '@vinejs/vine'
 import { DateTime } from 'luxon'
 
 export const signUpValidator = vine.compile(
@@ -20,11 +20,23 @@ export const signUpValidator = vine.compile(
   })
 )
 
+signUpValidator.messagesProvider = new SimpleMessagesProvider({
+  // Applicable for all fields
+  'required': 'The {{ field }} field is required',
+  'string': 'The value of {{ field }} field must be a string',
+
+  // signup
+  'email.unique':
+    'Cette adresse email est déjà utilisée, choisissez-en une autre ou connectez-vous.',
+  'password.minLength': 'Le mot de passe doit avoit au moins 8 charactères',
+
+  // Error message for the username field
+  'username.required': 'Please choose a username for your account',
+})
+
 export const loginValidator = vine.compile(
   vine.object({
     email: vine.string().email(),
     password: vine.string(),
   })
 )
-
-// vine.errorReporter = () => new JSONAPIErrorReporter()

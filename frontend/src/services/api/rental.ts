@@ -7,6 +7,7 @@ import {
 } from "@/constants/Constants";
 import { FetchCreateRentalData, Rental } from "@/types/rentalTypes";
 import { Watch } from "@/types/watchTypes";
+import { Value } from "node_modules/react-date-picker/dist/esm/shared/types";
 import { Dispatch, SetStateAction } from "react";
 
 /**
@@ -107,18 +108,20 @@ export const fetchRentalsByUserId = async (
  * @returns
  */
 export const fetchUpdateWatchesOfRental = async (
-  // setError: Dispatch<SetStateAction<string>>,
+  setError: Dispatch<SetStateAction<string>>,
   rental: Rental,
   rentalId: string,
   setRentals: Dispatch<SetStateAction<Rental[]>>,
   setWatchSelected: Dispatch<SetStateAction<Watch | undefined>>,
   setIsFullScreen: Dispatch<SetStateAction<boolean>>,
   userId: string,
-  watchSelected: Watch
+  watchSelected: Watch,
+  newWatchStartDate: Value
 ) => {
   const rentalData = {
     subscription_id: rental.subscription.id,
     watch_id: watchSelected.id,
+    date_start_of_new_watch: newWatchStartDate,
   };
 
   try {
@@ -134,9 +137,11 @@ export const fetchUpdateWatchesOfRental = async (
     const data = await res.json();
 
     if (!res.ok) {
-      // setError(data.errors[0].message);
+      setError(data.errors[0].message);
       return;
     }
+
+    setError("");
 
     await fetchRentalsByUserId(setRentals, userId);
     setWatchSelected(undefined);
@@ -144,6 +149,6 @@ export const fetchUpdateWatchesOfRental = async (
 
     return data;
   } catch (e) {
-    // setError(GENERIC_ERROR);
+    setError(GENERIC_ERROR);
   }
 };

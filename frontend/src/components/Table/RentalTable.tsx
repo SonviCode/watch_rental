@@ -55,8 +55,8 @@ const RentalTable = ({ rentals }: { rentals: Rental[] }) => {
                     new Date(a.pivotDateStart!).getTime()
                 )
                 .map((watch, i) => (
-                  <div className="flex gap-2 items-center">
-                    <p key={i}>{watch.name}</p>
+                  <div key={i} className="flex gap-2 items-center">
+                    <p>{watch.name}</p>
                     <span className="text-graylight text-xs">
                       {new Date(watch.pivotDateStart!).toLocaleDateString(
                         "fr-FR"

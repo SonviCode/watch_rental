@@ -9,6 +9,11 @@
             color: #333;
             line-height: 1.6;
         }
+        .delivery {
+            display: flex
+            gap: 10px;
+            justify-content: space-around;
+        }
         .container {
             max-width: 800px;
             margin: auto;
@@ -71,14 +76,15 @@
     </div>
 
     <!-- Livraison -->
+   <div class="delivery">
     <div class="section">
         <h2>LIVRAISON</h2>
         <p>
             {{ rental.user.firstName }}<br>
-            20 rue des Vosges<br>
-            67640 - LIPSHEIM, France<br>
-            Tel: 0782934530<br>
-            E-mail: tom.sonvico@free.fr
+            {{ rental.user.address[0].mainAddress }}<br>
+            {{ rental.user.address[0].zipCode }} - {{ rental.user.address[0].city }}, {{ rental.user.address[0].country }}<br>
+            Tel: {{ rental.user.phoneNumber }}<br>
+            E-mail: {{ rental.user.email }}
         </p>
     </div>
 
@@ -86,13 +92,14 @@
     <div class="section">
         <h2>FACTURATION</h2>
         <p>
-            Sonvico Tom<br>
-            20 rue des Vosges<br>
-            67640 - LIPSHEIM, France<br>
-            Tel: 0782934530<br>
-            E-mail: tom.sonvico@free.fr
+            {{ rental.user.firstName }}<br>
+            {{ rental.user.address[0].mainAddress }}<br>
+            {{ rental.user.address[0].zipCode }} - {{ rental.user.address[0].city }}, {{ rental.user.address[0].country }}<br>
+            Tel: {{ rental.user.phoneNumber }}<br>
+            E-mail: {{ rental.user.email }}
         </p>
     </div>
+   </div>
 
     <!-- Détails Facture -->
     <div class="section">

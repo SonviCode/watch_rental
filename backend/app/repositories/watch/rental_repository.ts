@@ -1,14 +1,21 @@
 import Rental from '#models/rental'
-import { addMonth } from '../../utils/date_utils.js'
 
+/**
+ * Repository class for Rental
+ */
 export default class RentalRepository {
+  /**
+   * get all rentals - only for admin
+   *
+   * @returns all rentals
+   */
   static async getAll() {
     return await Rental.query()
       .preload('status')
       .orderBy('created_at', 'desc')
       .preload('watch', (watchQuery) => {
         watchQuery
-          .pivotColumns(['date_start', 'date_end'])
+          .pivotColumns(['id', 'date_start', 'date_end'])
           .preload('brand')
           .preload('material')
           .preload('subscription')
@@ -20,13 +27,19 @@ export default class RentalRepository {
       .preload('subscription')
   }
 
+  /**
+   * get rental by id
+   *
+   * @param rentalId
+   * @returns rental
+   */
   static async getById(rentalId: string) {
     return await Rental.query()
       .where('id', rentalId)
       .preload('status')
       .preload('watch', (watchQuery) => {
         watchQuery
-          // .pivotColumns(['date_start', 'date_end'])
+          .pivotColumns(['id', 'date_start', 'date_end'])
           .preload('brand')
           .preload('material')
           .preload('subscription')
@@ -39,6 +52,12 @@ export default class RentalRepository {
       .firstOrFail()
   }
 
+  /**
+   * get rental by user id
+   *
+   * @param userId
+   * @returns rental
+   */
   static async getByUserId(userId: string) {
     return await Rental.query()
       .preload('status')
@@ -46,7 +65,7 @@ export default class RentalRepository {
       .orderBy('created_at', 'desc')
       .preload('watch', (watchQuery) => {
         watchQuery
-          .pivotColumns(['date_start', 'date_end'])
+          .pivotColumns(['id', 'date_start', 'date_end'])
           .preload('brand')
           .preload('material')
           .preload('subscription')
@@ -58,19 +77,37 @@ export default class RentalRepository {
       .preload('subscription')
   }
 
-  static async updateCurrentWatchOnRental(rental: Rental) {
+  /**
+   * update the watch currently in rent
+   *
+   * @param rental rental
+   * @param nextWatchStartDate start date of next watch
+   */
+  static async updateCurrentWatchOnRental(rental: Rental, nextWatchStartDate: string) {
+    const idPivotOfLastWatch = rental.watch.slice(-1).pop()!.$extras.pivot_id
     const idOfLastWatch = rental.watch.slice(-1).pop()!.id
+
+    console.log(idPivotOfLastWatch)
 
     rental.numberWatchesRemaining = rental.numberWatchesRemaining - 1
 
     rental
       .related('watch')
-      .sync({ [idOfLastWatch]: { date_end: addMonth(new Date(rental.dateStart), 1) } }, false)
+      .sync({ [idOfLastWatch]: { date_end: new Date(nextWatchStartDate) } }, false)
   }
 
-  static async createNextWatchOnRental(rental: Rental, nextWatchId: string) {
-    rental
-      .related('watch')
-      .attach({ [nextWatchId]: { date_start: addMonth(new Date(rental.dateStart), 1) } })
+  /**
+   * add the next watch in rent
+   *
+   * @param rental
+   * @param nextWatchId
+   * @param nextWatchStartDate start date of next watch
+   */
+  static async createNextWatchOnRental(
+    rental: Rental,
+    nextWatchId: string,
+    nextWatchStartDate: string
+  ) {
+    rental.related('watch').attach({ [nextWatchId]: { date_start: new Date(nextWatchStartDate) } })
   }
 }

@@ -1,14 +1,11 @@
-import {
-  fireEvent,
-  getByTestId,
-  render,
-  screen,
-  waitFor,
-} from "@testing-library/react";
-import { describe, expect, it, vi, beforeAll, afterAll } from "vitest";
-import { renderWithRouter } from "../utils/testUtils";
 import Login from "@/views/Auth/Login/Login";
 import SignUp from "@/views/Auth/SignUp/SignUp";
+import {
+  screen,
+  waitFor
+} from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import { renderWithRouterPath } from "../utils/testUtils";
 
 // global.fetch = vi.fn(() =>
 //   Promise.resolve({
@@ -45,7 +42,7 @@ describe("Login Page", () => {
   // });
 
   it("render signup", async () => {
-    renderWithRouter(<SignUp />, "/signup");
+    renderWithRouterPath(<SignUp />, "/signup");
 
     await waitFor(() =>
       expect(screen.getByTestId("signup-btn")).toBeInTheDocument()
@@ -53,7 +50,7 @@ describe("Login Page", () => {
   });
 
   it("render login", async () => {
-    renderWithRouter(<Login />, "/login");
+    renderWithRouterPath(<Login />, "/login");
 
     // expect(screen.getByTestId("login-btn")).toBeInTheDocument();
     await waitFor(() =>

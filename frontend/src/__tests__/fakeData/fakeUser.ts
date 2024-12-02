@@ -2,17 +2,28 @@ import { User } from "@/types/userType";
 import { faker } from "@faker-js/faker";
 
 // Fonction pour générer un utilisateur factice
-const generateFakeUser = (): User => ({
-  id: faker.datatype.uuid(),
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
+export const generateFakeUser = (): User => ({
+  id: faker.string.uuid(),
+  firstName: faker.person.firstName(),
+  lastName: faker.person.lastName(),
   email: faker.internet.email(),
-  phoneNumber: faker.phone.number(),
-  address: {
-    street: faker.address.streetAddress(),
-    city: faker.address.city(),
-    country: faker.address.country(),
-  },
+  phoneNumber: Number(faker.phone.number()),
+  role: "USER",
+  password: "password123",
+  emailIsVerified: false,
+  smsIsVerified: false,
+  idIsVerified: false,
+  createdAt: faker.date.recent(),
+  updatedAt: faker.date.recent(),
+  birthday: faker.date.recent(),
+  address: [
+    {
+      mainAddress: faker.location.streetAddress(),
+      city: faker.location.city(),
+      country: faker.location.country(),
+      zipCode: faker.location.zipCode(),
+    },
+  ],
 });
 
 // Exemple d'utilisation
