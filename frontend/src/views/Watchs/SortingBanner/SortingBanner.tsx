@@ -1,25 +1,7 @@
-// import SearchBar from "./SearchBar/SearchBar";
-// import Select from "react-select";
-// import "@/style/custom/select.css";
-
-// const options = [
-//   { value: "ascending_name", label: "Nom, A à Z" },
-//   { value: "decreasing_name", label: "Nom, Z à A" },
-//   { value: "ascending_price", label: "Prix, croissant" },
-//   { value: "decreasing_price", label: "Prix, décroissant" },
-// ];
-
-// const colorStyles = {
-//   control: (styles) => ({ ...styles, backgroundColor: "black" }),
-//   option: (styles) => ({ ...styles, backgroundColor: "black" }),
-// };
-
-const SortingBanner = () => {
-  const numberOfWatchs = 4;
-
+const SortingBanner = ({ nbOfWatchs }: { nbOfWatchs: number }) => {
   return (
-    <div className="py-10 w-full flex justify-between items-center pl-10">
-      <p>Il y a {numberOfWatchs} montres</p>
+    <div className="py-10 w-full flex justify-between items-center px-10">
+      <p>Il y a {nbOfWatchs} montres</p>
       {/* <SearchBar /> */}
       {/* <Select
         options={options}

@@ -22,7 +22,7 @@ const AddressPurchase = () => {
       <h2 className="uppercase font-bold mb-3">
         <FontAwesomeIcon icon={faLocationDot} /> Adresse de livraison
       </h2>
-      <div className="flex gap-10 justify-between">
+      <div className="flex-col sm:flex-row flex gap-10 justify-between">
         {user.address.map((address, i) => (
           <PurchaseAddressCard
             key={i}
@@ -31,7 +31,7 @@ const AddressPurchase = () => {
             // setSelectedAddress={setSelectedAddress}
           />
         ))}
-        <div className="border p-5  rounded-lg flex justify-center items-center gap-5 max-w-1/2 w-full">
+        <div className="border p-5 text-center rounded-lg flex justify-center items-center gap-5 max-w-1/2 w-full">
           <span>
             <FontAwesomeIcon icon={faPlus} /> ajouter une nouvelle adresse
           </span>

@@ -56,19 +56,7 @@ export default class RentalController {
   async createRental({ request, response }: HttpContext) {
     const body = await request.validateUsing(createRentalValidator)
 
-    const rentalBody = {
-      user_id: body.user_id,
-      rental_number: generateRentalNumber(body.subscription.title),
-      numberWatchesRemaining: body.subscription.numberMaxWatches - 1,
-      subscription_id: body.subscription.id,
-      date_start: new Date(body.date_start),
-      status_id: STATUS_ID_ACTIVE_RENTAL,
-    }
-
-    const rental = await Rental.create(rentalBody)
-    await rental
-      .related('watch')
-      .attach({ [body.watch_id]: { date_start: new Date(body.date_start) } })
+    const rental = await RentalRepository.addRental(body)
 
     const rentalCreated = await RentalRepository.getById(rental.id)
 
@@ -109,9 +97,18 @@ export default class RentalController {
 
     const rental = await RentalRepository.getById(rentalId)
 
+    rental.watch.map((el) => console.log(el.name))
+    // console.log(rental.watch)
+
+    console.log(body.date_start_of_new_watch)
+    console.log(new Date(rental.watch[rental.watch.length - 1].$extras.pivot_date_start), 1)
+
     if (
       new Date(body.date_start_of_new_watch).getTime() <
-      addMonth(new Date(rental.watch[rental.watch.length - 1].$extras.date_start), 1).getTime()
+      addMonth(
+        new Date(rental.watch[rental.watch.length - 1].$extras.pivot_date_start),
+        1
+      ).getTime()
     )
       return response
         .status(400)

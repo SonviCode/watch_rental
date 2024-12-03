@@ -36,6 +36,8 @@ export const API_PURCHASE_CREATE_STRIPE_PAYMENT =
 export const API_SUBSCRIPTION = API_ROOTDIR + "subscription";
 // ---watch
 export const API_WATCH = API_ROOTDIR + "watch";
+export const API_WATCH_FILTER = API_ROOTDIR + "watch/filter";
+export const API_WATCH_RENTAL = API_ROOTDIR + "watch/rental";
 // ---brand
 export const API_BRAND = API_ROOTDIR + "brand";
 // ---material

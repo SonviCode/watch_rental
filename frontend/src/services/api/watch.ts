@@ -65,7 +65,7 @@ export const fetchGetWatchsBySubId = async (
   subscriptionId: string
 ) => {
   try {
-    const res = await fetch(`${API_WATCH}?subscription_id=${subscriptionId}`);
+    const res = await fetch(`${API_WATCH}?subscription_id=${subscriptionId}&isAvailable=true`);
 
     const watchs = await res.json();
 

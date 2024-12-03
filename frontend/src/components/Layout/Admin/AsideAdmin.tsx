@@ -5,7 +5,7 @@ import {
   faHome,
   faLayerGroup,
   faSignal,
-  faUser
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
@@ -19,7 +19,7 @@ const AsideAdmin = () => {
       </Link>
 
       <h1 className="gradient-text uppercase text-bold text-xl mb-10">
-        Tempo Admin
+        <Link to="/admin">Tempo Admin</Link>
       </h1>
       <div>
         <h2 className="text-gray mb-3">Données</h2>

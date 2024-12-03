@@ -75,6 +75,12 @@ const WatchRentalAccountCard = ({
     setIsWatchModalOpen(false);
   };
 
+  const isLatestWatchIsActive =
+    new Date(rental.watch[rental.watch.length - 1].pivotDateStart!).getTime() <
+    new Date(Date.now()).getTime();
+
+  console.log(isLatestWatchIsActive);
+
   const numbersOfWatchesRemaining =
     rental.subscription.numberMaxWatches - nbWatchesInRental;
 
@@ -117,23 +123,30 @@ const WatchRentalAccountCard = ({
         />
       )}
       <div className="flex gap-10 items-end">
-        {rental.watch.map((watch, i) => (
-          <div key={i} className="relative flex flex-col">
-            {watch.pivotDateStart && (
-              <div className="text-graylight text-xs flex flex-col">
-                <span>
-                  {new Date(watch.pivotDateStart).toLocaleDateString("fr-FR")} -{" "}
-                </span>
-                <span>
-                  {watch.pivotDateEnd
-                    ? new Date(watch.pivotDateEnd).toLocaleDateString("fr-FR")
-                    : "actif"}
-                </span>
-              </div>
-            )}
-            <WatchPurchaseCard key={i} watch={watch} />
-          </div>
-        ))}
+        {rental.watch
+          .sort(
+            (a, b) =>
+              new Date(a.pivotDateStart!).getTime() -
+              new Date(b.pivotDateStart!).getTime()
+          )
+          .map((watch, i) => (
+            <div key={i} className="relative flex flex-col">
+              {watch.pivotDateStart && (
+                <div className="text-graylight text-xs flex text-center flex-col">
+                  <span>
+                    {new Date(watch.pivotDateStart).toLocaleDateString("fr-FR")}{" "}
+                    -{" "}
+                  </span>
+                  <span>
+                    {watch.pivotDateEnd
+                      ? new Date(watch.pivotDateEnd).toLocaleDateString("fr-FR")
+                      : "/"}
+                  </span>
+                </div>
+              )}
+              <WatchPurchaseCard key={i} watch={watch} />
+            </div>
+          ))}
         {watchSelected && (
           <WatchPurchaseCard
             watch={watchSelected}
@@ -146,7 +159,8 @@ const WatchRentalAccountCard = ({
             <div key={i} className="bg-gray w-28 h-28 rounded-md"></div>
           ))}
       </div>
-      {rental.numberWatchesRemaining !== 0 &&
+      {isLatestWatchIsActive &&
+        rental.numberWatchesRemaining !== 0 &&
         (watchSelected ? (
           <button
             onClick={() => setIsWatchModalOpen(true)}
@@ -218,7 +232,7 @@ const WatchRentalAccountCard = ({
             onClick={() => setIsUnsubscribeModalOpen(true)}
             className="text-purplelight"
           >
-            Se désabonner
+            Me désabonner
           </button>
         </div>
       )}

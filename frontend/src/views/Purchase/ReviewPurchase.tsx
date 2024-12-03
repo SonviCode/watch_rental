@@ -32,7 +32,7 @@ const ReviewPurchase = ({
 
   const { isLoading: watchIsLoading } = useFetchData(
     setWatchs,
-    `${API_WATCH}?subscription_id=${subscription.id}`
+    `${API_WATCH}?subscription_id=${subscription.id}&isAvailable=true`
   );
   const { isLoading: subIsLoading } = useFetchData(
     setAllSubscriptions,
@@ -44,9 +44,9 @@ const ReviewPurchase = ({
   const isWatchSelected = !isObjectEmpty(watchSelected);
 
   return (
-    <section className="grow p-10">
+    <section className="grow p-5 md:p-10">
       <form className="grow flex flex-col gap-5">
-        <div className="flex gap-10 justify-between">
+        <div className="flex flex-col sm:flex-row gap-5 sm:gap-10 justify-between">
           <SubscriptionSelectPurchase
             setWatchs={setWatchs}
             allSubscriptions={allSubscriptions}

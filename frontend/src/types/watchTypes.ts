@@ -1,4 +1,5 @@
-import { Subscription } from "./subscriptionTypes";
+import { Rental } from "./rentalTypes";
+import { Subscription, SubscriptionState } from "./subscriptionTypes";
 
 export type Watch =
   | {
@@ -14,6 +15,7 @@ export type Watch =
       updatedAt: Date;
       pivotDateStart?: Date;
       pivotDateEnd?: Date;
+      rental?: Rental[];
     }
   | Record<string, never>;
 
@@ -37,6 +39,12 @@ export type Image = {
   imageUrl: string;
   createdAt: Date;
   updatedAt: Date;
+};
+
+export type WatchFilter = {
+  keyRequest: string;
+  category: Material[] | Brand[] | SubscriptionState[];
+  name: string;
 };
 
 export interface purchaseSelectedWatchState {

@@ -1,13 +1,10 @@
 import {
-  API_BRAND,
-  API_MATERIAL,
-  API_SUBSCRIPTION,
+  API_WATCH_FILTER
 } from "@/constants/Constants";
 import useFetchData from "@/hooks/useFetchData";
 import { handleWatchsFilter } from "@/services/handler/handleChange";
-import { Brand, Material, Watch } from "@/types/watchTypes";
+import { Watch, WatchFilter } from "@/types/watchTypes";
 import { Dispatch, SetStateAction, useState } from "react";
-import { Subscription } from "react-redux";
 import SearchBar from "../SortingBanner/SearchBar/SearchBar";
 import FilterCategory from "./FilterCategory";
 
@@ -16,19 +13,12 @@ const Filter = ({
 }: {
   setWatchs: Dispatch<SetStateAction<Watch[]>>;
 }) => {
-  const [brands, setBrands] = useState<Brand[]>();
-  const [materials, setMaterials] = useState<Material[]>();
-  const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+  const [watchFilter, setWatchFIlter] = useState<WatchFilter[]>([]);
   const [checkedItems, setCheckedItems] = useState<FormData>(new FormData());
 
-  const { isLoading: subIsLoading } = useFetchData(
-    setSubscriptions,
-    API_SUBSCRIPTION
-  );
-  const { isLoading: matIsLoading } = useFetchData(setMaterials, API_MATERIAL);
-  const { isLoading: brandIsLoading } = useFetchData(setBrands, API_BRAND);
+  const { isLoading } = useFetchData(setWatchFIlter, API_WATCH_FILTER);
 
-  if (subIsLoading || brandIsLoading || matIsLoading) return;
+  if (isLoading) return;
 
   return (
     <div className="bg-blacklight h-auto w-[280px] p-10">
@@ -44,23 +34,7 @@ const Filter = ({
           }
           className=" border-b-gray border-b"
         >
-          {[
-            {
-              keyRequest: "subscription_id",
-              category: subscriptions,
-              name: "abonnement",
-            },
-            {
-              keyRequest: "brand_id",
-              category: brands,
-              name: "marque",
-            },
-            {
-              keyRequest: "material_id",
-              category: materials,
-              name: "matière",
-            },
-          ].map((filtre, i) => (
+          {watchFilter.map((filtre: WatchFilter, i) => (
             <FilterCategory
               key={i}
               keyRequest={filtre.keyRequest}

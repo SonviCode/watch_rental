@@ -24,13 +24,14 @@ export const handleChangeSubscriptionSelectOption = (
 
   const formData = new FormData();
   formData.append("subscription_id", e.target.value);
+  formData.append("isAvailable", "true");
   fetchGetWatchsByFilter(setWatchs, formData);
 };
 
 /**
- * 
- * @param subscription 
- * @param setWatchs 
+ *
+ * @param subscription
+ * @param setWatchs
  */
 export const handleChangeSubscriptionOnClik = (
   subscription: Subscription,

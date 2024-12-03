@@ -1,9 +1,39 @@
+import { STATUS_ID_ACTIVE_RENTAL } from '#constants/constants'
 import Rental from '#models/rental'
+import Watch from '#models/watch/watch'
+import { generateRentalNumber } from '../../utils/generation_utils.js'
+import WatchRepository from './watch_repository.js'
 
 /**
  * Repository class for Rental
  */
 export default class RentalRepository {
+  /**
+   * create a new rental
+   *
+   * @param body data to create the rental
+   * @returns the new rental
+   */
+  static async addRental(body: any) {
+    const rentalBody = {
+      user_id: body.user_id,
+      rental_number: generateRentalNumber(body.subscription.title),
+      numberWatchesRemaining: body.subscription.numberMaxWatches - 1,
+      subscription_id: body.subscription.id,
+      date_start: new Date(body.date_start),
+      status_id: STATUS_ID_ACTIVE_RENTAL,
+    }
+
+    const rental = await Rental.create(rentalBody)
+    await rental
+      .related('watch')
+      .attach({ [body.watch_id]: { date_start: new Date(body.date_start) } })
+    await rental.load('watch')
+
+    await WatchRepository.setWatchAvailibityToFalse(body.watch_id)
+
+    return rental
+  }
   /**
    * get all rentals - only for admin
    *
@@ -40,6 +70,7 @@ export default class RentalRepository {
       .preload('watch', (watchQuery) => {
         watchQuery
           .pivotColumns(['id', 'date_start', 'date_end'])
+          .orderBy('date_start')
           .preload('brand')
           .preload('material')
           .preload('subscription')
@@ -88,6 +119,7 @@ export default class RentalRepository {
     const idOfLastWatch = rental.watch.slice(-1).pop()!.id
 
     console.log(idPivotOfLastWatch)
+    console.log(idOfLastWatch)
 
     rental.numberWatchesRemaining = rental.numberWatchesRemaining - 1
 

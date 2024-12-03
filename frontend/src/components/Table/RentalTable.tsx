@@ -66,7 +66,7 @@ const RentalTable = ({ rentals }: { rentals: Rental[] }) => {
                         ? new Date(watch.pivotDateEnd).toLocaleDateString(
                             "fr-FR"
                           )
-                        : "actif"}
+                        : "/"}
                     </span>
                   </div>
                 ))}

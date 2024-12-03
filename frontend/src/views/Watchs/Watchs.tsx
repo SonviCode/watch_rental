@@ -25,9 +25,9 @@ const Watchs = () => {
           <div className="flex">
             <Filter setWatchs={setWatchs} />
             <div>
-              <SortingBanner />
+              <SortingBanner nbOfWatchs={watchs.length} />
 
-              <div className="flex gap-10 p-10">
+              <div className="grid grid-cols-4 gap-10 p-10">
                 {watchs && watchs.length > 0 ? (
                   watchs.map((watch, i) => <WatchCard watch={watch} key={i} />)
                 ) : (

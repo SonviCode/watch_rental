@@ -55,7 +55,7 @@ const ContainerPurchase = () => {
 
   return (
     <>
-      <div className="flex h-full max-w-full bg-blacklight">
+      <div className="flex-col lg:flex-row flex h-full max-w-full bg-blacklight">
         <div className="flex-grow">
           <StepsPurchase
             purchaseSteps={purchaseSteps}

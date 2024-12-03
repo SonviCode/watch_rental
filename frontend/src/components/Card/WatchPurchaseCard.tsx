@@ -12,16 +12,31 @@ const WatchPurchaseCard = ({
   onClick?: MouseEventHandler<HTMLDivElement> | undefined;
 }) => {
   let isWatchSelected = false;
+  let isWatchActive = false;
 
   if (watchSelected) {
     isWatchSelected = watch.id === watchSelected.id;
+  }
+
+  if (
+    !watch.pivotDateEnd &&
+    new Date(watch.pivotDateStart!).getTime() < new Date().getTime()
+  ) {
+    isWatchActive = true;
+  }
+
+  if (
+    new Date(watch.pivotDateEnd!).getTime() > new Date().getTime() &&
+    new Date(watch.pivotDateStart!).getTime() <= new Date().getTime()
+  ) {
+    isWatchActive = true;
   }
 
   return (
     <div
       onClick={onClick}
       className={`${isWatchSelected && "border-purple border-4"}
-      ${watch.pivotDateEnd ? "opacity-50" : ""} ${onClick ? "cursor-pointer" : ""}
+      ${isWatchActive ? "" : "opacity-50"} ${onClick ? "cursor-pointer" : ""}
        bg-[#FFFFFF] w-28 h-28 rounded-md text-sm text-center relative `}
     >
       <div className="absolute right-2 top-3 flex h-4 w-6 items-center justify-center rounded-full">

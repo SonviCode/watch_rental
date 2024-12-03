@@ -49,13 +49,19 @@ const WatchCard = ({ watch }: { watch: Watch }) => {
           dès {watch.subscription.price}€/mois
         </p>
 
-        <Link
-          to="/purchase"
-          onClick={() => dispatch(setSubscription(watch.subscription))}
-          className="z-10 m-auto w-full flex justify-center gradient-bg rounded-lg px-2 py-1.5"
-        >
-          S'abonner
-        </Link>
+        {watch.isAvailable ? (
+          <Link
+            to="/purchase"
+            onClick={() => dispatch(setSubscription(watch.subscription))}
+            className="z-10 m-auto w-full flex justify-center gradient-bg rounded-lg px-2 py-1.5"
+          >
+            S'abonner
+          </Link>
+        ) : (
+          <span className="z-10  h-full m-auto w-full flex justify-center text-purplelight rounded-lg italic text-center text-sm px-2 py-1.5">
+            Actuellement en location
+          </span>
+        )}
       </div>
     </div>
   );

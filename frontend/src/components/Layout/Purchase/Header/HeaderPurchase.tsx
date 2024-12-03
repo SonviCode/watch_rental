@@ -8,7 +8,7 @@ const HeaderPurchase = () => {
       <h1 className="gradient-text w-fit text-5xl">Tempo</h1>
       <Link
         to="/"
-        className="absolute left-5 flex items-center italic text-sm gap-2"
+        className="absolute left-5 top-4 sm:top-8 flex items-center italic text-xs sm:text-sm gap-2"
       >
         <FontAwesomeIcon icon={faChevronLeft} />
         Retour à l'accueil
