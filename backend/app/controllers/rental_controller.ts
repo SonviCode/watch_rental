@@ -1,11 +1,9 @@
-import Rental from '#models/rental'
-import RentalRepository from '#repositories/watch/rental_repository'
+import { STATUS_ID_CLOSED_RENTAL } from '#constants/constants'
+import RentalRepository from '#repositories/rental_repository'
 import MailService from '#services/mail_service'
 import { createRentalValidator, updateRentalValidator } from '#validators/rental_validator'
 import type { HttpContext } from '@adonisjs/core/http'
 import { addMonth } from '../utils/date_utils.js'
-import { STATUS_ID_ACTIVE_RENTAL, STATUS_ID_CLOSED_RENTAL } from '#constants/constants'
-import { generateRentalNumber } from '../utils/generation_utils.js'
 
 export default class RentalController {
   /**

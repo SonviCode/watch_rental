@@ -15,6 +15,7 @@ import {
   API_VERIFY_OTP_SMS,
 } from "../../constants/Constants";
 import { fetchCreateAddress } from "./user";
+import { getCookie } from "@/utils/cookieUtils";
 
 /**
  * service to sign up and add user
@@ -29,6 +30,9 @@ export const fetchSignUp = async (
   try {
     const res = await fetch(API_SIGNUP, {
       method: "POST",
+      headers: {
+        "X-XSRF-TOKEN": getCookie("XSRF-TOKEN")!,
+      },
       body: formData,
       credentials: "include",
     });
@@ -66,8 +70,8 @@ export const fetchLogin = async (
     const res = await fetch(API_LOGIN, {
       method: "POST",
       headers: {
-        Accept: "application.json",
         "Content-Type": "application/json",
+        "X-XSRF-TOKEN": getCookie("XSRF-TOKEN")!,
       },
       credentials: "include",
       body: JSON.stringify({ email, password }),
@@ -91,6 +95,9 @@ export const fetchLogin = async (
 export const fetchLogout = async (navigate: NavigateFunction) => {
   fetch(API_LOGOUT, {
     method: "POST",
+    headers: {
+      "X-XSRF-TOKEN": getCookie("XSRF-TOKEN")!,
+    },
     credentials: "include",
   })
     .then(() => navigate("/"))
@@ -114,6 +121,7 @@ export const fetchVerifyMail = async (
       headers: {
         Accept: "application.json",
         "Content-Type": "application/json",
+        "X-XSRF-TOKEN": getCookie("XSRF-TOKEN")!,
       },
       credentials: "include",
       body: JSON.stringify({ code }),

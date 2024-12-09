@@ -1,50 +1,35 @@
-# FROM node:alpine as base
+FROM node:20.12.2-alpine3.18 AS base
 
-# RUN npm install -g pnpm
+# All deps stage
+FROM base AS deps
+WORKDIR /app
+ADD package.json package-lock.json ./
+RUN npm ci
 
-# # All deps stage
-# FROM base as deps
-# WORKDIR /usr/src/app
-# ADD package.json pnpm-lock.yaml ./
-# RUN pnpm install --frozen-lockfile
-# RUN npm install -g ts-node
+# Production only deps stage
+FROM base AS production-deps
+WORKDIR /app
+ADD package.json package-lock.json ./
+RUN npm ci --omit=dev
 
-# # Production only deps stage
-# FROM base as production-deps
-# WORKDIR /usr/src/app
-# ADD package.json pnpm-lock.yaml ./
-# RUN pnpm install --frozen-lockfile --prod
+# migrations db
+FROM base as migrations
+WORKDIR /app
+RUN node ace migration:run --force
 
-# # Build stage
-# FROM base as build
-# WORKDIR /usr/src/app
-# COPY --from=deps /usr/src/app/node_modules /usr/src/app/node_modules
-# ADD . .
-# RUN node ace build --ignore-ts-errors 
+# Build stage
+FROM base AS build
+WORKDIR /app
+COPY --from=deps /app/node_modules /app/node_modules
+ADD . .
+RUN node ace build --ignore-ts-errors
+# RUN node ace migration:run --force
 
-# # Production stage
-# FROM base
-# ENV NODE_ENV=production
-# WORKDIR /usr/src/app
-# COPY --from=production-deps /usr/src/app/node_modules /usr/src/app/node_modules
-# COPY --from=build /usr/src/app/build /usr/src/app
-# EXPOSE 3333
-# CMD ["node", "./bin/server.js"]
-
-FROM node:18-alpine
-
-RUN npm install -g pnpm
-
-WORKDIR /usr/src/app
-
-COPY package.json pnpm-lock.yaml /usr/src/app/
-
-# RUN pnpm install 
-RUN pnpm install
-
-COPY . /usr/src/app
-
-# RUN pnpm run build
-
+# Production stage
+FROM base
+ENV NODE_ENV=production
+WORKDIR /app
+COPY --from=production-deps /app/node_modules /app/node_modules
+COPY --from=build /app/build /app
 EXPOSE 3333
-CMD ["node", "build"]
+CMD ["node", "./bin/server.js"]

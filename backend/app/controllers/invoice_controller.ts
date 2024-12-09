@@ -1,11 +1,11 @@
 import Invoice from '#models/invoice'
-import RentalRepository from '#repositories/watch/rental_repository'
+import RentalRepository from '#repositories/rental_repository'
 import PdfService from '#services/pdf_service'
 import { createInvoiceValidator } from '#validators/invoice_validator'
 import type { HttpContext } from '@adonisjs/core/http'
 import { addMonth } from '../utils/date_utils.js'
 import { generateInvoiceNumber } from '../utils/generation_utils.js'
-import InvoiceRepository from '#repositories/watch/invoice_repository'
+import InvoiceRepository from '#repositories/invoice_repository'
 
 export default class InvoiceController {
   /**

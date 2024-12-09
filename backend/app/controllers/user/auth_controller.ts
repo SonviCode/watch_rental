@@ -1,5 +1,6 @@
 import { EMAIL_IS_VERIFIED, OTP_EMAIL_IS_RESEND } from '#constants/constants'
 import User from '#models/user'
+import UserRepository from '#repositories/user_repository'
 import OtpService from '#services/otp_service'
 import env from '#start/env'
 import { loginValidator, signUpValidator } from '#validators/auth_validator'
@@ -19,7 +20,7 @@ export default class AuthController {
 
     const body = await request.validateUsing(signUpValidator)
 
-    const user = await User.create(body)
+    const user = await UserRepository.add(body)
 
     return response.created(user)
   }
@@ -76,7 +77,9 @@ export default class AuthController {
   }
 
   async resendOtpEmail({ auth, response }: HttpContext) {
-    const user = await User.findOrFail(auth.user?.id)
+    const userId = auth.user?.id
+
+    const user = await UserRepository.findById(userId!)
 
     await OtpService.sendOtpVerificationEmail(user)
 
@@ -84,7 +87,9 @@ export default class AuthController {
   }
 
   async isAdmin({ auth, response }: HttpContext) {
-    const user = await User.findOrFail(auth.user?.id)
+    const userId = auth.user?.id
+
+    const user = await UserRepository.findById(userId!)
     const role = user.role
 
     return response.send(role === env.get('ROLE_ADMIN'))

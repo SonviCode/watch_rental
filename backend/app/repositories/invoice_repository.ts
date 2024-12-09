@@ -1,6 +1,11 @@
 import Invoice from '#models/invoice'
 
 export default class InvoiceRepository {
+  /**
+   * get all invoices
+   * 
+   * @returns all invoices
+   */
   static async getAll() {
     return await Invoice.query().preload('rental', (rentalQuery) => {
       rentalQuery
@@ -12,6 +17,12 @@ export default class InvoiceRepository {
     })
   }
 
+  /**
+   * get invoice by invoice id
+   * 
+   * @param invoiceId 
+   * @returns invoice
+   */
   static async getById(invoiceId: string) {
     return await Invoice.query()
       .where('id', invoiceId)
@@ -26,6 +37,12 @@ export default class InvoiceRepository {
       .firstOrFail()
   }
 
+  /**
+   * get invoice by user id
+   * 
+   * @param userId 
+   * @returns invoice
+   */
   static async getByUserId(userId: string) {
     return await Invoice.query().preload('rental', (rentalQuery) => {
       rentalQuery

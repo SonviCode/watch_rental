@@ -1,8 +1,7 @@
 import { STATUS_ID_ACTIVE_RENTAL } from '#constants/constants'
 import Rental from '#models/rental'
-import Watch from '#models/watch/watch'
-import { generateRentalNumber } from '../../utils/generation_utils.js'
-import WatchRepository from './watch_repository.js'
+import { generateRentalNumber } from '../utils/generation_utils.js'
+import WatchRepository from './watch/watch_repository.js'
 
 /**
  * Repository class for Rental
